@@ -66,8 +66,6 @@ python3 server/metrics_server.py --host 127.0.0.1 --port 18080 --static-root . -
 
 统计后端只保存事件类型、对象 key、页面、匿名 session、哈希后的 IP 和 User-Agent 摘要；不保存明文 IP。部署时建议把 SQLite 放在 `/home/docs/kangaroo-review-runtime/metrics.sqlite3`，nginx 将 `/kangaroo-review/api/` 反代到本机 `127.0.0.1:18081`。
 
-线上隐藏统计面板：<https://docs.cpl.icu/kangaroo-review/metrics.html>。这个入口不写在主站导航里，需要直接输入地址访问。
-
 ## 验证记录
 
 - `node --check site/app.js site/content.js site/data/questions.js site/data/sources.js tools/smoke-site.mjs`
