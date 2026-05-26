@@ -11,8 +11,9 @@ import time
 import urllib.parse
 from datetime import datetime, timezone
 from http import HTTPStatus
-from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+from http.server import BaseHTTPRequestHandler, HTTPServer
 from pathlib import Path
+from socketserver import ThreadingMixIn
 from typing import Any, Dict, List, Optional, Tuple, Type
 
 
@@ -43,6 +44,10 @@ SITE_ROOT_FILES = {
     "metrics.html",
     "metrics.js",
 }
+
+
+class ThreadingHTTPServer(ThreadingMixIn, HTTPServer):
+    daemon_threads = True
 
 
 def utc_now_iso() -> str:
