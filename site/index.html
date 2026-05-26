@@ -9,15 +9,16 @@
   </head>
   <body>
     <header class="topbar">
-      <div>
-        <p class="eyebrow">Software Architecture</p>
-        <h1 id="page-title">软件体系结构复习资料</h1>
-      </div>
-      <div class="toolbar" aria-label="language and filters">
+      <a class="brand" href="#overview" aria-label="Back to overview">
+        <span class="eyebrow">Software Architecture</span>
+        <strong id="page-title">软件体系结构复习资料</strong>
+      </a>
+
+      <div class="toolbar" aria-label="Study controls">
         <div class="segmented" role="group" aria-label="Language mode">
-          <button class="seg active" data-lang="mix">中英</button>
-          <button class="seg" data-lang="zh">中文</button>
-          <button class="seg" data-lang="en">EN</button>
+          <button class="seg active" data-lang="mix" type="button">中英</button>
+          <button class="seg" data-lang="zh" type="button">中文</button>
+          <button class="seg" data-lang="en" type="button">EN</button>
         </div>
         <label class="search">
           <span>Search</span>
@@ -28,87 +29,31 @@
 
     <main class="layout">
       <aside class="rail">
-        <nav aria-label="Sections">
-          <a href="#dashboard" class="nav-link active">总览</a>
-          <a href="#path" class="nav-link">路线</a>
-          <a href="#knowledge" class="nav-link">知识点</a>
-          <a href="#papers" class="nav-link">真题</a>
-          <a href="#glossary" class="nav-link">术语</a>
-          <a href="#sources" class="nav-link">资料库</a>
+        <nav class="page-nav" aria-label="Review pages">
+          <a href="#overview" class="nav-link active" data-page="overview">总览</a>
+          <a href="#plan" class="nav-link" data-page="plan">路线</a>
+          <a href="#knowledge" class="nav-link" data-page="knowledge">知识库</a>
+          <a href="#papers" class="nav-link" data-page="papers">真题</a>
+          <a href="#glossary" class="nav-link" data-page="glossary">术语</a>
+          <a href="#whiteboards" class="nav-link" data-page="whiteboards">画板</a>
+          <a href="#sources" class="nav-link" data-page="sources">资料库</a>
         </nav>
-        <div class="priority-filter" role="group" aria-label="Priority filter">
-          <button class="chip active" data-priority="all">All</button>
-          <button class="chip" data-priority="P0">P0</button>
-          <button class="chip" data-priority="P1">P1</button>
-          <button class="chip" data-priority="P2">P2</button>
+
+        <div class="rail-filter" aria-label="Priority filter">
+          <span>Priority</span>
+          <div class="priority-filter" role="group" aria-label="Priority filter">
+            <button class="chip active" data-priority="all" type="button">All</button>
+            <button class="chip" data-priority="P0" type="button">P0</button>
+            <button class="chip" data-priority="P1" type="button">P1</button>
+            <button class="chip" data-priority="P2" type="button">P2</button>
+          </div>
         </div>
       </aside>
 
-      <section class="content">
-        <section id="dashboard" class="band dashboard">
-          <div class="summary">
-            <p class="section-kicker">Review Dashboard</p>
-            <h2 data-i18n="dashboardTitle">先保底，再冲设计题</h2>
-            <p data-i18n="dashboardCopy">
-              这份资料按复习课优先级组织：基础概念和质量属性负责拿稳简答题，ADD/DDD/微服务/企业架构负责设计分析题和进阶分。
-            </p>
-          </div>
-          <div id="exam-facts" class="fact-grid"></div>
-          <div id="evidence-strip" class="evidence-strip"></div>
-        </section>
-
-        <section id="path" class="band">
-          <div class="section-head">
-            <p class="section-kicker">Priority Path</p>
-            <h2>复习路线</h2>
-          </div>
-          <div id="priority-path" class="priority-path"></div>
-        </section>
-
-        <section id="knowledge" class="band">
-          <div class="section-head">
-            <p class="section-kicker">Knowledge Map</p>
-            <h2>知识点卡片</h2>
-          </div>
-          <div id="topic-grid" class="topic-grid"></div>
-        </section>
-
-        <section id="papers" class="band">
-          <div class="section-head split">
-            <div>
-              <p class="section-kicker">Past Papers</p>
-              <h2>往年真题聚类</h2>
-            </div>
-            <select id="cluster-select" aria-label="Question cluster">
-              <option value="all">All clusters</option>
-            </select>
-          </div>
-          <div id="question-grid" class="question-grid"></div>
-        </section>
-
-        <section id="glossary" class="band">
-          <div class="section-head split">
-            <div>
-              <p class="section-kicker">Glossary</p>
-              <h2>中英文术语表</h2>
-            </div>
-            <select id="glossary-select" aria-label="Glossary category">
-              <option value="all">All categories</option>
-            </select>
-          </div>
-          <div id="glossary-grid" class="glossary-grid"></div>
-        </section>
-
-        <section id="sources" class="band">
-          <div class="section-head">
-            <p class="section-kicker">Source Library</p>
-            <h2>资料与抽取状态</h2>
-          </div>
-          <div id="asset-strip" class="asset-strip"></div>
-          <div id="source-table" class="source-table"></div>
-        </section>
-      </section>
+      <section id="app-view" class="workspace" aria-live="polite"></section>
     </main>
+
+    <div id="modal-root" class="modal-root" hidden></div>
 
     <script src="content.js"></script>
     <script src="data/questions.js"></script>

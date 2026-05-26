@@ -19,3 +19,4 @@ data/feishu/*.json
 data/feishu/*.md
 data/feishu/media/
 data/feishu/whiteboards/
+data/blog/*.html
