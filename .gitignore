@@ -1,4 +1,6 @@
 .DS_Store
+__pycache__/
+*.pyc
 .swift-module-cache/
 
 # OMX runtime state is local execution bookkeeping. Keep context/research artifacts.
@@ -20,3 +22,6 @@ data/feishu/*.md
 data/feishu/media/
 data/feishu/whiteboards/
 data/blog/*.html
+data/metrics*.sqlite*
+*.sqlite3-wal
+*.sqlite3-shm

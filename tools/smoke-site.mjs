@@ -17,8 +17,10 @@ async function checkViewport(name, viewport) {
     if (message.type() === "error") errors.push(`${name}: console ${message.text()}`);
   });
 
-  await page.goto(baseUrl, { waitUntil: "networkidle" });
+  await page.goto(baseUrl, { waitUntil: "domcontentloaded" });
+  await page.waitForSelector(".hero-panel");
   const title = await page.locator(".hero-panel h1").innerText();
+  const overviewMetricBadges = await page.locator(".page-metrics .metric-badge").count();
   await page.click('button[data-lang="en"]');
   const englishNav = await page.locator(".nav-link").evaluateAll((nodes) => nodes.map((node) => node.textContent.trim()).join("|"));
   await page.click('button[data-lang="mix"]');
@@ -69,6 +71,11 @@ async function checkViewport(name, viewport) {
   const previewSample = await page.locator(".source-preview").innerText();
   await page.screenshot({ path: `${screenshots}/kangaroo-review-${name}-source-modal.png`, fullPage: true });
   await page.locator('button[data-action="close-modal"]').last().click();
+  const [sourcePopup] = await Promise.all([
+    page.waitForEvent("popup"),
+    page.click(".source-actions a")
+  ]);
+  await sourcePopup.close();
   await page.screenshot({ path: `${screenshots}/kangaroo-review-${name}-sources.png`, fullPage: true });
   const pageWidth = await page.evaluate(() => ({
     clientWidth: document.documentElement.clientWidth,
@@ -79,6 +86,7 @@ async function checkViewport(name, viewport) {
   return {
     name,
     title,
+    overviewMetricBadges,
     englishNavHasOverview: englishNav.includes("Overview") && englishNav.includes("Sources"),
     detailHasModernTopic: /DDD|领域驱动|微服务|Enterprise|企业架构/.test(detail),
     detailHasDeepDive: detailHasDeepDive > 0,
@@ -111,6 +119,7 @@ for (const result of [desktop, mobile]) {
   ]) {
     if (!result[key]) errors.push(`${result.name}: ${key} failed`);
   }
+  if (result.overviewMetricBadges < 3) errors.push(`${result.name}: metric badges missing`);
   if (result.whiteboardNaturalWidth < 1000) errors.push(`${result.name}: whiteboard image did not load`);
 }
 

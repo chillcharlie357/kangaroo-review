@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kangaroo Review Metrics</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="metrics-body">
+    <main class="metrics-dashboard">
+      <header class="metrics-hero">
+        <div>
+          <p class="section-kicker">Hidden Metrics</p>
+          <h1>访问统计面板</h1>
+          <p>这个页面不在主站导航中展示，只通过直接输入地址访问。</p>
+        </div>
+        <button id="refresh-metrics" type="button">刷新</button>
+      </header>
+
+      <section class="metric-summary" id="metric-summary" aria-live="polite"></section>
+
+      <section class="metrics-grid">
+        <article class="panel">
+          <div class="section-head">
+            <p class="section-kicker">Event Mix</p>
+            <h2>事件总量</h2>
+          </div>
+          <div id="event-chart" class="bar-chart"></div>
+        </article>
+
+        <article class="panel">
+          <div class="section-head">
+            <p class="section-kicker">Daily Trend</p>
+            <h2>最近趋势</h2>
+          </div>
+          <div id="daily-chart" class="line-chart"></div>
+        </article>
+
+        <article class="panel wide-panel">
+          <div class="section-head">
+            <p class="section-kicker">Top Items</p>
+            <h2>高频页面、词条与资料</h2>
+          </div>
+          <div id="top-items" class="metrics-table"></div>
+        </article>
+
+        <article class="panel wide-panel">
+          <div class="section-head">
+            <p class="section-kicker">Recent Events</p>
+            <h2>最近事件</h2>
+          </div>
+          <div id="recent-events" class="metrics-table"></div>
+        </article>
+      </section>
+    </main>
+
+    <script src="metrics.js"></script>
+  </body>
+</html>

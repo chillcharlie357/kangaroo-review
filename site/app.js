@@ -8,12 +8,30 @@ const state = {
   cluster: "all",
   glossary: "all",
   sourceGroup: "all",
+  metricCounts: {},
+  metricsAvailable: true,
+  metricsSessionId: "",
+  lastTrackedPage: "",
+  lastTrackedTopic: "",
   questions: [],
   sources: []
 };
 
 const content = window.reviewContent;
 const pages = new Set(["overview", "plan", "knowledge", "papers", "glossary", "whiteboards", "sources"]);
+const metricLabels = {
+  site_visit: { zh: "站点访问", en: "site visits" },
+  page_view: { zh: "本页查看", en: "page views" },
+  page_click: { zh: "导航点击", en: "nav clicks" },
+  topic_view: { zh: "知识点查看", en: "topic views" },
+  glossary_view: { zh: "词条查看", en: "term views" },
+  question_view: { zh: "真题展开", en: "question opens" },
+  source_preview: { zh: "预览", en: "previews" },
+  source_open: { zh: "打开/下载", en: "opens/downloads" },
+  diagram_open: { zh: "图解放大", en: "diagram zooms" },
+  whiteboard_open: { zh: "画板放大", en: "whiteboard zooms" }
+};
+const metricSessionKey = "kangaroo-review-session";
 
 function escapeHtml(text) {
   return String(text ?? "").replace(/[&<>"']/g, (char) => ({
@@ -94,8 +112,179 @@ async function loadJson(path, fallback) {
   }
 }
 
+function metricApiBase() {
+  if (window.location.protocol === "file:") return "";
+  if (window.location.pathname.startsWith("/kangaroo-review/")) return "/kangaroo-review/api";
+  return "/api";
+}
+
+function metricItemId(eventType, key) {
+  return `${eventType}::${key}`;
+}
+
+function metricLabel(eventType) {
+  return metricLabels[eventType] || { zh: "统计", en: "metrics" };
+}
+
+function stableMetricKey(prefix, value) {
+  const raw = String(value || "unknown")
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, "-")
+    .replace(/[^\w:/.\-\u4e00-\u9fa5]+/g, "-")
+    .replace(/-+/g, "-")
+    .slice(0, 180)
+    .replace(/^-|-$/g, "");
+  return `${prefix}:${raw || "unknown"}`;
+}
+
+function pageMetricKey(page = state.page) {
+  return stableMetricKey("page", page);
+}
+
+function topicMetricKey(topicId) {
+  return stableMetricKey("topic", topicId);
+}
+
+function glossaryMetricKey(term) {
+  return stableMetricKey("glossary", `${term.category}:${term.en || term.zh}`);
+}
+
+function questionMetricKey(question) {
+  return stableMetricKey("question", question.id || question.canonical_question);
+}
+
+function sourceMetricKey(source) {
+  return stableMetricKey("source", source.path || source.title || source.url);
+}
+
+function metricCount(eventType, key) {
+  const value = state.metricCounts[metricItemId(eventType, key)];
+  if (Number.isFinite(value)) return String(value);
+  return state.metricsAvailable ? "…" : (state.lang === "en" ? "off" : "离线");
+}
+
+function renderMetricBadge(eventType, key, label = metricLabel(eventType)) {
+  return `
+    <span class="metric-badge" data-metric-type="${escapeHtml(eventType)}" data-metric-key="${escapeHtml(key)}">
+      <b>${escapeHtml(metricCount(eventType, key))}</b>
+      <em>${escapeHtml(localize(label))}</em>
+    </span>
+  `;
+}
+
+function pageMetricFooter() {
+  const key = pageMetricKey();
+  return `
+    <footer class="page-metrics" aria-label="${state.lang === "en" ? "Page metrics" : "页面统计"}">
+      ${renderMetricBadge("site_visit", "site")}
+      ${renderMetricBadge("page_view", key)}
+      ${renderMetricBadge("page_click", key)}
+      <span>${state.lang === "en" ? "Metrics update after the lightweight SQLite service receives events." : "统计由轻量 SQLite 服务实时累加，服务离线时页面仍可正常复习。"}</span>
+    </footer>
+  `;
+}
+
+function createMetricSessionId() {
+  return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
+}
+
+function ensureMetricSession() {
+  if (state.metricsSessionId) return state.metricsSessionId;
+  try {
+    let value = window.sessionStorage.getItem(metricSessionKey);
+    if (!value) {
+      value = createMetricSessionId();
+      window.sessionStorage.setItem(metricSessionKey, value);
+    }
+    state.metricsSessionId = value;
+  } catch {
+    state.metricsSessionId = createMetricSessionId();
+  }
+  return state.metricsSessionId;
+}
+
+async function trackMetric(eventType, key, label, meta = {}) {
+  const apiBase = metricApiBase();
+  if (!apiBase || !key) return;
+  const payload = {
+    event_type: eventType,
+    key,
+    label,
+    page: state.page,
+    target: window.location.hash || window.location.pathname,
+    session_id: ensureMetricSession(),
+    meta
+  };
+  try {
+    const response = await fetch(`${apiBase}/track`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+      keepalive: true
+    });
+    state.metricsAvailable = response.ok;
+    window.setTimeout(refreshVisibleMetrics, 160);
+  } catch {
+    state.metricsAvailable = false;
+    updateMetricBadges();
+  }
+}
+
+async function refreshVisibleMetrics() {
+  const apiBase = metricApiBase();
+  const items = visibleMetricItems();
+  if (!apiBase || !items.length) return;
+  const params = new URLSearchParams();
+  items.forEach((item) => params.append("item", item));
+  try {
+    const res = await fetch(`${apiBase}/stats?${params.toString()}`, { cache: "no-store" });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    state.metricCounts = { ...state.metricCounts, ...(data.counts || {}) };
+    state.metricsAvailable = true;
+  } catch {
+    state.metricsAvailable = false;
+  }
+  updateMetricBadges();
+}
+
+function visibleMetricItems() {
+  const items = new Set();
+  document.querySelectorAll("[data-metric-type][data-metric-key]").forEach((node) => {
+    items.add(metricItemId(node.dataset.metricType, node.dataset.metricKey));
+  });
+  return [...items];
+}
+
+function updateMetricBadges() {
+  document.querySelectorAll("[data-metric-type][data-metric-key]").forEach((node) => {
+    const value = metricCount(node.dataset.metricType, node.dataset.metricKey);
+    const number = node.querySelector("b");
+    if (number) number.textContent = value;
+    node.classList.toggle("offline", !state.metricsAvailable);
+  });
+}
+
+function trackPageView(page) {
+  const key = pageMetricKey(page);
+  if (state.lastTrackedPage === `${page}:${window.location.hash}`) return;
+  state.lastTrackedPage = `${page}:${window.location.hash}`;
+  trackMetric("page_view", key, page);
+}
+
+function trackCurrentDetailView() {
+  if (state.page !== "knowledge" || !state.selectedTopicId) return;
+  if (state.lastTrackedTopic === state.selectedTopicId) return;
+  state.lastTrackedTopic = state.selectedTopicId;
+  const topic = content.topics.find((item) => item.id === state.selectedTopicId);
+  trackMetric("topic_view", topicMetricKey(state.selectedTopicId), topic ? labelText(topic.title) : state.selectedTopicId);
+}
+
 function setPage(page) {
-  state.page = pages.has(page) ? page : "overview";
+  const nextPage = pages.has(page) ? page : "overview";
+  if (state.page !== nextPage) state.lastTrackedTopic = "";
+  state.page = nextPage;
   document.querySelectorAll(".nav-link").forEach((link) => {
     link.classList.toggle("active", link.dataset.page === state.page);
   });
@@ -310,6 +499,7 @@ function renderTopicDetail(topic) {
       <div class="detail-badges">
         <span>${escapeHtml(topic.priority)}</span>
         <span>${escapeHtml(topic.examWeight || priorityName(topic.priority))}</span>
+        ${renderMetricBadge("topic_view", topicMetricKey(topic.id))}
       </div>
     </header>
     <p class="takeaway">${htmlText(topic.takeaway)}</p>
@@ -441,10 +631,11 @@ function renderQuestion(question, open) {
   const title = textForLanguage(zhQuestion, question.canonical_question);
   const answer = textForLanguage(zhAnswer, question.likely_answer_pattern);
   return `
-    <details class="question-item" ${open ? "open" : ""}>
+    <details class="question-item" data-question-id="${escapeHtml(question.id || "")}" ${open ? "open" : ""}>
       <summary>
         <span>${escapeHtml(question.cluster)} · ${(question.appearances || []).length} hits</span>
         <strong>${htmlText(title)}</strong>
+        ${renderMetricBadge("question_view", questionMetricKey(question))}
       </summary>
       <div class="question-body">
         <section>
@@ -500,14 +691,18 @@ function renderGlossary() {
         </label>
       </div>
       <div class="glossary-table">
-        ${items.map((item) => `
-          <div class="term-row">
+        ${items.map((item) => {
+          const key = glossaryMetricKey(item);
+          return `
+          <button class="term-row" type="button" data-action="glossary-term" data-term-key="${escapeHtml(key)}">
             <span>${escapeHtml(item.category)}</span>
             <strong>${state.lang === "en" ? escapeHtml(item.en) : escapeHtml(item.zh)}</strong>
             <b>${state.lang === "en" ? escapeHtml(item.zh) : escapeHtml(item.en)}</b>
             <p>${textForLanguage(escapeHtml(item.noteZh), escapeHtml(item.noteEn), " / ")}</p>
-          </div>
-        `).join("")}
+            ${renderMetricBadge("glossary_view", key)}
+          </button>
+        `;
+        }).join("")}
       </div>
     </section>
   `;
@@ -562,30 +757,45 @@ function renderSources() {
         ? "On the docs.cpl.icu deployment, previews and source links read the mirrored data/raw/slides files under /kangaroo-review/. The public GitHub repo still excludes private source files."
         : "服务器部署版会在 /kangaroo-review/ 下镜像 data/raw/slides，因此“预览抽取”和“打开源文件”都可直接阅读；public GitHub 仓库仍不提交这些源文件。"}</p>
       <div class="source-table">
-        ${rows.map((source, index) => `
+        ${rows.map((source, index) => {
+          const key = sourceMetricKey(source);
+          const label = sourceLabel(source);
+          return `
           <article class="source-row">
             <div>
               <span>${escapeHtml(source.kind || "source")} · ${escapeHtml(sourceGroupName(source.source_group))}</span>
-              <strong>${escapeHtml(sourceLabel(source))}</strong>
+              <strong>${escapeHtml(label)}</strong>
               <p>${escapeHtml(source.summary || source.path || "")}</p>
             </div>
             <em>${escapeHtml(source.trust || "auxiliary")} ${source.needs_ocr ? "· OCR" : ""}</em>
             <small>${source.page_count ? `${source.page_count} pages` : ""}${source.text_chars ? ` · ${source.text_chars} chars` : ""}</small>
+            <div class="source-metrics">
+              ${renderMetricBadge("source_preview", key)}
+              ${renderMetricBadge("source_open", key)}
+            </div>
             <div class="source-actions">
               <button type="button" data-action="preview-source" data-source-index="${index}">${state.lang === "en" ? "Preview" : "预览抽取"}</button>
-              ${renderSourceLink(source)}
+              ${renderSourceLink(source, key, label)}
             </div>
           </article>
-        `).join("")}
+        `;
+        }).join("")}
       </div>
     </section>
   `;
 }
 
-function renderSourceLink(source) {
+function renderSourceLink(source, key = sourceMetricKey(source), sourceName = sourceLabel(source)) {
   const href = source.url || normalizeDeployPath(source.open_path || "");
   if (!href) return "";
-  return `<a href="${escapeHtml(href)}" target="_blank" rel="noopener">${source.url ? (state.lang === "en" ? "Open URL" : "打开外链") : (state.lang === "en" ? "Open file" : "打开源文件")}</a>`;
+  const label = source.url
+    ? (state.lang === "en" ? "Open URL" : "打开外链")
+    : (state.lang === "en" ? "Open file" : "打开源文件");
+  return `
+    <a href="${escapeHtml(href)}" target="_blank" rel="noopener" data-action="open-source" data-source-key="${escapeHtml(key)}" data-source-label="${escapeHtml(sourceName)}">
+      ${label}
+    </a>
+  `;
 }
 
 function renderCurrentPage() {
@@ -599,7 +809,7 @@ function renderCurrentPage() {
     whiteboards: renderWhiteboards,
     sources: renderSources
   };
-  view.innerHTML = renderers[state.page]();
+  view.innerHTML = `${renderers[state.page]()}${pageMetricFooter()}`;
 }
 
 function renderMeta() {
@@ -629,12 +839,15 @@ function renderAll() {
   setPage(state.page);
   renderMeta();
   renderCurrentPage();
+  trackCurrentDetailView();
+  refreshVisibleMetrics();
 }
 
 function setPageFromHash() {
   const next = window.location.hash.replace("#", "") || "overview";
   setPage(next);
   renderAll();
+  trackPageView(state.page);
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
@@ -664,6 +877,13 @@ function setupEvents() {
 
   window.addEventListener("hashchange", setPageFromHash);
 
+  document.querySelectorAll(".nav-link[data-page]").forEach((link) => {
+    link.addEventListener("click", () => {
+      const page = link.dataset.page || "overview";
+      trackMetric("page_click", pageMetricKey(page), page);
+    });
+  });
+
   document.addEventListener("change", (event) => {
     if (event.target.id === "cluster-select") {
       state.cluster = event.target.value;
@@ -682,48 +902,75 @@ function setupEvents() {
   document.addEventListener("click", (event) => {
     const target = event.target.closest("[data-action]");
     if (!target) return;
-    const action = target.dataset.action;
-    if (action === "topic-group") {
-      state.topicGroup = target.dataset.topicGroup;
-      state.selectedTopicId = "";
-      renderAll();
-    }
-    if (action === "select-topic") {
-      state.selectedTopicId = target.dataset.topicId;
-      renderAll();
-    }
-    if (action === "jump-topic") {
-      state.selectedTopicId = target.dataset.topicId;
-      const topic = content.topics.find((item) => item.id === state.selectedTopicId);
-      state.topicGroup = topic?.group || "all";
-    }
-    if (action === "jump-question") {
-      state.cluster = "all";
-    }
-    if (action === "open-whiteboard") {
-      event.preventDefault();
-      openWhiteboard(target.dataset.boardId);
-    }
-    if (action === "open-diagram") {
-      event.preventDefault();
-      openDiagram(target.dataset.diagramId);
-    }
-    if (action === "preview-source") {
-      event.preventDefault();
-      const visibleSources = currentSources();
-      previewSource(visibleSources[Number(target.dataset.sourceIndex)]);
-    }
-    if (action === "close-modal") closeModal();
-    if (action === "zoom-board") {
-      const image = document.querySelector(".modal-image");
-      const current = Number(image?.dataset.zoom || "1");
-      const next = Math.min(3, Math.max(0.75, current + Number(target.dataset.delta)));
-      if (image) {
-        image.dataset.zoom = String(next);
-        image.style.width = `${Math.round(next * 100)}%`;
+    switch (target.dataset.action) {
+      case "topic-group":
+        state.topicGroup = target.dataset.topicGroup;
+        state.selectedTopicId = "";
+        state.lastTrackedTopic = "";
+        trackMetric("filter_change", stableMetricKey("topic-group", state.topicGroup), state.topicGroup);
+        renderAll();
+        break;
+      case "select-topic":
+        state.selectedTopicId = target.dataset.topicId;
+        state.lastTrackedTopic = "";
+        renderAll();
+        break;
+      case "jump-topic": {
+        state.selectedTopicId = target.dataset.topicId;
+        const topic = content.topics.find((item) => item.id === state.selectedTopicId);
+        state.topicGroup = topic?.group || "all";
+        break;
+      }
+      case "jump-question":
+        state.cluster = "all";
+        break;
+      case "open-whiteboard":
+        event.preventDefault();
+        trackMetric("whiteboard_open", stableMetricKey("whiteboard", target.dataset.boardId), target.dataset.boardId);
+        openWhiteboard(target.dataset.boardId);
+        break;
+      case "open-diagram":
+        event.preventDefault();
+        trackMetric("diagram_open", stableMetricKey("diagram", target.dataset.diagramId), target.dataset.diagramId);
+        openDiagram(target.dataset.diagramId);
+        break;
+      case "preview-source": {
+        event.preventDefault();
+        const source = currentSources()[Number(target.dataset.sourceIndex)];
+        if (source) trackMetric("source_preview", sourceMetricKey(source), sourceLabel(source));
+        previewSource(source);
+        break;
+      }
+      case "open-source":
+        trackMetric("source_open", target.dataset.sourceKey, target.dataset.sourceLabel || target.href, {
+          href: target.href
+        });
+        break;
+      case "glossary-term":
+        trackMetric("glossary_view", target.dataset.termKey, target.textContent.replace(/\s+/g, " ").trim().slice(0, 120));
+        break;
+      case "close-modal":
+        closeModal();
+        break;
+      case "zoom-board": {
+        const image = document.querySelector(".modal-image");
+        const current = Number(image?.dataset.zoom || "1");
+        const next = Math.min(3, Math.max(0.75, current + Number(target.dataset.delta)));
+        if (image) {
+          image.dataset.zoom = String(next);
+          image.style.width = `${Math.round(next * 100)}%`;
+        }
+        break;
       }
     }
   });
+
+  document.addEventListener("toggle", (event) => {
+    const item = event.target.closest?.(".question-item");
+    if (!item || !item.open) return;
+    const question = state.questions.find((entry) => (entry.id || "") === item.dataset.questionId);
+    if (question) trackMetric("question_view", questionMetricKey(question), question.question_zh || question.canonical_question);
+  }, true);
 
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape") closeModal();
@@ -886,6 +1133,10 @@ async function boot() {
   state.page = pages.has(window.location.hash.replace("#", "")) ? window.location.hash.replace("#", "") : "overview";
   setupEvents();
   renderAll();
+  trackMetric("site_visit", "site", "Software Architecture Review", {
+    path: window.location.pathname
+  });
+  trackPageView(state.page);
 }
 
 boot();
