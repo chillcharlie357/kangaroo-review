@@ -6,6 +6,7 @@ After=network.target
 Type=simple
 User=docs
 WorkingDirectory=/home/docs/kangaroo-review
+EnvironmentFile=-/home/docs/kangaroo-review-runtime/metrics.env
 Environment=KANGAROO_METRICS_HOST=127.0.0.1
 Environment=KANGAROO_METRICS_PORT=18081
 Environment=KANGAROO_DB_PATH=/home/docs/kangaroo-review-runtime/metrics.sqlite3
