@@ -26,7 +26,6 @@ async function checkViewport(name, viewport) {
   await page.click('a[data-page="knowledge"]');
   await page.waitForSelector(".knowledge-layout");
   await page.click('button[data-topic-group="modern"]');
-  await page.waitForTimeout(100);
   const detail = await page.locator(".topic-detail").innerText();
   const detailHasDeepDive = await page.locator(".deep-dive-row").count();
   const diagramBox = await page.locator(".diagram-card img").first().evaluate((element) => {
@@ -57,7 +56,12 @@ async function checkViewport(name, viewport) {
   await page.waitForSelector(".source-row");
   await page.click(".source-actions button");
   await page.waitForSelector(".source-preview");
-  await page.waitForTimeout(900);
+  await page.waitForFunction(() => {
+    const preview = document.querySelector(".source-preview");
+    if (!preview) return false;
+    return !preview.textContent.includes("正在读取本机抽取内容")
+      && !preview.textContent.includes("Loading local preview");
+  });
   const previewSample = await page.locator(".source-preview").innerText();
   await page.screenshot({ path: `${screenshots}/kangaroo-review-${name}-source-modal.png`, fullPage: true });
   await page.locator('button[data-action="close-modal"]').last().click();

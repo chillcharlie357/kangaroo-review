@@ -59,6 +59,12 @@ function localizedPair(item, zhKey, enKey) {
   return `${zh}\n${en}`;
 }
 
+function textForLanguage(zh, en, mixedSeparator = "\n") {
+  if (state.lang === "en") return en;
+  if (state.lang === "zh") return zh;
+  return `${zh}${mixedSeparator}${en}`;
+}
+
 function diagramById(id) {
   return (content.diagrams || []).find((diagram) => diagram.id === id);
 }
@@ -121,6 +127,12 @@ function currentTopics() {
     .filter((topic) => state.priority === "all" || topic.priority === state.priority)
     .filter((topic) => state.topicGroup === "all" || topic.group === state.topicGroup)
     .filter((topic) => includesQuery(topic.id, topic.priority, topic.title, topic.takeaway, topic.answerFrame, topic.bullets, topic.deepDive, topic.sources, topic.sourceConfidence));
+}
+
+function currentSources() {
+  return state.sources
+    .filter((source) => state.sourceGroup === "all" || (source.source_group || "other") === state.sourceGroup)
+    .filter((source) => includesQuery(source.title, source.path, source.url, source.kind, source.source_group, source.trust, source.summary, source.extraction));
 }
 
 function renderOverview() {
@@ -426,16 +438,8 @@ function renderQuestion(question, open) {
   const sample = localizedPair(question, "sample_answer_zh", "sample_answer_en");
   const visualHint = localizedPair(question, "visual_hint_zh", "visual_hint_en");
   const diagram = question.diagram_id ? diagramById(question.diagram_id) : null;
-  const title = state.lang === "en"
-    ? question.canonical_question
-    : state.lang === "zh"
-      ? zhQuestion
-      : `${zhQuestion}\n${question.canonical_question}`;
-  const answer = state.lang === "en"
-    ? question.likely_answer_pattern
-    : state.lang === "zh"
-      ? zhAnswer
-      : `${zhAnswer}\n${question.likely_answer_pattern}`;
+  const title = textForLanguage(zhQuestion, question.canonical_question);
+  const answer = textForLanguage(zhAnswer, question.likely_answer_pattern);
   return `
     <details class="question-item" ${open ? "open" : ""}>
       <summary>
@@ -501,7 +505,7 @@ function renderGlossary() {
             <span>${escapeHtml(item.category)}</span>
             <strong>${state.lang === "en" ? escapeHtml(item.en) : escapeHtml(item.zh)}</strong>
             <b>${state.lang === "en" ? escapeHtml(item.zh) : escapeHtml(item.en)}</b>
-            <p>${state.lang === "en" ? escapeHtml(item.noteEn) : state.lang === "zh" ? escapeHtml(item.noteZh) : `${escapeHtml(item.noteZh)} / ${escapeHtml(item.noteEn)}`}</p>
+            <p>${textForLanguage(escapeHtml(item.noteZh), escapeHtml(item.noteEn), " / ")}</p>
           </div>
         `).join("")}
       </div>
@@ -539,9 +543,7 @@ function renderWhiteboards() {
 
 function renderSources() {
   const groups = ["all", ...new Set(state.sources.map((source) => source.source_group || "other").sort())];
-  const rows = state.sources
-    .filter((source) => state.sourceGroup === "all" || (source.source_group || "other") === state.sourceGroup)
-    .filter((source) => includesQuery(source.title, source.path, source.url, source.kind, source.source_group, source.trust, source.summary, source.extraction));
+  const rows = currentSources();
   return `
     <section class="panel">
       <div class="section-head split">
@@ -708,9 +710,7 @@ function setupEvents() {
     }
     if (action === "preview-source") {
       event.preventDefault();
-      const visibleSources = state.sources
-        .filter((source) => state.sourceGroup === "all" || (source.source_group || "other") === state.sourceGroup)
-        .filter((source) => includesQuery(source.title, source.path, source.url, source.kind, source.source_group, source.trust, source.summary, source.extraction));
+      const visibleSources = currentSources();
       previewSource(visibleSources[Number(target.dataset.sourceIndex)]);
     }
     if (action === "close-modal") closeModal();
