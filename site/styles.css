@@ -666,6 +666,7 @@ select {
   --lane-bg: rgba(78, 115, 72, 0.1);
   display: grid;
   grid-template-columns: minmax(210px, 0.45fr) minmax(260px, 0.7fr) minmax(260px, 1fr);
+  align-items: start;
   gap: 16px;
   border: 1px solid var(--line);
   border-top: 5px solid var(--lane-color);
@@ -698,7 +699,9 @@ select {
 
 .priority-lane header {
   display: grid;
+  align-content: start;
   gap: 8px;
+  min-width: 0;
 }
 
 .priority-lane header > span {
