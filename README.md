@@ -59,6 +59,12 @@ python3 server/metrics_server.py --host 127.0.0.1 --port 18080 --static-root . -
 
 服务器部署版与 public repo 不同：`docs.cpl.icu/kangaroo-review` 会额外镜像 `raw/`、`slides/`、`data/` 等源资料目录，使“资料库”页可以预览抽取文本并打开原始 PDF/文档。
 
+同步到服务器时需要规范化源文件权限，避免本机 `600` 权限被原样带到线上后 nginx 返回 403。推荐在 rsync 中加入：
+
+```bash
+--chmod=Du=rwx,Dgo=rx,Fu=rw,Fgo=r
+```
+
 新增高优先级资料中，`raw/2021 痛苦回忆.pdf`、`raw/软统2022试卷.pdf` 与 `raw/25软件系统设计回忆版.jpg` 来自相邻课程《软件系统设计》。该课程只有体系结构部分与本课重合，因此题库只吸收 ASR、质量属性、架构视图、C&C/SOA、ADD、微服务、Pipe-and-Filter、缓存一致性等体系结构题；LSP/OCP、Factory、Command、Observer、Facade/Proxy、代码实现类题目按详细设计/GoF 设计模式排除。`raw/考前关键词提示版本.pdf`、`raw/老师复习大纲（答案方式）.docx` 和 Mubu 思维导图作为 2025 前人冲刺资料使用，但优先级仍服从今年复习课。`data/feishu/ai-wiki-*.md` 与 `data/feishu/whiteboards/` 来自同学 AI 整理 Wiki，通过 bytedcli 抓取后作为辅助资料，不作为老师标准答案。
 
 ## 访问统计
