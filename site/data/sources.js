@@ -711,5 +711,69 @@ window.reviewSources = [
     "pypdf_extracted_path": "data/extracted/raw/2022-307a521c.json",
     "ocr_text_path": "data/extracted/raw/softsys-2021-2022-architecture-filter.md",
     "ocr_text_chars": 8892
+  },
+  {
+    "path": "raw/25软件系统设计回忆版.jpg",
+    "bytes": 201029,
+    "kind": "jpg",
+    "extraction": "manual-vision-ocr",
+    "text_chars": 678,
+    "image": {
+      "width": 665,
+      "height": 1920,
+      "mode": "RGB"
+    },
+    "needs_ocr": true,
+    "title": "软件系统设计 2025 春回忆版（筛选架构部分）",
+    "source_group": "adjacent_past_papers",
+    "trust": "high_priority_adjacent_filtered",
+    "preview_path": "../data/extracted/raw/softsys-2025-architecture-filter.md",
+    "open_path": "../raw/25软件系统设计回忆版.jpg",
+    "summary": "相邻课程 2025 回忆卷照片。仅吸收需求/ASR、质量属性场景、C&C/SOA、ADD、微服务特性与微服务拆分设计；GoF/OOP 设计模式题已排除。"
+  },
+  {
+    "path": "raw/考前关键词提示版本.pdf",
+    "bytes": 2309942,
+    "kind": "pdf",
+    "extraction": "pypdf",
+    "text_chars": 11489,
+    "page_count": 17,
+    "extracted_path": "data/extracted/raw/source-f1c00c82.json",
+    "needs_ocr": false,
+    "title": "2025 软件体系结构考前关键词提示版本",
+    "source_group": "current_senior_review",
+    "trust": "auxiliary_current_review",
+    "preview_path": "../data/extracted/raw/source-f1c00c82.json",
+    "open_path": "../raw/考前关键词提示版本.pdf",
+    "summary": "学长考前关键词与答题提示，覆盖基础概念、质量属性、模式/战术、ADD、微服务、企业架构等；用于补充记忆口径，优先级服从今年复习课。"
+  },
+  {
+    "path": "raw/老师复习大纲（答案方式）.docx",
+    "bytes": 5962230,
+    "kind": "docx",
+    "extraction": "python-docx",
+    "text_chars": 7956,
+    "extracted_path": "data/extracted/raw/source-0157f2b0.md",
+    "needs_ocr": false,
+    "title": "2025 老师复习大纲（答案方式）",
+    "source_group": "current_senior_review",
+    "trust": "auxiliary_current_review",
+    "preview_path": "../data/extracted/raw/source-0157f2b0.md",
+    "open_path": "../raw/老师复习大纲（答案方式）.docx",
+    "summary": "前人按老师复习口径整理的答案方式，重点覆盖 ADD、微服务六特性、AI-native、企业架构与 DDD；作为今年复习课的辅助校对材料。"
+  },
+  {
+    "path": "mubu/Klk_SUrzZB",
+    "url": "https://mubu.com/doc/Klk_SUrzZB",
+    "kind": "mubu",
+    "extraction": "playwright-share-api",
+    "text_chars": 18475,
+    "node_count": 287,
+    "title": "Mubu：Software System Design - Software Architecture Design",
+    "source_group": "adjacent_course_notes",
+    "trust": "high_priority_adjacent_filtered",
+    "preview_path": "../data/extracted/raw/mubu-softsys-architecture-outline.md",
+    "open_path": "https://mubu.com/doc/Klk_SUrzZB",
+    "summary": "相邻课程架构部分思维导图，已从 Mubu share 接口递归抽取 287 个节点，并保留颜色标签。剔除设计模式外延后，用作今年复习主纲的补充证据。"
   }
 ];

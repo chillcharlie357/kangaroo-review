@@ -124,6 +124,19 @@
     "needs_ocr": false
   },
   {
+    "path": "raw/25软件系统设计回忆版.jpg",
+    "bytes": 201029,
+    "kind": "jpg",
+    "extraction": "image-meta",
+    "text_chars": 0,
+    "image": {
+      "width": 665,
+      "height": 1920,
+      "mode": "RGB"
+    },
+    "needs_ocr": true
+  },
+  {
     "path": "raw/zqx考试复习资料/【批量下载】18年等/18年.pdf",
     "bytes": 1181515,
     "kind": "pdf",
@@ -279,6 +292,24 @@
     "text_chars": 3954,
     "page_count": 6,
     "extracted_path": "data/extracted/raw/source-ae2e2d76.json",
+    "needs_ocr": false
+  },
+  {
+    "path": "raw/老师复习大纲（答案方式）.docx",
+    "bytes": 5962230,
+    "kind": "docx",
+    "extraction": "python-docx",
+    "text_chars": 7956,
+    "extracted_path": "data/extracted/raw/source-0157f2b0.md"
+  },
+  {
+    "path": "raw/考前关键词提示版本.pdf",
+    "bytes": 2309942,
+    "kind": "pdf",
+    "extraction": "pypdf",
+    "text_chars": 11489,
+    "page_count": 17,
+    "extracted_path": "data/extracted/raw/source-f1c00c82.json",
     "needs_ocr": false
   },
   {

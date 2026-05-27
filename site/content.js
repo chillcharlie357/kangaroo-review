@@ -32,16 +32,16 @@ window.reviewContent = {
         "en": "Slides: 10 PDFs cataloged; image-based PDFs are OCR/extracted and used for cross-checking"
       },
       {
-        "zh": "前人资料：raw 中 Markdown/DOCX/RTF/PDF 已抽取；真题聚类 36 条，并补齐中文对照、真实答题示例和来源路径",
-        "en": "Raw materials: Markdown/DOCX/RTF/PDF extracted; 36 past-paper clusters now include Chinese counterparts, answer examples, and source paths"
+        "zh": "前人资料：raw 中 Markdown/DOCX/RTF/PDF/图片已抽取；真题聚类 39 条，并补齐中文对照、真实答题示例、优先级和来源路径",
+        "en": "Raw materials: Markdown/DOCX/RTF/PDF/images extracted; 39 past-paper clusters now include Chinese counterparts, answer examples, priorities, and source paths"
       },
       {
         "zh": "新增博客：EagleBear 2025Spring 两篇博客与架构相关引用已纳入，详细设计/设计模式专题已降权或排除",
         "en": "New blog source: two EagleBear 2025Spring posts and architecture-related references integrated; detailed design/design-pattern-only material is downgraded or excluded"
       },
       {
-        "zh": "新增高优先级资料：软件系统设计 2021/2022 真实卷已按“只保留体系结构题”筛选；2022 扫描卷已完成 OCR 校对；AI 整理 Wiki 与画板已用 bytedcli 抓取并入库",
-        "en": "New high-priority sources: 2021/2022 Software System Design papers were filtered to architecture-only questions; the scanned 2022 paper was OCR-checked; the AI wiki and whiteboard were fetched with bytedcli"
+        "zh": "新增高优先级资料：软件系统设计 2021/2022/2025 真实卷已按“只保留体系结构题”筛选；2025 照片已 OCR；Mubu 思维导图已从 share 接口递归抽取 287 个节点；AI 整理 Wiki 与画板已用 bytedcli 抓取并入库",
+        "en": "New high-priority sources: 2021/2022/2025 Software System Design papers were filtered to architecture-only questions; the 2025 photo was OCR-checked; the Mubu mind map was recursively extracted from the share API with 287 nodes; the AI wiki and whiteboard were fetched with bytedcli"
       }
     ]
   },
@@ -88,8 +88,8 @@ window.reviewContent = {
         "en": "Historical High-Frequency Core"
       },
       "summary": {
-        "zh": "这些是往年题反复出现的基本盘，也是简答题最稳的得分来源。新补的 2021/2022《软件系统设计》卷中，架构相关题也主要落在这里。",
-        "en": "These recur in past papers and are the safest source of short-answer points. The newly added 2021/2022 Software System Design papers also map mainly here after filtering architecture-only questions."
+        "zh": "这些是往年题反复出现的基本盘，也是简答题最稳的得分来源。新补的 2021/2022/2025《软件系统设计》卷和 2025 前人冲刺资料中，架构相关题也主要落在这里。",
+        "en": "These recur in past papers and are the safest source of short-answer points. The newly added 2021/2022/2025 Software System Design papers and 2025 senior review materials also map mainly here after filtering architecture-only questions."
       },
       "items": [
         {
@@ -2246,8 +2246,8 @@ window.reviewContent = {
       },
       "items": [
         {
-          "zh": "按 36 个真题簇逐条看中文答案，再对照英文题干；2021/2022 相邻课程真题优先看架构筛选部分",
-          "en": "Read Chinese answer frames for all 36 clusters, then compare English prompts; prioritize the architecture-filtered 2021/2022 adjacent-course papers"
+          "zh": "按 39 个真题簇逐条看中文答案，再对照英文题干；2025/2022/2021 相邻课程真题优先看架构筛选部分，GoF/OOP 题跳过",
+          "en": "Read Chinese answer frames for all 39 clusters, then compare English prompts; prioritize the architecture-filtered 2025/2022/2021 adjacent-course papers and skip GoF/OOP-only questions"
         },
         {
           "zh": "练 4 个设计模板：DDD 改错、微服务迁移、三层系统、缓存失效",
@@ -2281,7 +2281,7 @@ window.reviewContent = {
         "zh": "已扩充",
         "en": "Expanded"
       },
-      "evidence": "Lecture 1 OCR, Lecture 2-4 OCR, review notes, blog references, 2021/2022 Software System Design filtered questions"
+      "evidence": "Lecture 1 OCR, Lecture 2-4 OCR, review notes, blog references, 2021/2022/2025 Software System Design filtered questions, 2025 keyword hints"
     },
     {
       "area": {
@@ -2292,7 +2292,7 @@ window.reviewContent = {
         "zh": "重点强化",
         "en": "Strengthened as focus"
       },
-      "evidence": "Li review notes, slides 6-13, EagleBear 2025 DDD"
+      "evidence": "Li review notes, slides 6-13, EagleBear 2025 DDD, 2025 review outline, Mubu 287-node architecture mind map"
     },
     {
       "area": {
@@ -2314,7 +2314,7 @@ window.reviewContent = {
         "zh": "历史高频，降权保留",
         "en": "Kept as lower-priority historical topics"
       },
-      "evidence": "Past papers, EagleBear system-design review, 2021/2022 adjacent-course architecture questions"
+      "evidence": "Past papers, EagleBear system-design review, 2021/2022/2025 adjacent-course architecture questions, Mubu architecture notes"
     },
     {
       "area": {
@@ -2325,7 +2325,7 @@ window.reviewContent = {
         "zh": "排除主线",
         "en": "Excluded from mainline"
       },
-      "evidence": "Current course review scope excludes design-pattern-only half; 2021/2022 LSP/OCP, Factory, Command, Observer and pattern-coding questions were filtered out"
+      "evidence": "Current course review scope excludes design-pattern-only half; 2021/2022/2025 LSP/OCP, Factory, Command, Observer, Facade/Proxy and pattern-coding questions were filtered out"
     }
   ],
   "whiteboards": [

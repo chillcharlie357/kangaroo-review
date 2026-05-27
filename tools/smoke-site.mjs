@@ -124,7 +124,10 @@ async function checkViewport(name, viewport) {
     hasAiWhiteboard: hasAiWhiteboard > 0,
     whiteboardNaturalWidth,
     sourceGroups,
-    hasNewSourceGroups: sourceGroups.includes("ai_generated_notes") && sourceGroups.includes("adjacent_past_papers"),
+    hasNewSourceGroups: sourceGroups.includes("ai_generated_notes")
+      && sourceGroups.includes("adjacent_past_papers")
+      && sourceGroups.includes("current_senior_review")
+      && sourceGroups.includes("adjacent_course_notes"),
     aiSourceVisible: /AI 整理|Wiki|画板|期末复习/.test(aiSourceText),
     sourcePreviewLoaded: !/预览失败|Preview failed/.test(previewSample),
     rewardHasCopy: /报销一点Codex|Codex bill|谢谢|Thank you/.test(rewardText),
@@ -161,7 +164,7 @@ for (const result of [desktop, mobile]) {
     if (!result[key]) errors.push(`${result.name}: ${key} failed`);
   }
   if (result.overviewMetricBadges < 3) errors.push(`${result.name}: metric badges missing`);
-  if (result.questionCount < 36) errors.push(`${result.name}: expected at least 36 question clusters`);
+  if (result.questionCount < 39) errors.push(`${result.name}: expected at least 39 question clusters`);
   if (result.whiteboardCount < 4) errors.push(`${result.name}: expected at least 4 whiteboards`);
   if (result.whiteboardNaturalWidth < 1000) errors.push(`${result.name}: whiteboard image did not load`);
 }

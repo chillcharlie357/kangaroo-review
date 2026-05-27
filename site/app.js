@@ -120,12 +120,13 @@ function includesQuery(...values) {
   return values.flatMap(flattenValues).join(" ").toLowerCase().includes(q);
 }
 
-async function loadJson(path, fallback) {
+async function loadJson(path, fallback, validate = () => true) {
   if (window.location.protocol === "file:") return fallback;
   try {
     const res = await fetch(path);
     if (!res.ok) return fallback;
-    return await res.json();
+    const data = await res.json();
+    return validate(data) ? data : fallback;
   } catch {
     return fallback;
   }
@@ -324,6 +325,8 @@ function sourceGroupName(group) {
     senior_blog_reference: state.lang === "en" ? "Senior blog" : "学长博客",
     raw_predecessor_notes: state.lang === "en" ? "Past notes" : "前人资料",
     adjacent_past_papers: state.lang === "en" ? "Adjacent papers" : "相邻课程真题",
+    current_senior_review: state.lang === "en" ? "2025 senior review" : "2025 前人冲刺",
+    adjacent_course_notes: state.lang === "en" ? "Adjacent course notes" : "相邻课程笔记",
     ai_generated_notes: state.lang === "en" ? "AI notes" : "AI 整理资料"
   })[group] || group || "Other";
 }
@@ -627,10 +630,12 @@ function renderDiagramCard(diagram, compact = false) {
 }
 
 function renderPapers() {
-  const clusters = ["all", ...new Set(state.questions.map((q) => q.cluster).sort())];
-  const questions = state.questions
+  const priorityQuestions = state.questions
+    .filter((question) => state.priority === "all" || question.priority === state.priority);
+  const clusters = ["all", ...new Set(priorityQuestions.map((q) => q.cluster).sort())];
+  const questions = priorityQuestions
     .filter((question) => state.cluster === "all" || question.cluster === state.cluster)
-    .filter((question) => includesQuery(question.cluster, question.canonical_question, question.question_zh, question.likely_answer_pattern, question.answer_zh, question.sample_answer_zh, question.sample_answer_en, question.recurring_terms, question.english_keywords, question.appearances));
+    .filter((question) => includesQuery(question.cluster, question.priority, question.priority_reason_zh, question.priority_reason_en, question.canonical_question, question.question_zh, question.likely_answer_pattern, question.answer_zh, question.sample_answer_zh, question.sample_answer_en, question.recurring_terms, question.english_keywords, question.appearances));
   return `
     <section class="panel">
       <div class="section-head split">
@@ -645,6 +650,9 @@ function renderPapers() {
           </select>
         </label>
       </div>
+      <p class="source-note">${state.lang === "en"
+        ? "Cluster priority follows the current review class first, then recent adjacent-course papers, then older historical papers."
+        : "题簇优先级先按今年复习课主纲排序，再参考 2025/2022/2021 相邻课程真题，最后才看更早旧题。"}</p>
       <div class="question-list">
         ${questions.map((question, index) => renderQuestion(question, index === 0)).join("") || `<p class="empty">${state.lang === "en" ? "No question matches current filters." : "当前筛选下没有真题。"}</p>`}
       </div>
@@ -660,10 +668,15 @@ function renderQuestion(question, open) {
   const diagram = question.diagram_id ? diagramById(question.diagram_id) : null;
   const title = textForLanguage(zhQuestion, question.canonical_question);
   const answer = textForLanguage(zhAnswer, question.likely_answer_pattern);
+  const priority = question.priority || "P2";
+  const priorityReason = localizedPair(question, "priority_reason_zh", "priority_reason_en");
   return `
     <details class="question-item" data-question-id="${escapeHtml(question.id || "")}" ${open ? "open" : ""}>
       <summary>
-        <span>${escapeHtml(question.cluster)} · ${(question.appearances || []).length} hits</span>
+        <span class="question-kicker">
+          <em class="question-priority ${escapeHtml(priority.toLowerCase())}">${escapeHtml(priority)} · ${escapeHtml(priorityName(priority))}</em>
+          ${escapeHtml(question.cluster)} · ${(question.appearances || []).length} hits
+        </span>
         <strong>${htmlText(title)}</strong>
         ${renderMetricBadge("question_view", questionMetricKey(question))}
       </summary>
@@ -694,6 +707,7 @@ function renderQuestion(question, open) {
           <div class="tag-stack">
             ${[...(question.english_keywords || question.recurring_terms || [])].map((term) => `<span>${escapeHtml(term)}</span>`).join("")}
           </div>
+          ${priorityReason ? `<small class="priority-reason">${htmlText(priorityReason)}</small>` : ""}
           <small>${escapeHtml((question.appearances || []).join(" · "))}</small>
         </div>
       </div>
@@ -896,6 +910,7 @@ function setupEvents() {
       document.querySelectorAll("[data-priority]").forEach((item) => item.classList.remove("active"));
       button.classList.add("active");
       state.priority = button.dataset.priority;
+      state.cluster = "all";
       renderAll();
     });
   });
@@ -1210,8 +1225,8 @@ async function sourceTextFromResponse(res, path) {
 }
 
 async function boot() {
-  state.questions = await loadJson("data/questions.json", window.reviewQuestions || []);
-  state.sources = await loadJson("data/sources.json", window.reviewSources || []);
+  state.questions = await loadJson("data/questions.json", window.reviewQuestions || [], Array.isArray);
+  state.sources = await loadJson("data/sources.json", window.reviewSources || [], Array.isArray);
   state.page = pages.has(window.location.hash.replace("#", "")) ? window.location.hash.replace("#", "") : "overview";
   setupEvents();
   renderAll();

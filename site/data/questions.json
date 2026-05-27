@@ -34,7 +34,10 @@
       "technical environment"
     ],
     "sample_answer_zh": "软件架构来自多种约束和驱动因素，不只是需求文档。常见五类来源是：需求，说明系统必须提供的功能和质量目标；系统利益相关者，例如用户、运维、测试、监管者，他们带来不同 concern；开发组织，例如团队结构、技能和进度会影响模块边界；架构师经验和既有模式，例如分层、微服务、broker；技术和运行环境，例如数据库、中间件、云平台、遗留系统。还可以补充业务目标，例如上市时间和成本。",
-    "sample_answer_en": "Architecture does not come only from requirement documents. It is shaped by requirements, stakeholders, development organization, architect experience/patterns, and technical or operational environment. Business goals such as time-to-market and cost can also drive architectural choices."
+    "sample_answer_en": "Architecture does not come only from requirement documents. It is shaped by requirements, stakeholders, development organization, architect experience/patterns, and technical or operational environment. Business goals such as time-to-market and cost can also drive architectural choices.",
+    "priority": "P1",
+    "priority_reason_zh": "复习课或最新前人资料覆盖，且历史题高频；适合作为简答题保底。",
+    "priority_reason_en": "Covered by review-class or latest senior notes and recurring in past papers; good short-answer baseline."
   },
   {
     "id": "q_arch_design_structure",
@@ -67,7 +70,10 @@
       "externally visible properties"
     ],
     "sample_answer_zh": "Architecture 是高层设计和一组重要设计决定；design 是更宽泛的设计活动，所以所有 architecture 都是 design，但不是所有 design 都达到 architecture 层次。Structure 强调元素、元素关系和外部可见属性，例如组件、连接器、模块依赖。Architecture 包含一个或多个 structure，并进一步包含设计原则、约束、质量属性影响和演化理由。因此答题时可说：structure 是架构的表达对象之一，architecture 是用这些结构和决策来满足 ASR 的整体方案。",
-    "sample_answer_en": "Architecture is high-level design and significant decisions. Design is broader, so every architecture is design but not every design is architecture. Structure means elements, relations, and externally visible properties. Architecture includes structures plus principles, constraints, quality consequences, and rationale."
+    "sample_answer_en": "Architecture is high-level design and significant decisions. Design is broader, so every architecture is design but not every design is architecture. Structure means elements, relations, and externally visible properties. Architecture includes structures plus principles, constraints, quality consequences, and rationale.",
+    "priority": "P1",
+    "priority_reason_zh": "复习课或最新前人资料覆盖，且历史题高频；适合作为简答题保底。",
+    "priority_reason_en": "Covered by review-class or latest senior notes and recurring in past papers; good short-answer baseline."
   },
   {
     "id": "q_req_quality_asr",
@@ -108,7 +114,10 @@
       "non-functional requirements"
     ],
     "sample_answer_zh": "软件需求是系统必须满足的全部要求，通常包括功能需求、质量需求和约束。功能需求说明系统要做什么，例如下单、支付、查询；质量属性说明系统做得好不好，例如性能、可用性、安全性和可修改性；约束是已经给定、必须遵守的设计决定，例如必须使用某数据库或满足法规。ASR 是架构攸关需求，是会显著影响架构设计决策的需求。重要且困难的质量需求、关键业务目标和强约束最容易成为 ASR。",
-    "sample_answer_en": "Software requirements include functional requirements, quality requirements, and constraints. Quality attributes describe how well the system behaves. ASRs are requirements that significantly affect architectural decisions; hard and important qualities, business goals, and constraints often become ASRs."
+    "sample_answer_en": "Software requirements include functional requirements, quality requirements, and constraints. Quality attributes describe how well the system behaves. ASRs are requirements that significantly affect architectural decisions; hard and important qualities, business goals, and constraints often become ASRs.",
+    "priority": "P1",
+    "priority_reason_zh": "复习课或最新前人资料覆盖，且历史题高频；适合作为简答题保底。",
+    "priority_reason_en": "Covered by review-class or latest senior notes and recurring in past papers; good short-answer baseline."
   },
   {
     "id": "q_requirement_kinds",
@@ -116,12 +125,22 @@
     "canonical_question": "What kinds of requirements influence architecture design decisions and how are they specified?",
     "appearances": [
       "2016 A",
-      "2021 softsys recall"
+      "2021 softsys recall",
+      "2025 softsys recall",
+      "2025 keyword hints",
+      "2025 review outline",
+      "Mubu softsys architecture notes"
     ],
     "source_paths": [
       "raw/zqx考试复习资料/【批量下载】18年等/体系结构2016年春季2班A卷.docx",
       "raw/2021 痛苦回忆.pdf",
-      "data/extracted/raw/softsys-2021-2022-architecture-filter.md"
+      "data/extracted/raw/softsys-2021-2022-architecture-filter.md",
+      "raw/25软件系统设计回忆版.jpg",
+      "data/extracted/raw/softsys-2025-architecture-filter.md",
+      "raw/考前关键词提示版本.pdf",
+      "raw/老师复习大纲（答案方式）.docx",
+      "https://mubu.com/doc/Klk_SUrzZB",
+      "data/extracted/raw/mubu-softsys-architecture-outline.md"
     ],
     "recurring_terms": [
       "functional requirements",
@@ -141,7 +160,10 @@
       "constraints"
     ],
     "sample_answer_zh": "影响架构设计的需求主要有三类。第一类是功能需求，说明系统必须提供哪些行为和业务价值，通常用用例、用户故事或功能列表描述。第二类是质量需求，说明系统应具备的整体特性，例如性能、可用性、安全性，最好用质量属性场景描述，使其可测试。第三类是约束，表示预先确定的设计决定或外部限制，例如技术栈、部署环境、法规和组织规则。架构设计要同时满足这三类需求，并重点识别其中的 ASR。",
-    "sample_answer_en": "Three kinds of requirements shape architecture: functional requirements, quality requirements, and constraints. Functions describe behavior and value, quality requirements should be specified by measurable scenarios, and constraints are pre-made decisions or external limits."
+    "sample_answer_en": "Three kinds of requirements shape architecture: functional requirements, quality requirements, and constraints. Functions describe behavior and value, quality requirements should be specified by measurable scenarios, and constraints are pre-made decisions or external limits.",
+    "priority": "P0",
+    "priority_reason_zh": "今年复习课主纲与 2025 最新相邻课程资料同时命中，优先练到能直接成段作答。",
+    "priority_reason_en": "Hit by the current review-class outline and the latest 2025 adjacent-course evidence; practice until you can write a full answer."
   },
   {
     "id": "q_quality_scenarios",
@@ -152,12 +174,22 @@
       "2015 A",
       "2017 recall",
       "2018 recall",
-      "2019 recall"
+      "2019 recall",
+      "2025 softsys recall",
+      "2025 keyword hints",
+      "2025 review outline",
+      "Mubu softsys architecture notes"
     ],
     "source_paths": [
       "raw/zqx考试复习资料/张贺老师 体系结构 往年考题.md",
       "raw/zqx考试复习资料/【批量下载】18年等/体系结构2015年春季2班A卷.docx",
-      "data/extracted/raw/zqx考试复习资料/往年资料以及答案.txt"
+      "data/extracted/raw/zqx考试复习资料/往年资料以及答案.txt",
+      "raw/25软件系统设计回忆版.jpg",
+      "data/extracted/raw/softsys-2025-architecture-filter.md",
+      "raw/考前关键词提示版本.pdf",
+      "raw/老师复习大纲（答案方式）.docx",
+      "https://mubu.com/doc/Klk_SUrzZB",
+      "data/extracted/raw/mubu-softsys-architecture-outline.md"
     ],
     "recurring_terms": [
       "source of stimulus",
@@ -194,7 +226,10 @@
     "sample_answer_zh": "质量属性场景用于把模糊的质量需求改写成可测试的架构需求。一个完整场景包含六个部分：刺激源、刺激、环境、制品、响应、响应度量。例子：在系统正常运行时，心跳监控器发现订单服务无响应，系统应自动把请求切换到备用实例，并通知运维人员；用户请求继续得到服务，恢复时间不超过 30 秒，且不丢失已提交订单。六要素分别是：source=heartbeat monitor，stimulus=order service does not respond，environment=normal operation，artifact=order service and failover mechanism，response=fail over and notify operator，measure=recover within 30 seconds and no committed order lost。",
     "sample_answer_en": "A quality attribute scenario makes a vague quality measurable. Example availability scenario: during normal operation, a heartbeat monitor detects that the order service does not respond. The order service and failover mechanism switch requests to a standby instance, notify operators, and continue service. The response measure is recovery within 30 seconds with no committed order lost.",
     "visual_hint_zh": "画六个节点：刺激源 -> 刺激 -> 环境/制品 -> 响应 -> 响应度量；每个节点写一个具体词，不要空泛。",
-    "visual_hint_en": "Draw six nodes from source to measure; each node needs a concrete phrase."
+    "visual_hint_en": "Draw six nodes from source to measure; each node needs a concrete phrase.",
+    "priority": "P0",
+    "priority_reason_zh": "今年复习课主纲与 2025 最新相邻课程资料同时命中，优先练到能直接成段作答。",
+    "priority_reason_en": "Hit by the current review-class outline and the latest 2025 adjacent-course evidence; practice until you can write a full answer."
   },
   {
     "id": "q_asr_sources",
@@ -235,7 +270,10 @@
     "sample_answer_zh": "ASR 是对架构有重大影响的需求，不是所有需求。识别 ASR 可以从四类来源入手：第一，分析需求文档和用户故事，找出高优先级功能、质量需求和约束；第二，访谈利益相关者或开展 QAW，把“系统要快、稳定、安全”这类说法转成可度量场景；第三，分析业务目标，例如上市时间、成本、合规和可扩展市场；第四，用场景、用例和效用树组织质量属性，并按业务价值和架构影响排序。最终优先处理高价值且高架构影响的需求。",
     "sample_answer_en": "An ASR is a requirement with strong architectural impact. Sources include requirement documents and stories, stakeholder interviews/QAW, business goals, constraints, scenarios/use cases, and utility tree prioritization. High-value and high-impact drivers should be handled first.",
     "visual_hint_zh": "可以参考配套图解，考场手画时保留核心元素和箭头，不必追求美观。",
-    "visual_hint_en": "Use the linked diagram as a guide; in the exam, keep core elements and arrows rather than visual polish."
+    "visual_hint_en": "Use the linked diagram as a guide; in the exam, keep core elements and arrows rather than visual polish.",
+    "priority": "P1",
+    "priority_reason_zh": "复习课或最新前人资料覆盖，且历史题高频；适合作为简答题保底。",
+    "priority_reason_en": "Covered by review-class or latest senior notes and recurring in past papers; good short-answer baseline."
   },
   {
     "id": "q_risk_sensitivity_tradeoff",
@@ -271,7 +309,10 @@
       "quality attributes"
     ],
     "sample_answer_zh": "Risk 是某个架构决策可能导致质量目标无法满足的潜在负面结果，例如使用单一数据库节点可能造成可用性风险。Sensitivity point 是某个参数或设计决定的小变化会明显影响某个质量属性，例如缓存大小会显著影响性能。Trade-off point 是一个决策同时影响多个质量属性，并且影响方向可能相反，例如分层架构提高可修改性和可维护性，但额外层次调用可能降低性能。",
-    "sample_answer_en": "Risk is a potential negative outcome. A sensitivity point is a decision or parameter where change strongly affects one quality, e.g. cache size affects performance. A tradeoff point affects multiple qualities in conflicting directions, e.g. layering improves modifiability but may hurt performance."
+    "sample_answer_en": "Risk is a potential negative outcome. A sensitivity point is a decision or parameter where change strongly affects one quality, e.g. cache size affects performance. A tradeoff point affects multiple qualities in conflicting directions, e.g. layering improves modifiability but may hurt performance.",
+    "priority": "P2",
+    "priority_reason_zh": "历史高频或补充背景，但今年复习课未放在最高优先级；保留骨架即可。",
+    "priority_reason_en": "Historically useful or supporting background, but not highest priority in this review class; keep the skeleton."
   },
   {
     "id": "q_arch_process",
@@ -313,7 +354,10 @@
       "outputs"
     ],
     "sample_answer_zh": "软件架构过程可以概括为五个活动。首先识别和规约 ASR，输入是业务目标、需求、约束和利益相关者关注点，输出是优先级化的架构驱动因素。其次进行架构设计，选择模式、战术和分解方案，输出候选架构。第三是文档化，用视图、接口、约束和设计理由描述架构。第四是架构评估，根据质量属性场景发现风险、敏感点和权衡点。最后是架构演化，在需求和环境变化时维护架构一致性。",
-    "sample_answer_en": "The architecture process includes identifying/specifying ASRs, designing architecture with patterns/tactics/decomposition, documenting views/interfaces/rationale, evaluating risks/sensitivity/tradeoffs, and evolving the architecture as requirements and environment change."
+    "sample_answer_en": "The architecture process includes identifying/specifying ASRs, designing architecture with patterns/tactics/decomposition, documenting views/interfaces/rationale, evaluating risks/sensitivity/tradeoffs, and evolving the architecture as requirements and environment change.",
+    "priority": "P1",
+    "priority_reason_zh": "复习课或最新前人资料覆盖，且历史题高频；适合作为简答题保底。",
+    "priority_reason_en": "Covered by review-class or latest senior notes and recurring in past papers; good short-answer baseline."
   },
   {
     "id": "q_add_process",
@@ -322,12 +366,22 @@
     "appearances": [
       "2015 B",
       "2016 B",
-      "2018 recall"
+      "2018 recall",
+      "2025 softsys recall",
+      "2025 keyword hints",
+      "2025 review outline",
+      "Mubu softsys architecture notes"
     ],
     "source_paths": [
       "raw/zqx考试复习资料/【批量下载】18年等/体系结构2015年春季2班B卷.docx",
       "raw/zqx考试复习资料/【批量下载】18年等/体系结构2016年春季2班B卷.docx",
-      "data/extracted/raw/zqx考试复习资料/往年资料以及答案.txt"
+      "data/extracted/raw/zqx考试复习资料/往年资料以及答案.txt",
+      "raw/25软件系统设计回忆版.jpg",
+      "data/extracted/raw/softsys-2025-architecture-filter.md",
+      "raw/考前关键词提示版本.pdf",
+      "raw/老师复习大纲（答案方式）.docx",
+      "https://mubu.com/doc/Klk_SUrzZB",
+      "data/extracted/raw/mubu-softsys-architecture-outline.md"
     ],
     "recurring_terms": [
       "ADD",
@@ -358,7 +412,10 @@
     "sample_answer_zh": "ADD 是属性驱动的迭代式架构设计方法。一次 ADD 迭代通常先确认已有足够需求信息，然后选择要分解的系统元素；接着识别该元素相关的 ASR，包括功能、质量属性和约束；再选择设计概念，例如架构模式、战术和参考架构，并记录初步视图；随后实例化架构元素，分配职责，定义元素之间的接口；最后检查设计是否满足需求和约束，必要时细化需求并继续下一轮迭代。ADD 的重点不是一次画完架构，而是用驱动因素逐步收敛设计。",
     "sample_answer_en": "ADD is an iterative attribute-driven design method. In one iteration, confirm requirements, select an element, identify ASRs, choose design concepts such as patterns/tactics/reference architecture, instantiate elements, assign responsibilities, define interfaces, check against drivers, and iterate.",
     "visual_hint_zh": "画成闭环，不要画成一次性瀑布。每轮都要有 driver、design concept、instantiation、review。",
-    "visual_hint_en": "Draw a loop, not a waterfall. Each iteration needs driver, concept, instantiation, and review."
+    "visual_hint_en": "Draw a loop, not a waterfall. Each iteration needs driver, concept, instantiation, and review.",
+    "priority": "P0",
+    "priority_reason_zh": "今年复习课主纲与 2025 最新相邻课程资料同时命中，优先练到能直接成段作答。",
+    "priority_reason_en": "Hit by the current review-class outline and the latest 2025 adjacent-course evidence; practice until you can write a full answer."
   },
   {
     "id": "q_atam_outputs",
@@ -409,7 +466,10 @@
     "sample_answer_zh": "ATAM 的输出按阶段组织。Phase 0 是准备阶段，输出评估计划，包括参与者、时间、范围和报告对象。Phase 1 面向项目决策者，输出业务目标、架构介绍、效用树、优先质量场景、风险、非风险、敏感点和权衡点。Phase 2 引入更广泛的利益相关者，输出新的 stakeholder 场景、合并后的优先场景列表和风险主题。Phase 3 是后续阶段，输出最终评估报告，汇总发现的问题、风险主题和改进建议。",
     "sample_answer_en": "ATAM outputs are phase-based: Phase 0 evaluation plan; Phase 1 business drivers, architecture presentation, utility tree, scenarios, risks/non-risks, sensitivity and tradeoff points; Phase 2 stakeholder scenarios and risk themes; Phase 3 final report.",
     "visual_hint_zh": "可以参考配套图解，考场手画时保留核心元素和箭头，不必追求美观。",
-    "visual_hint_en": "Use the linked diagram as a guide; in the exam, keep core elements and arrows rather than visual polish."
+    "visual_hint_en": "Use the linked diagram as a guide; in the exam, keep core elements and arrows rather than visual polish.",
+    "priority": "P2",
+    "priority_reason_zh": "历史高频或补充背景，但今年复习课未放在最高优先级；保留骨架即可。",
+    "priority_reason_en": "Historically useful or supporting background, but not highest priority in this review class; keep the skeleton."
   },
   {
     "id": "q_atam_stakeholders",
@@ -448,7 +508,10 @@
       "scenarios"
     ],
     "sample_answer_zh": "ATAM 中至少有三类关键参与者。评估团队负责组织评估、引导场景生成、记录风险和形成报告；项目决策者或管理者介绍业务驱动因素和评估目标；首席架构师介绍当前架构、设计理由和关键决策；更广泛的 stakeholder，例如用户、测试、运维、安全和维护人员，负责提出场景并参与优先级排序。不同角色共同保证评估既覆盖业务目标，也覆盖质量属性和实际运行风险。",
-    "sample_answer_en": "ATAM stakeholders include the evaluation team, project decision makers/managers, lead architect, and broader stakeholders such as users, testers, operators, security, and maintainers. They provide business drivers, architecture presentation, scenarios, priorities, and risk validation."
+    "sample_answer_en": "ATAM stakeholders include the evaluation team, project decision makers/managers, lead architect, and broader stakeholders such as users, testers, operators, security, and maintainers. They provide business drivers, architecture presentation, scenarios, priorities, and risk validation.",
+    "priority": "P2",
+    "priority_reason_zh": "历史高频或补充背景，但今年复习课未放在最高优先级；保留骨架即可。",
+    "priority_reason_en": "Historically useful or supporting background, but not highest priority in this review class; keep the skeleton."
   },
   {
     "id": "q_style_view_mapping",
@@ -490,7 +553,10 @@
     "sample_answer_zh": "架构问题要按它关注的元素和关系映射到不同 style/view。若问题问“系统如何被组织成实现单元”，应使用 Module style，例如 decomposition、uses、layered、generalization view。若问题问“系统运行时组件如何交互”，应使用 Component-and-Connector style，例如 client-server、pipe-and-filter、publish-subscribe、SOA view。若问题问“软件如何映射到非软件环境”，应使用 Allocation style，例如 deployment、install、work assignment、multi-tier view。这样可以避免把所有问题都画成一种 UML 图。",
     "sample_answer_en": "Map architecture questions by elements and relations: implementation units use module styles such as decomposition/uses/layered; runtime interactions use C&C styles such as client-server, pipe-filter, pub-sub, SOA; software-to-environment mapping uses allocation styles such as deployment, install, work assignment, multi-tier.",
     "visual_hint_zh": "可以参考配套图解，考场手画时保留核心元素和箭头，不必追求美观。",
-    "visual_hint_en": "Use the linked diagram as a guide; in the exam, keep core elements and arrows rather than visual polish."
+    "visual_hint_en": "Use the linked diagram as a guide; in the exam, keep core elements and arrows rather than visual polish.",
+    "priority": "P1",
+    "priority_reason_zh": "复习课或最新前人资料覆盖，且历史题高频；适合作为简答题保底。",
+    "priority_reason_en": "Covered by review-class or latest senior notes and recurring in past papers; good short-answer baseline."
   },
   {
     "id": "q_different_views",
@@ -538,7 +604,10 @@
     "sample_answer_zh": "软件架构需要用不同视图文档化，因为不同利益相关者关心不同问题，单一视图无法同时表达实现结构、运行时交互、部署环境和质量属性。开发者关心模块分解和依赖关系，运维人员关心部署视图，测试人员关心接口和质量场景，项目经理关心工作分配和风险。示例视图包括：Module view 表示实现单元和依赖；C&C view 表示运行时组件和连接器；Deployment view 表示软件到硬件节点的映射；Quality view 表示性能、安全、可靠性等质量关注点。",
     "sample_answer_en": "Multiple views are needed because different stakeholders have different concerns. Developers need module dependencies, operators need deployment, testers need interfaces and quality scenarios, and managers need work assignment/risk. Examples: module, C&C, deployment, and quality views.",
     "visual_hint_zh": "可以参考配套图解，考场手画时保留核心元素和箭头，不必追求美观。",
-    "visual_hint_en": "Use the linked diagram as a guide; in the exam, keep core elements and arrows rather than visual polish."
+    "visual_hint_en": "Use the linked diagram as a guide; in the exam, keep core elements and arrows rather than visual polish.",
+    "priority": "P1",
+    "priority_reason_zh": "复习课或最新前人资料覆盖，且历史题高频；适合作为简答题保底。",
+    "priority_reason_en": "Covered by review-class or latest senior notes and recurring in past papers; good short-answer baseline."
   },
   {
     "id": "q_doc_package",
@@ -581,7 +650,10 @@
     "sample_answer_zh": "典型架构文档包应包含 View 和 Beyond 两部分。View 部分记录选定的架构视图，每个视图应有主表示图、元素说明、关系说明、接口、行为、上下文图和设计理由。Beyond 部分记录跨视图的信息，包括文档路线图、系统概述、业务目标、架构驱动因素、视图之间的映射、重要设计决策、约束、术语表和索引。这样文档不仅说明“架构长什么样”，还说明“为什么这样设计”和“不同视图如何对应”。",
     "sample_answer_en": "An architecture documentation package has views and beyond-view information. Each view includes primary presentation, element catalog, relations, interfaces, behavior, context, and rationale. Beyond-view information includes roadmap, overview, drivers, view mappings, decisions, constraints, glossary, and index.",
     "visual_hint_zh": "可以参考配套图解，考场手画时保留核心元素和箭头，不必追求美观。",
-    "visual_hint_en": "Use the linked diagram as a guide; in the exam, keep core elements and arrows rather than visual polish."
+    "visual_hint_en": "Use the linked diagram as a guide; in the exam, keep core elements and arrows rather than visual polish.",
+    "priority": "P1",
+    "priority_reason_zh": "复习课或最新前人资料覆盖，且历史题高频；适合作为简答题保底。",
+    "priority_reason_en": "Covered by review-class or latest senior notes and recurring in past papers; good short-answer baseline."
   },
   {
     "id": "q_4_plus_1",
@@ -591,12 +663,19 @@
       "2015 B",
       "2016 B",
       "2017 recall",
-      "2019 recall"
+      "2019 recall",
+      "2025 keyword hints",
+      "2025 review outline",
+      "Mubu softsys architecture notes"
     ],
     "source_paths": [
       "raw/zqx考试复习资料/【批量下载】18年等/体系结构2015年春季2班B卷.docx",
       "raw/zqx考试复习资料/【批量下载】18年等/体系结构2016年春季2班B卷.docx",
-      "raw/zqx考试复习资料/张贺老师 体系结构 往年考题.md"
+      "raw/zqx考试复习资料/张贺老师 体系结构 往年考题.md",
+      "raw/考前关键词提示版本.pdf",
+      "raw/老师复习大纲（答案方式）.docx",
+      "https://mubu.com/doc/Klk_SUrzZB",
+      "data/extracted/raw/mubu-softsys-architecture-outline.md"
     ],
     "recurring_terms": [
       "4+1",
@@ -624,7 +703,10 @@
     "sample_answer_zh": "Kruchten 的 4+1 视图用五类视角描述架构。Logical view 描述系统提供给用户的主要功能和领域对象；Process view 描述运行时进程、线程、并发和通信；Development view 描述代码模块、包和开发组织；Physical view 描述软件如何部署到硬件节点；“+1” 是场景或用例，用来串联和验证前四个视图。它的价值在于用不同视角服务不同利益相关者，并用场景检查视图之间是否一致。",
     "sample_answer_en": "Kruchten 4+1 includes logical, process, development, physical, plus scenarios/use cases. Logical covers functionality/domain objects, process covers runtime concurrency/communication, development covers modules/packages, physical covers deployment, and scenarios validate the other views.",
     "visual_hint_zh": "可以参考配套图解，考场手画时保留核心元素和箭头，不必追求美观。",
-    "visual_hint_en": "Use the linked diagram as a guide; in the exam, keep core elements and arrows rather than visual polish."
+    "visual_hint_en": "Use the linked diagram as a guide; in the exam, keep core elements and arrows rather than visual polish.",
+    "priority": "P1",
+    "priority_reason_zh": "复习课或最新前人资料覆盖，且历史题高频；适合作为简答题保底。",
+    "priority_reason_en": "Covered by review-class or latest senior notes and recurring in past papers; good short-answer baseline."
   },
   {
     "id": "q_patterns_tactics",
@@ -633,12 +715,17 @@
     "appearances": [
       "2015 recall",
       "2015 A",
-      "2016 A"
+      "2016 A",
+      "2025 keyword hints",
+      "Mubu softsys architecture notes"
     ],
     "source_paths": [
       "raw/zqx考试复习资料/张贺老师 体系结构 往年考题.md",
       "raw/zqx考试复习资料/【批量下载】18年等/体系结构2015年春季2班A卷.docx",
-      "raw/zqx考试复习资料/【批量下载】18年等/体系结构2016年春季2班A卷.docx"
+      "raw/zqx考试复习资料/【批量下载】18年等/体系结构2016年春季2班A卷.docx",
+      "raw/考前关键词提示版本.pdf",
+      "https://mubu.com/doc/Klk_SUrzZB",
+      "data/extracted/raw/mubu-softsys-architecture-outline.md"
     ],
     "recurring_terms": [
       "patterns",
@@ -663,7 +750,10 @@
     "sample_answer_zh": "Tactic 是更小的架构设计决定，通常针对一个具体质量属性；Pattern 是更大粒度的架构组织方案，往往组合多个 tactic。比如为了提高可用性，可以使用 heartbeat、redundancy、failover；为了提高性能，可以使用 caching、load balancing、control resource demand；为了提高可修改性，可以使用 information hiding、layering；为了提高安全性，可以使用 authentication、authorization、audit。模式和战术都是架构师的工具，区别在于粒度和组合程度。",
     "sample_answer_en": "A tactic is a smaller design decision aimed at a quality attribute; a pattern is a larger reusable organization that often combines tactics. Availability tactics include heartbeat/redundancy/failover; performance uses caching/load balancing; security uses authentication/authorization/audit.",
     "visual_hint_zh": "可以参考配套图解，考场手画时保留核心元素和箭头，不必追求美观。",
-    "visual_hint_en": "Use the linked diagram as a guide; in the exam, keep core elements and arrows rather than visual polish."
+    "visual_hint_en": "Use the linked diagram as a guide; in the exam, keep core elements and arrows rather than visual polish.",
+    "priority": "P1",
+    "priority_reason_zh": "复习课或最新前人资料覆盖，且历史题高频；适合作为简答题保底。",
+    "priority_reason_en": "Covered by review-class or latest senior notes and recurring in past papers; good short-answer baseline."
   },
   {
     "id": "q_generic_design_strategies",
@@ -674,14 +764,21 @@
       "2019 recall",
       "2025 blog",
       "2021 softsys recall",
-      "2022 softsys A"
+      "2022 softsys A",
+      "2025 keyword hints",
+      "2025 review outline",
+      "Mubu softsys architecture notes"
     ],
     "source_paths": [
       "raw/zqx考试复习资料/张贺老师 体系结构 往年考题.md",
       "data/extracted/raw/zqx考试复习资料/往年资料以及答案.txt",
       "raw/2021 痛苦回忆.pdf",
       "raw/软统2022试卷.pdf",
-      "data/extracted/raw/softsys-2021-2022-architecture-filter.md"
+      "data/extracted/raw/softsys-2021-2022-architecture-filter.md",
+      "raw/考前关键词提示版本.pdf",
+      "raw/老师复习大纲（答案方式）.docx",
+      "https://mubu.com/doc/Klk_SUrzZB",
+      "data/extracted/raw/mubu-softsys-architecture-outline.md"
     ],
     "recurring_terms": [
       "layering",
@@ -711,7 +808,10 @@
     "sample_answer_zh": "通用设计策略包括抽象、分解、分治、生成-测试、迭代和复用，也可以在架构层体现为分层、组件化、服务化和插件化。以 ADD 为例，架构师先用分解选择要处理的系统元素，再用抽象识别职责和接口，用复用选择已有 pattern/tactic，用迭代逐轮处理最高优先级 ASR。例子：报价系统先分出 API、报价引擎、缓存和数据存储，再用缓存 tactic 提升性能，用 connector/adaptor 隔离异构调用。",
     "sample_answer_en": "Generic strategies include abstraction, decomposition, divide-and-conquer, generate-and-test, iteration, and reuse. In ADD, decomposition selects the element to design, abstraction identifies responsibilities and interfaces, reuse selects known patterns/tactics, and iteration handles the highest-priority ASRs round by round.",
     "visual_hint_zh": "可以参考配套图解，考场手画时保留核心元素和箭头，不必追求美观。",
-    "visual_hint_en": "Use the linked diagram as a guide; in the exam, keep core elements and arrows rather than visual polish."
+    "visual_hint_en": "Use the linked diagram as a guide; in the exam, keep core elements and arrows rather than visual polish.",
+    "priority": "P1",
+    "priority_reason_zh": "复习课或最新前人资料覆盖，且历史题高频；适合作为简答题保底。",
+    "priority_reason_en": "Covered by review-class or latest senior notes and recurring in past papers; good short-answer baseline."
   },
   {
     "id": "q_cnc_mvc",
@@ -754,7 +854,10 @@
     "sample_answer_zh": "Component-and-Connector style 关注运行时元素及其交互方式，而不是代码目录结构。组件是运行时执行计算或保存状态的单元，连接器是组件之间调用、事件、消息或数据流的交互机制。MVC 是一个典型例子：Model 保存业务数据和状态，View 负责用户界面展示，Controller 接收用户输入并协调 Model 与 View。它通过调用和通知关系把三者连接起来，使界面展示、用户输入和业务状态变化相对分离。",
     "sample_answer_en": "C&C style focuses on runtime elements and interactions, not code folders. Components compute or hold state, while connectors are calls/events/messages/streams. In MVC, Model holds data/state, View presents UI, Controller handles input and coordinates Model/View through calls and notifications.",
     "visual_hint_zh": "可以参考配套图解，考场手画时保留核心元素和箭头，不必追求美观。",
-    "visual_hint_en": "Use the linked diagram as a guide; in the exam, keep core elements and arrows rather than visual polish."
+    "visual_hint_en": "Use the linked diagram as a guide; in the exam, keep core elements and arrows rather than visual polish.",
+    "priority": "P1",
+    "priority_reason_zh": "复习课或最新前人资料覆盖，且历史题高频；适合作为简答题保底。",
+    "priority_reason_en": "Covered by review-class or latest senior notes and recurring in past papers; good short-answer baseline."
   },
   {
     "id": "q_broker_pattern",
@@ -798,7 +901,10 @@
     "sample_answer_zh": "Broker 模式适用于由多个远程对象或服务组成、需要解耦客户端和服务端通信的分布式系统。Broker 作为中介，负责服务注册、查找、请求转发、结果返回和可能的协议适配。好处是客户端不需要知道服务端位置和实现，服务可以动态替换或扩展，系统互操作性和可扩展性更好。局限是 broker 增加了间接层和复杂度，可能带来延迟、瓶颈、单点故障、安全攻击面和测试困难。",
     "sample_answer_en": "The Broker pattern mediates between clients and servers in distributed systems. It supports registration, lookup, request forwarding, response return, and protocol adaptation. Benefits are location transparency, extensibility, and interoperability; limits are latency, bottleneck, single point of failure, security, and testing complexity.",
     "visual_hint_zh": "可以参考配套图解，考场手画时保留核心元素和箭头，不必追求美观。",
-    "visual_hint_en": "Use the linked diagram as a guide; in the exam, keep core elements and arrows rather than visual polish."
+    "visual_hint_en": "Use the linked diagram as a guide; in the exam, keep core elements and arrows rather than visual polish.",
+    "priority": "P1",
+    "priority_reason_zh": "复习课或最新前人资料覆盖，且历史题高频；适合作为简答题保底。",
+    "priority_reason_en": "Covered by review-class or latest senior notes and recurring in past papers; good short-answer baseline."
   },
   {
     "id": "q_layered_style",
@@ -838,7 +944,10 @@
     "sample_answer_zh": "分层架构把系统组织成若干抽象层，每一层为上层提供服务，并依赖下层完成更基础的能力。它适合复杂系统的关注点分离，例如表示层、业务层、数据访问层。优点是结构清晰、职责分离、可替换性和可维护性较好，也便于复用底层服务。局限是层数过多会增加复杂度和性能开销；如果上层频繁绕过中间层直接访问底层，会破坏分层约束；如果层的抽象设计不合理，反而会阻碍演化。",
     "sample_answer_en": "Layered architecture organizes a system into abstraction layers with allowed-to-use relations. It improves separation, modifiability, replaceability, and reuse. Limits include extra complexity, performance cost, layer bridging, and poor abstractions that block evolution.",
     "visual_hint_zh": "可以参考配套图解，考场手画时保留核心元素和箭头，不必追求美观。",
-    "visual_hint_en": "Use the linked diagram as a guide; in the exam, keep core elements and arrows rather than visual polish."
+    "visual_hint_en": "Use the linked diagram as a guide; in the exam, keep core elements and arrows rather than visual polish.",
+    "priority": "P1",
+    "priority_reason_zh": "复习课或最新前人资料覆盖，且历史题高频；适合作为简答题保底。",
+    "priority_reason_en": "Covered by review-class or latest senior notes and recurring in past papers; good short-answer baseline."
   },
   {
     "id": "q_layered_vs_multitier",
@@ -875,7 +984,10 @@
     "sample_answer_zh": "Layered pattern 和 Multi-tier pattern 的核心区别在关注点。Layered 是 module style，强调逻辑职责和允许使用关系，例如 UI 层、业务层、数据层，即使它们部署在同一进程中也仍然是分层。Multi-tier 是 allocation style，强调软件单元如何分布到不同进程、机器或网络节点上，例如浏览器、应用服务器、数据库服务器三层部署。简单说，layered 回答“代码和职责如何分层”，multi-tier 回答“系统如何部署和分布”。",
     "sample_answer_en": "Layered is a module style about logical responsibilities and allowed-to-use relations. Multi-tier is an allocation style about distributing software across processes, machines, or network nodes. Layered answers how code/responsibilities are separated; multi-tier answers how the system is deployed.",
     "visual_hint_zh": "可以参考配套图解，考场手画时保留核心元素和箭头，不必追求美观。",
-    "visual_hint_en": "Use the linked diagram as a guide; in the exam, keep core elements and arrows rather than visual polish."
+    "visual_hint_en": "Use the linked diagram as a guide; in the exam, keep core elements and arrows rather than visual polish.",
+    "priority": "P1",
+    "priority_reason_zh": "复习课或最新前人资料覆盖，且历史题高频；适合作为简答题保底。",
+    "priority_reason_en": "Covered by review-class or latest senior notes and recurring in past papers; good short-answer baseline."
   },
   {
     "id": "q_soa_quality",
@@ -920,7 +1032,10 @@
     "sample_answer_zh": "SOA 的基本思想是把业务能力封装成自治服务，通过明确服务契约对外提供能力。核心原则包括服务契约、服务封装、服务复用、服务组合、服务自治和尽量无状态。SOA 提高互操作性，因为异构系统可以通过标准契约和消息协议集成；也有利于可伸缩性，因为服务之间松耦合，可以独立扩展和组合。但 SOA 也会引入分布式复杂度，中间件可能成为性能瓶颈或攻击目标，多服务调用也会增加安全治理、追踪和故障定位难度。",
     "sample_answer_en": "SOA encapsulates business capabilities as autonomous services with explicit contracts. It improves interoperability and potential scalability through loose coupling and standard contracts, but adds distributed complexity, middleware bottlenecks, security governance, tracing, and fault diagnosis challenges.",
     "visual_hint_zh": "可以参考配套图解，考场手画时保留核心元素和箭头，不必追求美观。",
-    "visual_hint_en": "Use the linked diagram as a guide; in the exam, keep core elements and arrows rather than visual polish."
+    "visual_hint_en": "Use the linked diagram as a guide; in the exam, keep core elements and arrows rather than visual polish.",
+    "priority": "P1",
+    "priority_reason_zh": "复习课或最新前人资料覆盖，且历史题高频；适合作为简答题保底。",
+    "priority_reason_en": "Covered by review-class or latest senior notes and recurring in past papers; good short-answer baseline."
   },
   {
     "id": "q_soa_ws_esb",
@@ -963,18 +1078,28 @@
     "sample_answer_zh": "SOA 是一种架构风格或设计原则，目标是把业务功能组织成可组合、可复用的服务。Web Service 是实现服务互操作的一组技术标准，例如 SOAP、WSDL 或 HTTP 相关协议，它可以用来实现 SOA，但不等于 SOA。ESB 是企业服务总线，是一种中间件基础设施，提供消息路由、协议转换、服务编排和集成能力。三者关系是：SOA 定义架构思想，Web Service 提供实现技术，ESB 提供支撑 SOA 集成的基础设施。",
     "sample_answer_en": "SOA is an architectural style/principle. Web Service is an implementation technology for interoperable services, such as SOAP/WSDL/HTTP. ESB is middleware infrastructure for routing, protocol translation, orchestration, and integration. SOA is the idea, Web Service is a technology, ESB is supporting infrastructure.",
     "visual_hint_zh": "可以参考配套图解，考场手画时保留核心元素和箭头，不必追求美观。",
-    "visual_hint_en": "Use the linked diagram as a guide; in the exam, keep core elements and arrows rather than visual polish."
+    "visual_hint_en": "Use the linked diagram as a guide; in the exam, keep core elements and arrows rather than visual polish.",
+    "priority": "P1",
+    "priority_reason_zh": "复习课或最新前人资料覆盖，且历史题高频；适合作为简答题保底。",
+    "priority_reason_en": "Covered by review-class or latest senior notes and recurring in past papers; good short-answer baseline."
   },
   {
     "id": "q_microservices_vs_soa",
     "cluster": "patterns_styles",
     "canonical_question": "Compare microservices and SOA.",
     "appearances": [
-      "2019 recall"
+      "2019 recall",
+      "2025 keyword hints",
+      "2025 review outline",
+      "Mubu softsys architecture notes"
     ],
     "source_paths": [
       "raw/zqx考试复习资料/张贺老师 体系结构 往年考题.md",
-      "data/extracted/raw/zqx考试复习资料/往年资料以及答案.txt"
+      "data/extracted/raw/zqx考试复习资料/往年资料以及答案.txt",
+      "raw/考前关键词提示版本.pdf",
+      "raw/老师复习大纲（答案方式）.docx",
+      "https://mubu.com/doc/Klk_SUrzZB",
+      "data/extracted/raw/mubu-softsys-architecture-outline.md"
     ],
     "recurring_terms": [
       "microservices",
@@ -1003,7 +1128,10 @@
     "sample_answer_zh": "微服务和 SOA 都强调服务化、分布式、松耦合和复用，但粒度和治理方式不同。SOA 往往面向企业级集成，服务粒度较大，常依赖 ESB 或集中治理；微服务通常围绕业务能力或子域拆分，服务更小，由团队独立开发、部署和运维。微服务更强调服务自治、独立部署、轻量通信、服务自有数据和基础设施自动化。它提高了局部演化和持续交付能力，但也带来服务发现、分布式事务、监控、链路追踪和运维复杂度。",
     "sample_answer_en": "Microservices and SOA both use services, distribution, loose coupling, and reuse. SOA is often enterprise integration with larger services and centralized governance/ESB. Microservices are smaller, business-capability based, independently deployed/owned, lightweight, and service-data owned, but add discovery, transactions, tracing, and ops complexity.",
     "visual_hint_zh": "用对比表或迁移图：粒度、治理、部署、数据所有权、通信、代价。",
-    "visual_hint_en": "Use a comparison table or migration diagram: granularity, governance, deployment, data ownership, communication, costs."
+    "visual_hint_en": "Use a comparison table or migration diagram: granularity, governance, deployment, data ownership, communication, costs.",
+    "priority": "P0",
+    "priority_reason_zh": "今年复习课主纲与 2025 最新相邻课程资料同时命中，优先练到能直接成段作答。",
+    "priority_reason_en": "Hit by the current review-class outline and the latest 2025 adjacent-course evidence; practice until you can write a full answer."
   },
   {
     "id": "q_spl_vs_single",
@@ -1044,7 +1172,10 @@
     "sample_answer_zh": "软件产品线架构面向一组相关产品，而单个产品架构只面向一个系统。产品线架构必须显式管理共性和可变性，通过核心资产、产品线架构和变化点支持多个产品变体。它追求系统化复用和规模化定制，因此架构中要预留允许变化的范围和机制。单个产品架构只要满足该产品的功能和质量目标即可，不一定需要管理多个变体。产品线架构前期成本更高，但在多个产品间复用时能降低长期成本。",
     "sample_answer_en": "A software product line architecture serves a family of related products, while a single-product architecture serves one system. SPL explicitly manages commonality and variability through core assets, PLA, and variation points. It costs more upfront but reduces long-term cost across variants.",
     "visual_hint_zh": "可以参考配套图解，考场手画时保留核心元素和箭头，不必追求美观。",
-    "visual_hint_en": "Use the linked diagram as a guide; in the exam, keep core elements and arrows rather than visual polish."
+    "visual_hint_en": "Use the linked diagram as a guide; in the exam, keep core elements and arrows rather than visual polish.",
+    "priority": "P2",
+    "priority_reason_zh": "历史高频或补充背景，但今年复习课未放在最高优先级；保留骨架即可。",
+    "priority_reason_en": "Historically useful or supporting background, but not highest priority in this review class; keep the skeleton."
   },
   {
     "id": "q_reuse_spl_mda_soa",
@@ -1094,7 +1225,10 @@
     "sample_answer_zh": "SPL、MDA 和 SOA 都通过抽象来提高复用，但复用对象不同。SPL 复用的是核心资产、产品线架构和变化机制，适合一组相似产品的系统化开发。MDA 复用的是平台无关模型和模型转换，通过 PIM 到 PSM 的映射适配不同平台。SOA 复用的是服务契约和业务服务组合，适合异构系统集成。共同点是都强调抽象、变化管理和批量定制；区别是 SPL 偏产品族和核心资产，MDA 偏模型与转换，SOA 偏运行时服务组合。",
     "sample_answer_en": "SPL, MDA, and SOA all improve reuse through abstraction. SPL reuses core assets and variation mechanisms, MDA reuses platform-independent models and transformations, and SOA reuses service contracts/compositions for integration.",
     "visual_hint_zh": "可以参考配套图解，考场手画时保留核心元素和箭头，不必追求美观。",
-    "visual_hint_en": "Use the linked diagram as a guide; in the exam, keep core elements and arrows rather than visual polish."
+    "visual_hint_en": "Use the linked diagram as a guide; in the exam, keep core elements and arrows rather than visual polish.",
+    "priority": "P2",
+    "priority_reason_zh": "历史高频或补充背景，但今年复习课未放在最高优先级；保留骨架即可。",
+    "priority_reason_en": "Historically useful or supporting background, but not highest priority in this review class; keep the skeleton."
   },
   {
     "id": "q_spl_variability",
@@ -1140,7 +1274,10 @@
     "sample_answer_zh": "SPL 通过变化点和变化机制实现可变性。核心资产中预留 variation points，产品线架构提供支持这些变化的结构基础；具体产品通过选择特征、配置组件、替换实现或组合服务来得到不同变体。变化可以发生在工作区创建时、构建时、部署时、启动时或运行时。绑定越晚，可修改性和灵活性通常越好，但测试组合更多、运行时复杂度更高；绑定越早，测试和控制更简单，但后续变化成本更高。",
     "sample_answer_en": "SPL implements variability through variation points and mechanisms. Core assets contain variation points, the PLA supports variation, and products select features/configurations/replacements/compositions. Later binding improves flexibility but increases test combinations and runtime complexity.",
     "visual_hint_zh": "可以参考配套图解，考场手画时保留核心元素和箭头，不必追求美观。",
-    "visual_hint_en": "Use the linked diagram as a guide; in the exam, keep core elements and arrows rather than visual polish."
+    "visual_hint_en": "Use the linked diagram as a guide; in the exam, keep core elements and arrows rather than visual polish.",
+    "priority": "P2",
+    "priority_reason_zh": "历史高频或补充背景，但今年复习课未放在最高优先级；保留骨架即可。",
+    "priority_reason_en": "Historically useful or supporting background, but not highest priority in this review class; keep the skeleton."
   },
   {
     "id": "q_binding_time",
@@ -1176,7 +1313,10 @@
     "sample_answer_zh": "软件变化可以从时间、空间/结构和抽象三个维度理解。Binding time 表示某个变化点在什么时候被决定，例如编码时、编译时、部署时、启动时或运行时。较晚绑定能提高可修改性和配置灵活性，例如运行时选择支付策略或插件；但它会增加测试组合、运行时错误和性能开销。较早绑定更容易验证和优化，但当需求变化时修改成本更高。因此架构师要按质量目标选择合适绑定时间。",
     "sample_answer_en": "Change can be understood by time, space/structure, and abstraction. Binding time is when a variation is decided: coding, compile, deploy, startup, or runtime. Later binding improves flexibility but increases tests/runtime uncertainty; earlier binding is easier to verify but harder to change.",
     "visual_hint_zh": "可以参考配套图解，考场手画时保留核心元素和箭头，不必追求美观。",
-    "visual_hint_en": "Use the linked diagram as a guide; in the exam, keep core elements and arrows rather than visual polish."
+    "visual_hint_en": "Use the linked diagram as a guide; in the exam, keep core elements and arrows rather than visual polish.",
+    "priority": "P2",
+    "priority_reason_zh": "历史高频或补充背景，但今年复习课未放在最高优先级；保留骨架即可。",
+    "priority_reason_en": "Historically useful or supporting background, but not highest priority in this review class; keep the skeleton."
   },
   {
     "id": "q_three_tier_design",
@@ -1216,7 +1356,10 @@
     "sample_answer_zh": "以订票系统为例，可以采用三层架构。表示层负责用户交互，包括航班查询、登录、选座和支付页面；业务逻辑层负责核心业务规则，包括库存校验、价格计算、订单创建、支付协调和取消规则；数据访问层负责访问航班、座位、订单和用户数据库，并封装持久化细节。该架构把界面、业务规则和数据访问分离，使 UI、业务规则和数据库可以相对独立修改。用 Views and Beyond 文档化时，应给出模块视图、运行时交互视图、部署视图、接口说明和设计理由。",
     "sample_answer_en": "For a booking system, use presentation, business logic, and data access tiers. Presentation handles UI, business logic handles availability/pricing/orders/payment coordination, and data access encapsulates persistence. Document it with module, runtime, deployment views, interfaces, and rationale.",
     "visual_hint_zh": "图里每层至少写 2-3 个职责，旁边补 Views and Beyond 文档项。",
-    "visual_hint_en": "Write 2-3 responsibilities per tier and add Views and Beyond documentation notes."
+    "visual_hint_en": "Write 2-3 responsibilities per tier and add Views and Beyond documentation notes.",
+    "priority": "P2",
+    "priority_reason_zh": "历史高频或补充背景，但今年复习课未放在最高优先级；保留骨架即可。",
+    "priority_reason_en": "Historically useful or supporting background, but not highest priority in this review class; keep the skeleton."
   },
   {
     "id": "q_distributed_cache_design",
@@ -1263,7 +1406,10 @@
     "sample_answer_zh": "当前设计的问题是某个服务器更新本地缓存后，其他服务器缓存不会失效。可以增加 Cache Invalidation Coordinator 或 Broker。更新流程是：客户端请求某服务器修改 BSI；该服务器先提交数据库；提交成功后向 coordinator 发布缓存失效事件；coordinator 通知其他服务器的 cache adapter；各缓存删除本地 BSI 或标记失效；下次读取时从数据库重新加载。Observer 映射时，coordinator/更新源可视作 Subject，各 cache adapter 视作 Observer；异构协议下，adapter 或 connector 把统一的 invalidate 接口转换为 RMI、HTTP/JSP 或 SOAP 调用。",
     "sample_answer_en": "The issue is that one server updates its local cache while other caches remain stale. Add a Cache Invalidation Coordinator/Broker. Commit the DB change first, then publish an invalidation event; the coordinator notifies cache adapters, which delete or mark entries stale and reload later. The coordinator/update source plays the Subject role and cache adapters play Observers; connectors/adapters hide RMI, HTTP/JSP, or SOAP differences.",
     "visual_hint_zh": "用时序图最稳：Client -> Server -> DB -> Coordinator/Broker -> Cache Adapters。",
-    "visual_hint_en": "A sequence diagram is safest: Client -> Server -> DB -> Coordinator/Broker -> Cache Adapters."
+    "visual_hint_en": "A sequence diagram is safest: Client -> Server -> DB -> Coordinator/Broker -> Cache Adapters.",
+    "priority": "P2",
+    "priority_reason_zh": "历史高频或补充背景，但今年复习课未放在最高优先级；保留骨架即可。",
+    "priority_reason_en": "Historically useful or supporting background, but not highest priority in this review class; keep the skeleton."
   },
   {
     "id": "q_stakeholder_concerns",
@@ -1297,7 +1443,10 @@
       "risk management"
     ],
     "sample_answer_zh": "Concern 是利益相关者对系统的关注点，包括功能、质量属性、技术选择、成本、进度、风险、部署、维护和合规。Stakeholder 是会影响系统或被系统影响的人或组织，包括用户/客户、业务方、开发者、测试人员、运维人员、项目经理、架构师、安全/监管人员等。架构师要识别 stakeholder concern，并用不同视图和质量场景回应它们。",
-    "sample_answer_en": "A concern is something stakeholders care about: function, quality, technology, cost, schedule, risk, deployment, maintenance, compliance. Stakeholders include users/customers, business owners, developers, testers, operators, managers, architects, security/regulators. Architecture addresses their concerns through views and scenarios."
+    "sample_answer_en": "A concern is something stakeholders care about: function, quality, technology, cost, schedule, risk, deployment, maintenance, compliance. Stakeholders include users/customers, business owners, developers, testers, operators, managers, architects, security/regulators. Architecture addresses their concerns through views and scenarios.",
+    "priority": "P1",
+    "priority_reason_zh": "复习课或最新前人资料覆盖，且历史题高频；适合作为简答题保底。",
+    "priority_reason_en": "Covered by review-class or latest senior notes and recurring in past papers; good short-answer baseline."
   },
   {
     "id": "q_availability_mtbf_mttr",
@@ -1334,7 +1483,10 @@
       "downtime"
     ],
     "sample_answer_zh": "Availability 是系统在被请求时能够提供正确服务的程度，常用 SLA 百分比表达。MTBF 是 Mean Time Between Failures，即两次故障之间的平均时间；MTTR 是 Mean Time To Repair，即平均修复时间。若用概率近似，系统可用性 = MTBF / (MTBF + MTTR)，也就是正常运行时间占正常运行时间与停机修复时间之和的比例。提高可用性可以通过故障检测、冗余、故障转移和快速恢复，但会增加成本和复杂度。",
-    "sample_answer_en": "Availability is the probability or proportion of time that the system delivers correct service when needed. MTBF means Mean Time Between Failures and MTTR means Mean Time To Repair. A common estimate is Availability = MTBF / (MTBF + MTTR), or uptime divided by uptime plus downtime. Tactics include fault detection, redundancy, failover, and recovery, with cost and complexity tradeoffs."
+    "sample_answer_en": "Availability is the probability or proportion of time that the system delivers correct service when needed. MTBF means Mean Time Between Failures and MTTR means Mean Time To Repair. A common estimate is Availability = MTBF / (MTBF + MTTR), or uptime divided by uptime plus downtime. Tactics include fault detection, redundancy, failover, and recovery, with cost and complexity tradeoffs.",
+    "priority": "P1",
+    "priority_reason_zh": "复习课或最新前人资料覆盖，且历史题高频；适合作为简答题保底。",
+    "priority_reason_en": "Covered by review-class or latest senior notes and recurring in past papers; good short-answer baseline."
   },
   {
     "id": "q_pattern_architecture_boundary",
@@ -1369,18 +1521,28 @@
     ],
     "diagram_id": "patterns-taxonomy",
     "sample_answer_zh": "软件模式是对反复出现的上下文、问题和解决方案的命名抽象。能否提供架构取决于粒度：Layered、Broker、Pipe-and-Filter、SOA 等 architectural patterns/styles 会组织系统级组件、连接件、约束和质量取舍，因此可以作为架构骨架；Strategy、Factory、Command 等 GoF 模式主要解决类和对象协作问题，只能作为局部设计手段，不能直接替代体系结构。",
-    "sample_answer_en": "A software pattern is a named abstraction of a recurring context, problem, and solution. Architectural patterns/styles such as Layered, Broker, Pipe-and-Filter, and SOA can provide an architecture skeleton because they organize system-level elements, connectors, constraints, and quality tradeoffs. GoF patterns are mostly local class/object collaboration mechanisms."
+    "sample_answer_en": "A software pattern is a named abstraction of a recurring context, problem, and solution. Architectural patterns/styles such as Layered, Broker, Pipe-and-Filter, and SOA can provide an architecture skeleton because they organize system-level elements, connectors, constraints, and quality tradeoffs. GoF patterns are mostly local class/object collaboration mechanisms.",
+    "priority": "P1",
+    "priority_reason_zh": "复习课或最新前人资料覆盖，且历史题高频；适合作为简答题保底。",
+    "priority_reason_en": "Covered by review-class or latest senior notes and recurring in past papers; good short-answer baseline."
   },
   {
     "id": "q_design_decisions_importance",
     "cluster": "architecture_basics",
     "canonical_question": "Why are design decisions important to software architecture? Explain “architecture = design structure plus design decisions”.",
     "appearances": [
-      "2021 softsys recall"
+      "2021 softsys recall",
+      "2025 keyword hints",
+      "2025 review outline",
+      "Mubu softsys architecture notes"
     ],
     "source_paths": [
       "raw/2021 痛苦回忆.pdf",
-      "data/extracted/raw/softsys-2021-2022-architecture-filter.md"
+      "data/extracted/raw/softsys-2021-2022-architecture-filter.md",
+      "raw/考前关键词提示版本.pdf",
+      "raw/老师复习大纲（答案方式）.docx",
+      "https://mubu.com/doc/Klk_SUrzZB",
+      "data/extracted/raw/mubu-softsys-architecture-outline.md"
     ],
     "recurring_terms": [
       "design decisions",
@@ -1404,18 +1566,27 @@
       "tradeoff"
     ],
     "sample_answer_zh": "设计决定重要，因为架构的价值不只在组件-连接器结构，还在早期关键选择及其理由。结构图能说明系统有哪些元素、怎样连接；设计决定记录职责分配、协调模型、数据模型、资源管理、元素映射、绑定时机和技术选择，并解释这些决定怎样满足 ASR、带来哪些风险和权衡。这样架构才能被评审、沟通和演化。",
-    "sample_answer_en": "Design decisions matter because architecture is more than a component-and-connector structure. The structure says what elements exist and how they interact; decisions record responsibility allocation, coordination, data, resources, mapping, binding time, technology choices, rationale, risks, and tradeoffs. This makes architecture reviewable, communicable, and evolvable."
+    "sample_answer_en": "Design decisions matter because architecture is more than a component-and-connector structure. The structure says what elements exist and how they interact; decisions record responsibility allocation, coordination, data, resources, mapping, binding time, technology choices, rationale, risks, and tradeoffs. This makes architecture reviewable, communicable, and evolvable.",
+    "priority": "P1",
+    "priority_reason_zh": "复习课或最新前人资料覆盖，且历史题高频；适合作为简答题保底。",
+    "priority_reason_en": "Covered by review-class or latest senior notes and recurring in past papers; good short-answer baseline."
   },
   {
     "id": "q_cnc_soa",
     "cluster": "patterns_styles",
     "canonical_question": "What is the nature of component-and-connector style? Explain with SOA as an example.",
     "appearances": [
-      "2021 softsys recall"
+      "2021 softsys recall",
+      "2025 softsys recall",
+      "Mubu softsys architecture notes"
     ],
     "source_paths": [
       "raw/2021 痛苦回忆.pdf",
-      "data/extracted/raw/softsys-2021-2022-architecture-filter.md"
+      "data/extracted/raw/softsys-2021-2022-architecture-filter.md",
+      "raw/25软件系统设计回忆版.jpg",
+      "data/extracted/raw/softsys-2025-architecture-filter.md",
+      "https://mubu.com/doc/Klk_SUrzZB",
+      "data/extracted/raw/mubu-softsys-architecture-outline.md"
     ],
     "recurring_terms": [
       "component-and-connector",
@@ -1441,7 +1612,10 @@
     ],
     "diagram_id": "patterns-taxonomy",
     "sample_answer_zh": "Component-and-Connector style 的本质是描述系统运行时有哪些组件、它们通过哪些连接件交互，以及交互受到什么约束。以 SOA 为例，独立服务承担业务能力，服务契约定义可调用接口，HTTP/SOAP/消息队列/ESB 等承担连接件角色。它提升互操作性、复用和组织间集成能力，但会带来远程调用开销、治理复杂度和服务版本兼容问题。",
-    "sample_answer_en": "A C&C style describes runtime components, connectors, and interaction constraints. In SOA, services are components, service contracts define interfaces, and HTTP/SOAP/messaging/ESB act as connectors. SOA improves interoperability and reuse, but adds remote-call overhead, governance complexity, and versioning issues."
+    "sample_answer_en": "A C&C style describes runtime components, connectors, and interaction constraints. In SOA, services are components, service contracts define interfaces, and HTTP/SOAP/messaging/ESB act as connectors. SOA improves interoperability and reuse, but adds remote-call overhead, governance complexity, and versioning issues.",
+    "priority": "P0",
+    "priority_reason_zh": "今年复习课主纲与 2025 最新相邻课程资料同时命中，优先练到能直接成段作答。",
+    "priority_reason_en": "Hit by the current review-class outline and the latest 2025 adjacent-course evidence; practice until you can write a full answer."
   },
   {
     "id": "q_pipe_filter_text_design",
@@ -1478,6 +1652,158 @@
     ],
     "diagram_id": "patterns-taxonomy",
     "sample_answer_zh": "可以设计为一条 Pipe-and-Filter 流水线：FileReader filter 从文件读取字符流，Tokenizer filter 将文本拆成单词，Normalizer filter 统一大小写并去除标点，DuplicateRemover filter 用集合过滤重复词，Sorter filter 排序，Writer filter 输出结果。每个 pipe 只传递约定格式的数据，filter 之间不共享内部状态。这样做的优点是步骤清晰、可复用、可替换；限制是对强交互、共享状态或需要全局回退的任务不友好。",
-    "sample_answer_en": "Use a Pipe-and-Filter pipeline: FileReader reads the text stream, Tokenizer splits words, Normalizer lowercases and removes punctuation, DuplicateRemover filters duplicates, Sorter orders the words, and Writer outputs the result. Pipes carry agreed data formats and filters avoid shared state. This improves reuse and replaceability, but is weak for highly interactive or shared-state tasks."
+    "sample_answer_en": "Use a Pipe-and-Filter pipeline: FileReader reads the text stream, Tokenizer splits words, Normalizer lowercases and removes punctuation, DuplicateRemover filters duplicates, Sorter orders the words, and Writer outputs the result. Pipes carry agreed data formats and filters avoid shared state. This improves reuse and replaceability, but is weak for highly interactive or shared-state tasks.",
+    "priority": "P1",
+    "priority_reason_zh": "复习课或最新前人资料覆盖，且历史题高频；适合作为简答题保底。",
+    "priority_reason_en": "Covered by review-class or latest senior notes and recurring in past papers; good short-answer baseline."
+  },
+  {
+    "id": "q_operability_performance_scenarios",
+    "cluster": "quality_attributes_asr",
+    "priority": "P0",
+    "priority_reason_zh": "今年复习课主纲与 2025 最新相邻课程资料同时命中，优先练到能直接成段作答。",
+    "priority_reason_en": "Hit by the current review-class outline and the latest 2025 adjacent-course evidence; practice until you can write a full answer.",
+    "canonical_question": "Describe operability and performance quality attribute scenarios.",
+    "question_zh": "如何描述可操作性和性能的质量属性场景？",
+    "appearances": [
+      "2025 softsys recall",
+      "2025 keyword hints",
+      "2025 review outline"
+    ],
+    "source_paths": [
+      "raw/25软件系统设计回忆版.jpg",
+      "data/extracted/raw/softsys-2025-architecture-filter.md",
+      "raw/考前关键词提示版本.pdf",
+      "raw/老师复习大纲（答案方式）.docx"
+    ],
+    "recurring_terms": [
+      "operability",
+      "performance",
+      "quality attribute scenario",
+      "response measure"
+    ],
+    "likely_answer_pattern": "Use the same six-part scenario template. For operability, focus on operator actions, diagnosis, configuration, rollback, or monitoring. For performance, focus on workload, latency/throughput, and measurable response time.",
+    "question_en": "Describe operability and performance quality attribute scenarios.",
+    "answer_zh": "仍用六要素模板。可操作性写操作者在某环境下执行诊断、配置、回滚或监控操作，系统给出可理解、可执行的响应，并用完成时间/错误率/恢复时间度量。性能写用户或外部系统在峰值/正常负载下发起请求，目标制品在限定延迟、吞吐或资源占用内响应。",
+    "topicIds": [
+      "quality",
+      "quality-tactics"
+    ],
+    "english_keywords": [
+      "source of stimulus",
+      "stimulus",
+      "environment",
+      "artifact",
+      "response",
+      "response measure",
+      "operability",
+      "performance"
+    ],
+    "diagram_id": "quality-scenario",
+    "sample_answer_zh": "可操作性场景：在系统正常运行且订单服务告警时，运维人员通过监控控制台查看异常订单链路，系统应展示相关日志、指标和依赖服务状态，并允许一键回滚到上一个稳定版本；响应度量是 2 分钟内定位故障服务，5 分钟内完成回滚，且回滚过程不影响已支付订单。性能场景：在晚高峰每秒 1000 个下单请求下，用户向订单服务提交订单，系统应完成校验、创建订单并返回结果；响应度量是 95% 请求在 2 秒内返回，错误率低于 0.1%。",
+    "sample_answer_en": "Operability scenario: during normal operation, an operator receives an order-service alarm and uses the console to inspect traces, logs, metrics, and dependencies, then rolls back to a stable version. The measure is diagnosis within 2 minutes and rollback within 5 minutes without affecting paid orders. Performance scenario: under 1000 order requests per second at peak time, 95% of order submissions return within 2 seconds and error rate stays below 0.1%.",
+    "visual_hint_zh": "两个场景都画同一张六要素图，只是 stimulus、artifact、response measure 换成“运维操作”和“高并发请求”。",
+    "visual_hint_en": "Use the same six-part diagram for both; change the stimulus/artifact/measure for operator action vs high-load request."
+  },
+  {
+    "id": "q_microservices_characteristics",
+    "cluster": "microservices_design",
+    "priority": "P0",
+    "priority_reason_zh": "今年复习课主纲与 2025 最新相邻课程资料同时命中，优先练到能直接成段作答。",
+    "priority_reason_en": "Hit by the current review-class outline and the latest 2025 adjacent-course evidence; practice until you can write a full answer.",
+    "canonical_question": "Describe the main characteristics of microservice architecture.",
+    "question_zh": "说明微服务架构的主要特征。",
+    "appearances": [
+      "2025 softsys recall",
+      "2025 keyword hints",
+      "2025 review outline",
+      "Mubu softsys architecture notes",
+      "Li review class"
+    ],
+    "source_paths": [
+      "raw/25软件系统设计回忆版.jpg",
+      "data/extracted/raw/softsys-2025-architecture-filter.md",
+      "raw/考前关键词提示版本.pdf",
+      "raw/老师复习大纲（答案方式）.docx",
+      "https://mubu.com/doc/Klk_SUrzZB",
+      "data/extracted/raw/mubu-softsys-architecture-outline.md",
+      "data/feishu/li-shanshan-course-review.md"
+    ],
+    "recurring_terms": [
+      "microservices",
+      "business capability",
+      "independent deployment",
+      "decentralized governance",
+      "service-owned data",
+      "infrastructure automation"
+    ],
+    "likely_answer_pattern": "State microservices as small independently deployable services organized around business capabilities, with service autonomy, decentralized governance/data, lightweight communication, and automated infrastructure; finish with distributed-system tradeoffs.",
+    "question_en": "Describe the main characteristics of microservice architecture.",
+    "answer_zh": "微服务把单体应用拆成围绕业务能力组织的小服务。每个服务可独立开发、测试、部署和扩展，服务之间通过轻量通信协作；团队和技术治理更去中心化，服务通常拥有自己的数据边界，并依赖 CI/CD、容器、服务发现、监控和链路追踪等自动化基础设施。代价是网络失败、分布式事务、一致性和运维复杂度上升。",
+    "topicIds": [
+      "microservices",
+      "patterns",
+      "design-playbook"
+    ],
+    "english_keywords": [
+      "small services",
+      "business capability",
+      "independent deployment",
+      "service autonomy",
+      "decentralized data",
+      "infrastructure automation"
+    ],
+    "diagram_id": "microservice-migration",
+    "sample_answer_zh": "微服务架构的主要特征可以背六点：第一，通过服务组件化，把业务能力封装为可独立替换和升级的服务；第二，围绕业务能力组织团队和系统边界；第三，高内聚低耦合，服务内部保有自己的领域逻辑，服务间减少直接依赖；第四，去中心化治理和数据管理，不同服务可选不同技术栈并拥有自己的数据库；第五，基础设施自动化，通过 CI/CD、容器、服务发现、监控等支撑频繁交付；第六，服务设计与演进，允许服务独立演进并通过高可用设计容忍失败。",
+    "sample_answer_en": "Six characteristics: componentization via services, organization around business capabilities, high cohesion and loose coupling, decentralized governance/data ownership, infrastructure automation such as CI/CD and containers, and evolutionary service design with resilience.",
+    "visual_hint_zh": "可画成“业务能力 -> 服务边界 -> 独立部署/自有数据库/自动化平台”的三层图。",
+    "visual_hint_en": "Draw business capabilities mapped to service boundaries, each with independent deployment, owned data, and automation support."
+  },
+  {
+    "id": "q_microservice_food_delivery_design",
+    "cluster": "design_diagrams",
+    "priority": "P0",
+    "priority_reason_zh": "今年复习课主纲与 2025 最新相邻课程资料同时命中，优先练到能直接成段作答。",
+    "priority_reason_en": "Hit by the current review-class outline and the latest 2025 adjacent-course evidence; practice until you can write a full answer.",
+    "canonical_question": "Design a food-delivery platform using microservices and explain the service decomposition.",
+    "question_zh": "用微服务设计一个外卖平台，并说明操作、微服务和对应关系。",
+    "appearances": [
+      "2025 softsys recall design"
+    ],
+    "source_paths": [
+      "raw/25软件系统设计回忆版.jpg",
+      "data/extracted/raw/softsys-2025-architecture-filter.md",
+      "https://mubu.com/doc/Klk_SUrzZB",
+      "data/extracted/raw/mubu-softsys-architecture-outline.md"
+    ],
+    "recurring_terms": [
+      "microservice decomposition",
+      "business capability",
+      "bounded context",
+      "API Gateway",
+      "domain event",
+      "Saga"
+    ],
+    "likely_answer_pattern": "Explain why the scenario fits microservices, identify operations from verbs, map business capabilities/subdomains to services, then describe APIs/events, data ownership, and quality tradeoffs.",
+    "question_en": "Design a food-delivery platform using microservices and explain the service decomposition.",
+    "answer_zh": "先说明外卖平台业务域多、流量峰值明显、团队可按业务能力并行演进，因此适合微服务。再从动词识别系统操作：浏览菜单、下单、支付、接单、配送、通知、结算。服务可拆为用户、商家/菜单、订单、支付、配送调度、通知、结算/评价等。每个服务拥有自己的数据，跨服务用 API Gateway、同步查询和异步领域事件协作，并用 Saga/补偿保证最终一致性。",
+    "topicIds": [
+      "microservices",
+      "ddd",
+      "design-playbook"
+    ],
+    "english_keywords": [
+      "food delivery",
+      "business capability",
+      "service boundary",
+      "domain event",
+      "eventual consistency",
+      "Saga"
+    ],
+    "diagram_id": "microservice-migration",
+    "sample_answer_zh": "示例答案：外卖平台适合微服务，因为用户、商家、订单、支付、骑手调度和通知属于不同业务能力，访问压力和变化频率不同，可以独立扩展和迭代。系统操作包括浏览餐厅和菜单、创建订单、支付订单、商家接单、分配骑手、更新配送状态、发送通知和结算。对应服务可以设计为 User Service、Restaurant/Menu Service、Order Service、Payment Service、Delivery/Dispatch Service、Notification Service、Settlement Service。用户请求先进入 API Gateway；Order Service 创建订单后发布 OrderCreated 事件，Payment Service 支付成功后发布 PaymentSucceeded，Delivery Service 订阅后分配骑手并更新状态。订单、支付、配送分别拥有自己的数据库，跨服务一致性用 Saga 和补偿操作处理。",
+    "sample_answer_en": "A food-delivery platform fits microservices because user, restaurant/menu, order, payment, delivery, notification, and settlement capabilities evolve and scale differently. Map operations to services: browse menus, create order, pay, accept order, dispatch rider, update delivery, notify, and settle. Use API Gateway, service-owned databases, domain events such as OrderCreated and PaymentSucceeded, and Saga/compensation for eventual consistency.",
+    "visual_hint_zh": "画图时把 API Gateway 放在前面，后面按业务能力画 6-7 个服务，服务间用事件箭头标出 OrderCreated/PaymentSucceeded/DeliveryAssigned。",
+    "visual_hint_en": "Draw API Gateway in front, 6-7 capability services behind it, and event arrows for OrderCreated, PaymentSucceeded, and DeliveryAssigned."
   }
 ]

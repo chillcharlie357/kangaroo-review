@@ -12,7 +12,7 @@
 python3 -m http.server 18080 --bind 127.0.0.1
 ```
 
-然后打开 <http://127.0.0.1:18080/site/>。
+然后打开 <http://127.0.0.1:18080/site/>。仓库根入口 <http://127.0.0.1:18080/> 会自动跳转到 `site/`，线上 <https://docs.cpl.icu/kangaroo-review/> 也同样跳转。
 
 带访问统计的本地浏览：
 
@@ -33,11 +33,13 @@ python3 server/metrics_server.py --host 127.0.0.1 --port 18080 --static-root . -
 - `site/metrics.html` / `site/metrics.js`：隐藏访问统计图表页，不在主导航中展示。
 - `site/assets/reward/`：底部低调打赏弹窗使用的微信/支付宝收款码。
 - `site/content.js`：复习路线、15 个知识点、79 条术语、11 张本地图解和 4 张画板资源。
-- `site/data/questions.json`：36 条往年题聚类，包含中文完整示例答案、英文关键词和图解关联。
-- `site/data/sources.json`：48 个源文件的抽取状态清单。
+- `site/data/questions.json`：39 条往年题聚类，包含中文完整示例答案、英文关键词、优先级和图解关联。
+- `site/data/sources.json`：52 个源文件的抽取状态清单。
 - `server/metrics_server.py`：Python 标准库 + SQLite 的轻量访问统计 API。
 - `deploy/`：systemd service 和 nginx 反代片段。
 - `tools/extract_sources.py`：本地文本抽取脚本。
+- `tools/extract_mubu.mjs`：从 Mubu public share 接口递归抽取思维导图节点。
+- `tools/integrate_2025_materials.mjs`：将 2025 新资料与题簇优先级合并进发布数据。
 - `tools/vision_pdf_ocr.swift`：macOS Vision/PDFKit OCR 脚本。
 - `data/catalog/sources.json`：抽取脚本生成的本地原始文件清单，用于记录 raw/slides 的基础抽取状态；可发布资料库以 `site/data/sources.json` 的人工增补版本为准。
 - `.omx/research/`：资料盘点、真题分析、信息架构、UX 方案等研究记录。
@@ -57,7 +59,7 @@ python3 server/metrics_server.py --host 127.0.0.1 --port 18080 --static-root . -
 
 服务器部署版与 public repo 不同：`docs.cpl.icu/kangaroo-review` 会额外镜像 `raw/`、`slides/`、`data/` 等源资料目录，使“资料库”页可以预览抽取文本并打开原始 PDF/文档。
 
-新增高优先级资料中，`raw/2021 痛苦回忆.pdf` 与 `raw/软统2022试卷.pdf` 来自相邻课程《软件系统设计》。该课程只有体系结构部分与本课重合，因此题库只吸收 ASR、质量属性、架构视图、C&C/SOA、ATAM、Pipe-and-Filter、缓存一致性等体系结构题；LSP/OCP、Factory、Command、Observer、代码实现类题目按详细设计/GoF 设计模式排除。`data/feishu/ai-wiki-*.md` 与 `data/feishu/whiteboards/` 来自同学 AI 整理 Wiki，通过 bytedcli 抓取后作为辅助资料，不作为老师标准答案。
+新增高优先级资料中，`raw/2021 痛苦回忆.pdf`、`raw/软统2022试卷.pdf` 与 `raw/25软件系统设计回忆版.jpg` 来自相邻课程《软件系统设计》。该课程只有体系结构部分与本课重合，因此题库只吸收 ASR、质量属性、架构视图、C&C/SOA、ADD、微服务、Pipe-and-Filter、缓存一致性等体系结构题；LSP/OCP、Factory、Command、Observer、Facade/Proxy、代码实现类题目按详细设计/GoF 设计模式排除。`raw/考前关键词提示版本.pdf`、`raw/老师复习大纲（答案方式）.docx` 和 Mubu 思维导图作为 2025 前人冲刺资料使用，但优先级仍服从今年复习课。`data/feishu/ai-wiki-*.md` 与 `data/feishu/whiteboards/` 来自同学 AI 整理 Wiki，通过 bytedcli 抓取后作为辅助资料，不作为老师标准答案。
 
 ## 访问统计
 
@@ -84,7 +86,7 @@ python3 server/metrics_server.py --host 127.0.0.1 --port 18080 --static-root . -
 - `node --check site/app.js site/metrics.js tools/smoke-site.mjs tools/smoke-metrics.mjs`
 - `jq empty site/data/questions.json site/data/sources.json`
 - `python3 -m unittest tools/test_metrics_server.py`
-- Playwright/Chrome 桌面与移动视口验证：15 个知识点、36 条真题聚类、79 个术语、48 条资料清单、11 张本地图解、4 张画板、免责声明、打赏弹窗，无控制台错误，无横向溢出。
+- Playwright/Chrome 桌面与移动视口验证：15 个知识点、39 条真题聚类、79 个术语、52 条资料清单、11 张本地图解、4 张画板、免责声明、打赏弹窗，无控制台错误，无横向溢出。
 - Playwright/Chrome 隐藏统计页验证：按天/按小时切换、访问人数卡片、事件图表、Top Items、Recent Events 均可渲染。
 
 ## License
