@@ -11,7 +11,13 @@ const browser = await chromium.launch({ headless: true, executablePath });
 const errors = [];
 
 async function checkViewport(name, viewport) {
-  const page = await browser.newPage({ viewport });
+  const page = await browser.newPage({
+    viewport,
+    acceptDownloads: true,
+    extraHTTPHeaders: process.env.KANGAROO_SMOKE_COMMENTS === "1"
+      ? { "Accept-Language": `smoke-${name}-${Date.now()}-${Math.random()}` }
+      : {}
+  });
   page.on("pageerror", (error) => errors.push(`${name}: pageerror ${error.message}`));
   page.on("console", (message) => {
     if (message.type() === "error") errors.push(`${name}: console ${message.text()}`);
@@ -22,9 +28,65 @@ async function checkViewport(name, viewport) {
   const title = await page.locator(".hero-panel h1").innerText();
   const disclaimer = await page.locator(".disclaimer-band").innerText();
   const overviewMetricBadges = await page.locator(".page-metrics .metric-badge").count();
+  const commentsPanelVisible = await page.locator(".comments-panel").count();
+  const checklistToolsVisible = await page.locator(".checklist-tools").count();
   await page.click('button[data-lang="en"]');
   const englishNav = await page.locator(".nav-link").evaluateAll((nodes) => nodes.map((node) => node.textContent.trim()).join("|"));
   await page.click('button[data-lang="mix"]');
+
+  await page.click('a[data-page="plan"]');
+  await page.waitForSelector(".route-step .check-control input");
+  await page.evaluate(() => {
+    localStorage.setItem("kangaroo-review-checklist-v1", JSON.stringify({
+      app: "kangaroo-review",
+      schema: 1,
+      items: {
+        "route:step-1": {
+          done: true,
+          label: "legacy route key",
+          updatedAt: "2026-05-27T00:00:00Z"
+        }
+      }
+    }));
+  });
+  await page.reload({ waitUntil: "domcontentloaded" });
+  await page.waitForSelector(".route-step .check-control input");
+  const checklistLegacyMigrated = await page.evaluate(() => {
+    const data = JSON.parse(localStorage.getItem("kangaroo-review-checklist-v1") || "{}");
+    return data.items?.["route:baseline-points"]?.done === true;
+  });
+  const checklistRestored = await page.locator(".route-step .check-control input").first().isChecked();
+  const [download] = await Promise.all([
+    page.waitForEvent("download"),
+    page.click('[data-action="export-checklist"]')
+  ]);
+  const exportedChecklistPath = `${screenshots}/kangaroo-review-${name}-checklist.txt`;
+  await download.saveAs(exportedChecklistPath);
+  await page.evaluate(() => localStorage.removeItem("kangaroo-review-checklist-v1"));
+  await page.setInputFiles("#checklist-import-input", exportedChecklistPath);
+  await page.waitForFunction(() => {
+    const data = JSON.parse(localStorage.getItem("kangaroo-review-checklist-v1") || "{}");
+    return data.items?.["route:baseline-points"]?.done === true;
+  });
+  const checklistRoundTripped = await page.locator(".route-step .check-control input").first().isChecked();
+  const priorityBadgesSingleLine = await page.locator(".priority-lane header > span").evaluateAll((nodes) => nodes.every((node) => {
+    const rectCount = node.getClientRects().length;
+    return rectCount === 1 && getComputedStyle(node).whiteSpace === "nowrap";
+  }));
+  let commentPosted = true;
+  if (process.env.KANGAROO_SMOKE_COMMENTS === "1") {
+    const body = `smoke comment ${Date.now()}`;
+    await page.evaluate(() => {
+      localStorage.setItem("kangaroo-review-browser-id", `smoke-${Date.now()}-${Math.random()}`);
+    });
+    await page.fill(".comment-form textarea", body);
+    await page.click(".comment-form button");
+    await page.waitForFunction((expected) => {
+      return document.querySelector(".comment-list")?.textContent.includes(expected);
+    }, body, { timeout: 5000 });
+    const commentsText = await page.locator(".comment-list").innerText();
+    commentPosted = commentsText.includes(body);
+  }
 
   await page.click('a[data-page="knowledge"]');
   await page.waitForSelector(".knowledge-layout");
@@ -112,6 +174,13 @@ async function checkViewport(name, viewport) {
     title,
     disclaimerHasCodex: /Codex|GPT-5\.5/.test(disclaimer),
     overviewMetricBadges,
+    checklistToolsVisible: checklistToolsVisible > 0,
+    commentsPanelVisible: commentsPanelVisible > 0,
+    checklistLegacyMigrated,
+    checklistRestored,
+    checklistRoundTripped,
+    priorityBadgesSingleLine,
+    commentPosted,
     englishNavHasOverview: englishNav.includes("Overview") && englishNav.includes("Sources"),
     detailHasModernTopic: /DDD|领域驱动|微服务|Enterprise|企业架构/.test(detail),
     detailHasDeepDive: detailHasDeepDive > 0,
@@ -159,6 +228,13 @@ for (const result of [desktop, mobile]) {
     "rewardHasCopy",
     "rewardImageLoaded",
     "rewardAlipayLoaded",
+    "checklistToolsVisible",
+    "commentsPanelVisible",
+    "checklistLegacyMigrated",
+    "checklistRestored",
+    "checklistRoundTripped",
+    "priorityBadgesSingleLine",
+    "commentPosted",
     "noHorizontalOverflow"
   ]) {
     if (!result[key]) errors.push(`${result.name}: ${key} failed`);

@@ -1,8 +1,8 @@
 window.reviewContent = {
   "meta": {
     "title": {
-      "zh": "2026 南大软院研究生《软件体系结构》复习资料",
-      "en": "2026 NJU Software Institute Graduate Software Architecture Review"
+      "zh": "《软件体系结构》复习资料 2026 南大软院研究生",
+      "en": "Software Architecture Review 2026 NJU Software Institute Graduate"
     },
     "exam": [
       {
@@ -39,8 +39,8 @@ window.reviewContent = {
           "en": "Scope Boundary"
         },
         "body": {
-          "zh": "专门面向 2026 南京大学软件学院研究生《软件体系结构》期末复习；不保证适用于未来年份或 2026 本科《软件系统设计》。",
-          "en": "Built specifically for the 2026 NJU Software Institute graduate Software Architecture final review; not guaranteed for future offerings or the 2026 undergraduate Software System Design course."
+          "zh": "专门面向 2026 南京大学软件学院研究生《软件体系结构》期末复习；不保证适用于未来年份或本科《软件系统设计》。",
+          "en": "Built specifically for the 2026 NJU Software Institute graduate Software Architecture final review; not guaranteed for future offerings or the undergraduate Software System Design course."
         }
       },
       {
@@ -2204,6 +2204,7 @@ window.reviewContent = {
   ],
   "studyPlan": [
     {
+      "id": "baseline-points",
       "day": {
         "zh": "第 1 轮",
         "en": "Round 1"
@@ -2228,6 +2229,7 @@ window.reviewContent = {
       ]
     },
     {
+      "id": "advanced-focus",
       "day": {
         "zh": "第 2 轮",
         "en": "Round 2"
@@ -2256,6 +2258,7 @@ window.reviewContent = {
       ]
     },
     {
+      "id": "past-paper-practice",
       "day": {
         "zh": "第 3 轮",
         "en": "Round 3"

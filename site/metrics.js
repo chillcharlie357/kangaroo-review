@@ -91,6 +91,22 @@ function trendLabel(bucket, grain) {
   return bucket.slice(5);
 }
 
+function formatChinaTime(value) {
+  if (!value) return "";
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return value;
+  return date.toLocaleString("zh-CN", {
+    timeZone: "Asia/Shanghai",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: false
+  });
+}
+
 function renderTrend(element, rows, grain) {
   const byBucket = new Map();
   rows.forEach((row) => {
@@ -157,7 +173,7 @@ async function render() {
     button.classList.toggle("active", button.dataset.grain === dashboardState.grain);
   });
   const trendTitle = document.getElementById("trend-title");
-  if (trendTitle) trendTitle.textContent = dashboardState.grain === "hour" ? "最近趋势（按小时）" : "最近趋势（按天）";
+  if (trendTitle) trendTitle.textContent = dashboardState.grain === "hour" ? "最近趋势（按小时，中国时区）" : "最近趋势（按天，中国时区）";
   try {
     const data = await loadMetrics();
     renderSummary(data);
@@ -170,7 +186,7 @@ async function render() {
       { label: "次数", value: (row) => row.total }
     ]);
     renderTable(document.getElementById("recent-events"), data.recent || [], [
-      { label: "时间", value: (row) => row.created_at },
+      { label: "时间", value: (row) => formatChinaTime(row.created_at) },
       { label: "类型", value: (row) => eventName(row.event_type) },
       { label: "对象", value: (row) => row.label || row.metric_key },
       { label: "页面", value: (row) => row.page }

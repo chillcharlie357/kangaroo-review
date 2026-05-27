@@ -6,9 +6,11 @@ import hashlib
 import json
 import mimetypes
 import os
+import re
 import sqlite3
 import time
 import urllib.parse
+import unicodedata
 from datetime import datetime, timedelta, timezone
 from http import HTTPStatus
 from http.server import BaseHTTPRequestHandler, HTTPServer
@@ -17,6 +19,7 @@ from socketserver import ThreadingMixIn
 from typing import Any, Dict, List, Optional, Tuple, Type
 
 
+CHINA_TZ = timezone(timedelta(hours=8), "Asia/Shanghai")
 EVENT_TYPES = {
     "site_visit",
     "page_view",
@@ -37,7 +40,35 @@ MAX_BODY_BYTES = 64 * 1024
 MAX_LABEL_LENGTH = 180
 MAX_KEY_LENGTH = 240
 MAX_META_LENGTH = 2048
+MAX_COMMENT_LENGTH = 1000
+MAX_NICKNAME_LENGTH = 32
+MAX_PAGE_LENGTH = 80
+COMMENT_PAGE_SIZE = 50
+COMMENT_IDENTITY_RATE_LIMIT = 5
+COMMENT_VISITOR_RATE_LIMIT = 8
+COMMENT_IP_RATE_LIMIT = 20
+COMMENT_RATE_WINDOW_SECONDS = 10 * 60
 VISITOR_EXPR = "CASE WHEN visitor_hash != '' THEN visitor_hash ELSE ip_hash || ':' || user_agent END"
+DEFAULT_BLOCK_WORDS = (
+    "博彩",
+    "赌博",
+    "彩票",
+    "裸聊",
+    "色情",
+    "成人",
+    "代考",
+    "代写",
+    "办证",
+    "发票",
+    "贷款",
+    "加微信",
+    "casino",
+    "porn",
+    "viagra",
+    "loan",
+    "telegram",
+    "whatsapp",
+)
 SITE_ROOT_FILES = {
     "index.html",
     "app.js",
@@ -48,6 +79,10 @@ SITE_ROOT_FILES = {
 }
 
 
+class RateLimitError(ValueError):
+    pass
+
+
 class ThreadingHTTPServer(ThreadingMixIn, HTTPServer):
     daemon_threads = True
 
@@ -56,19 +91,46 @@ def utc_now_iso() -> str:
     return datetime.now(timezone.utc).replace(microsecond=0).isoformat()
 
 
-def utc_day(ts: Optional[float] = None) -> str:
+def china_now_iso() -> str:
+    return datetime.now(CHINA_TZ).replace(microsecond=0).isoformat()
+
+
+def china_day(ts: Optional[float] = None) -> str:
     timestamp = time.time() if ts is None else ts
-    return datetime.fromtimestamp(timestamp, timezone.utc).strftime("%Y-%m-%d")
+    return datetime.fromtimestamp(timestamp, CHINA_TZ).strftime("%Y-%m-%d")
 
 
-def utc_cutoff_iso(days: int) -> str:
-    cutoff = datetime.now(timezone.utc) - timedelta(days=max(0, days - 1))
-    return cutoff.replace(hour=0, minute=0, second=0, microsecond=0).isoformat()
+def china_cutoff_utc_iso(days: int) -> str:
+    cutoff = datetime.now(CHINA_TZ) - timedelta(days=max(0, days - 1))
+    local_midnight = cutoff.replace(hour=0, minute=0, second=0, microsecond=0)
+    return local_midnight.astimezone(timezone.utc).isoformat()
+
+
+def china_bucket_expr(grain: str) -> str:
+    fmt = "%Y-%m-%dT%H:00" if grain == "hour" else "%Y-%m-%d"
+    return f"strftime('{fmt}', created_at, '+8 hours')"
 
 
 def clamp_text(value: Any, limit: int) -> str:
     text = str(value or "").strip()
     return text[:limit]
+
+
+def moderation_text(value: str) -> str:
+    normalized = unicodedata.normalize("NFKC", value or "").lower()
+    return re.sub(r"[\W_]+", "", normalized, flags=re.UNICODE)
+
+
+def origin_is_allowed(origin: str, host: str, allowed_origins: set[str]) -> bool:
+    if not origin:
+        return True
+    parsed_origin = urllib.parse.urlparse(origin)
+    same_origin = bool(
+        host
+        and parsed_origin.netloc.lower() == host.lower()
+        and parsed_origin.scheme in {"http", "https"}
+    )
+    return same_origin or origin.rstrip("/") in allowed_origins
 
 
 def json_response(handler: BaseHTTPRequestHandler, status: int, payload: Dict[str, Any]) -> None:
@@ -77,18 +139,25 @@ def json_response(handler: BaseHTTPRequestHandler, status: int, payload: Dict[st
     handler.send_header("Content-Type", "application/json; charset=utf-8")
     handler.send_header("Content-Length", str(len(body)))
     handler.send_header("Cache-Control", "no-store")
-    handler.send_header("Access-Control-Allow-Origin", "*")
-    handler.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
-    handler.send_header("Access-Control-Allow-Headers", "Content-Type")
+    origin = handler.headers.get("Origin", "")
+    host = handler.headers.get("Host", "")
+    allowed_origins = getattr(getattr(handler, "app", None), "allowed_origins", set())
+    if origin and origin_is_allowed(origin, host, allowed_origins):
+        handler.send_header("Access-Control-Allow-Origin", origin)
+        handler.send_header("Vary", "Origin")
+        handler.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+        handler.send_header("Access-Control-Allow-Headers", "Content-Type")
     handler.end_headers()
     if handler.command != "HEAD":
         handler.wfile.write(body)
 
 
 class MetricsStore:
-    def __init__(self, db_path: Path, salt: str) -> None:
+    def __init__(self, db_path: Path, salt: str, block_words: Optional[List[str]] = None) -> None:
         self.db_path = db_path
         self.salt = salt
+        words = list(DEFAULT_BLOCK_WORDS) + list(block_words or [])
+        self.block_words = sorted({moderation_text(word) for word in words if moderation_text(word)})
         self.db_path.parent.mkdir(parents=True, exist_ok=True)
         self.init_schema()
 
@@ -142,6 +211,23 @@ class MetricsStore:
 
                 CREATE INDEX IF NOT EXISTS idx_events_created_at ON events(created_at);
                 CREATE INDEX IF NOT EXISTS idx_events_type_key ON events(event_type, metric_key);
+
+                CREATE TABLE IF NOT EXISTS comments (
+                  id INTEGER PRIMARY KEY AUTOINCREMENT,
+                  page TEXT NOT NULL,
+                  nickname TEXT NOT NULL,
+                  body TEXT NOT NULL,
+                  identity_hash TEXT NOT NULL,
+                  ip_hash TEXT NOT NULL,
+                  visitor_hash TEXT NOT NULL,
+                  user_agent TEXT NOT NULL,
+                  accept_language TEXT NOT NULL DEFAULT '',
+                  created_at TEXT NOT NULL,
+                  status TEXT NOT NULL DEFAULT 'visible'
+                );
+
+                CREATE INDEX IF NOT EXISTS idx_comments_page_created_at ON comments(page, created_at);
+                CREATE INDEX IF NOT EXISTS idx_comments_identity_created_at ON comments(identity_hash, created_at);
                 """
             )
             self.migrate_schema(conn)
@@ -153,6 +239,18 @@ class MetricsStore:
         if "accept_language" not in columns:
             conn.execute("ALTER TABLE events ADD COLUMN accept_language TEXT NOT NULL DEFAULT ''")
         conn.execute("CREATE INDEX IF NOT EXISTS idx_events_visitor_created_at ON events(visitor_hash, created_at)")
+
+        comment_columns = {row["name"] for row in conn.execute("PRAGMA table_info(comments)").fetchall()}
+        if comment_columns:
+            if "visitor_hash" not in comment_columns:
+                conn.execute("ALTER TABLE comments ADD COLUMN visitor_hash TEXT NOT NULL DEFAULT ''")
+            if "accept_language" not in comment_columns:
+                conn.execute("ALTER TABLE comments ADD COLUMN accept_language TEXT NOT NULL DEFAULT ''")
+            if "status" not in comment_columns:
+                conn.execute("ALTER TABLE comments ADD COLUMN status TEXT NOT NULL DEFAULT 'visible'")
+        conn.execute("CREATE INDEX IF NOT EXISTS idx_comments_page_created_at ON comments(page, created_at)")
+        conn.execute("CREATE INDEX IF NOT EXISTS idx_comments_page_status_id ON comments(page, status, id DESC)")
+        conn.execute("CREATE INDEX IF NOT EXISTS idx_comments_identity_created_at ON comments(identity_hash, created_at)")
 
     def client_ip_from_headers(self, headers: Any, client_ip: str) -> str:
         forwarded_for = clamp_text(headers.get("X-Forwarded-For", ""), 240)
@@ -171,6 +269,25 @@ class MetricsStore:
         material = f"{self.salt}:{ip}:{user_agent[:180]}:{accept_language[:80]}".encode("utf-8", errors="ignore")
         return hashlib.sha256(material).hexdigest()[:24]
 
+    def anonymize_commenter(self, ip: str, user_agent: str, accept_language: str, client_id: str) -> str:
+        material = f"{self.salt}:comment:{ip}:{user_agent[:180]}:{accept_language[:80]}:{client_id[:120]}".encode(
+            "utf-8",
+            errors="ignore",
+        )
+        return hashlib.sha256(material).hexdigest()[:24]
+
+    def normalize_page(self, value: Any) -> str:
+        page = clamp_text(value, MAX_PAGE_LENGTH).lower()
+        if not page.replace("-", "").replace("_", "").isalnum():
+            raise ValueError("invalid page")
+        return page
+
+    def validate_comment_text(self, body: str) -> None:
+        compact = moderation_text(body)
+        for word in self.block_words:
+            if word and word in compact:
+                raise ValueError("comment contains blocked words")
+
     def track(self, payload: Dict[str, Any], headers: Any, client_ip: str) -> Dict[str, Any]:
         event_type = clamp_text(payload.get("event_type"), 60)
         if event_type not in EVENT_TYPES:
@@ -186,7 +303,7 @@ class MetricsStore:
         session_id = clamp_text(payload.get("session_id"), 80)
         meta_json = json.dumps(payload.get("meta") or {}, ensure_ascii=False, sort_keys=True)[:MAX_META_LENGTH]
         created_at = utc_now_iso()
-        today = utc_day()
+        today = china_day()
         user_agent = clamp_text(headers.get("User-Agent", ""), 240)
         accept_language = clamp_text(headers.get("Accept-Language", ""), 120)
         referrer = clamp_text(headers.get("Referer", ""), 240)
@@ -241,6 +358,99 @@ class MetricsStore:
 
         return {"ok": True, "event_type": event_type, "key": metric_key}
 
+    def list_comments(self, page: str, limit: int = COMMENT_PAGE_SIZE) -> Dict[str, Any]:
+        page_key = self.normalize_page(page)
+        limit = max(1, min(limit, COMMENT_PAGE_SIZE))
+        with self.connect() as conn:
+            rows = conn.execute(
+                """
+                SELECT id, page, nickname, body, created_at
+                FROM comments
+                WHERE page = ? AND status = 'visible'
+                ORDER BY id DESC
+                LIMIT ?
+                """,
+                (page_key, limit),
+            ).fetchall()
+        comments = [dict(row) for row in reversed(rows)]
+        return {"ok": True, "page": page_key, "comments": comments}
+
+    def add_comment(self, payload: Dict[str, Any], headers: Any, client_ip: str) -> Dict[str, Any]:
+        page = self.normalize_page(payload.get("page") or "")
+        nickname = clamp_text(payload.get("nickname") or "匿名同学", MAX_NICKNAME_LENGTH) or "匿名同学"
+        body = clamp_text(payload.get("body") or "", MAX_COMMENT_LENGTH)
+        if len(body) < 2:
+            raise ValueError("comment is too short")
+        self.validate_comment_text(body)
+
+        created_at = utc_now_iso()
+        user_agent = clamp_text(headers.get("User-Agent", ""), 240)
+        accept_language = clamp_text(headers.get("Accept-Language", ""), 120)
+        client_identity_ip = self.client_ip_from_headers(headers, client_ip)
+        client_id = clamp_text(payload.get("client_id"), 120)
+        ip_hash = self.anonymize_ip(client_identity_ip)
+        visitor_hash = self.anonymize_visitor(client_identity_ip, user_agent, accept_language)
+        identity_hash = self.anonymize_commenter(client_identity_ip, user_agent, accept_language, client_id)
+        cutoff = datetime.now(timezone.utc) - timedelta(seconds=COMMENT_RATE_WINDOW_SECONDS)
+        cutoff_iso = cutoff.replace(microsecond=0).isoformat()
+
+        with self.connect() as conn:
+            conn.execute("BEGIN IMMEDIATE")
+            recent_count = conn.execute(
+                """
+                SELECT COUNT(*) AS total
+                FROM comments
+                WHERE created_at >= ?
+                  AND (
+                    identity_hash = ?
+                    OR visitor_hash = ?
+                  )
+                """,
+                (cutoff_iso, identity_hash, visitor_hash),
+            ).fetchone()["total"]
+            if int(recent_count or 0) >= COMMENT_VISITOR_RATE_LIMIT:
+                raise RateLimitError("comment rate limit exceeded")
+            identity_count = conn.execute(
+                """
+                SELECT COUNT(*) AS total
+                FROM comments
+                WHERE identity_hash = ? AND created_at >= ?
+                """,
+                (identity_hash, cutoff_iso),
+            ).fetchone()["total"]
+            if int(identity_count or 0) >= COMMENT_IDENTITY_RATE_LIMIT:
+                raise RateLimitError("comment rate limit exceeded")
+            ip_count = conn.execute(
+                """
+                SELECT COUNT(*) AS total
+                FROM comments
+                WHERE ip_hash = ? AND created_at >= ?
+                """,
+                (ip_hash, cutoff_iso),
+            ).fetchone()["total"]
+            if int(ip_count or 0) >= COMMENT_IP_RATE_LIMIT:
+                raise RateLimitError("comment rate limit exceeded")
+            cursor = conn.execute(
+                """
+                INSERT INTO comments (
+                  page, nickname, body, identity_hash, ip_hash, visitor_hash,
+                  user_agent, accept_language, created_at, status
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'visible')
+                """,
+                (page, nickname, body, identity_hash, ip_hash, visitor_hash, user_agent, accept_language, created_at),
+            )
+            conn.commit()
+        return {
+            "ok": True,
+            "comment": {
+                "id": int(cursor.lastrowid),
+                "page": page,
+                "nickname": nickname,
+                "body": body,
+                "created_at": created_at,
+            },
+        }
+
     def stats(self, items: List[str]) -> Dict[str, Any]:
         pairs = []
         for item in items:
@@ -273,8 +483,7 @@ class MetricsStore:
         return {"counts": counts, "items": [f"{event_type}::{metric_key}" for event_type, metric_key in pairs]}
 
     def trend(self, conn: sqlite3.Connection, days: int, grain: str) -> List[Dict[str, Any]]:
-        bucket_expr = "substr(created_at, 1, 13) || ':00'" if grain == "hour" else "substr(created_at, 1, 10)"
-        cutoff = utc_cutoff_iso(days)
+        cutoff = china_cutoff_utc_iso(days)
         return [
             dict(row)
             for row in conn.execute(
@@ -286,13 +495,31 @@ class MetricsStore:
                 WHERE created_at >= ?
                 GROUP BY bucket
                 ORDER BY bucket ASC
-                """.format(bucket_expr=bucket_expr, visitor_expr=VISITOR_EXPR),
+                """.format(bucket_expr=china_bucket_expr(grain), visitor_expr=VISITOR_EXPR),
+                (cutoff,),
+            ).fetchall()
+        ]
+
+    def daily_breakdown(self, conn: sqlite3.Connection, days: int) -> List[Dict[str, Any]]:
+        cutoff = china_cutoff_utc_iso(days)
+        return [
+            dict(row)
+            for row in conn.execute(
+                """
+                SELECT {bucket_expr} AS event_date,
+                       event_type,
+                       COUNT(*) AS total
+                FROM events
+                WHERE created_at >= ?
+                GROUP BY event_date, event_type
+                ORDER BY event_date ASC, event_type ASC
+                """.format(bucket_expr=china_bucket_expr("day")),
                 (cutoff,),
             ).fetchall()
         ]
 
     def visitor_totals(self, conn: sqlite3.Connection, days: int) -> Dict[str, int]:
-        cutoff = utc_cutoff_iso(days)
+        cutoff = china_cutoff_utc_iso(days)
         row = conn.execute(
             """
             SELECT COUNT(DISTINCT {visitor_expr}) AS unique_visitors,
@@ -329,16 +556,7 @@ class MetricsStore:
             ).fetchall()
             visitors = self.visitor_totals(conn, days)
             trend = self.trend(conn, days, grain)
-            daily = conn.execute(
-                """
-                SELECT event_date, event_type, SUM(total) AS total
-                FROM daily_counts
-                WHERE event_date >= date('now', ?)
-                GROUP BY event_date, event_type
-                ORDER BY event_date ASC, event_type ASC
-                """,
-                (f"-{days - 1} days",),
-            ).fetchall()
+            daily = self.daily_breakdown(conn, days)
             recent = conn.execute(
                 """
                 SELECT event_type, metric_key, label, page, target, created_at
@@ -349,14 +567,15 @@ class MetricsStore:
             ).fetchall()
 
         return {
-            "generated_at": utc_now_iso(),
+            "generated_at": china_now_iso(),
+            "timezone": "Asia/Shanghai",
             "days": days,
             "grain": grain,
             "totals": [dict(row) for row in totals],
             "top_items": [dict(row) for row in top_items],
             "visitors": visitors,
             "trend": trend,
-            "daily": [dict(row) for row in daily],
+            "daily": daily,
             "recent": [dict(row) for row in recent],
         }
 
@@ -373,24 +592,51 @@ class MetricsHandler(BaseHTTPRequestHandler):
 
     def do_POST(self) -> None:
         endpoint = self.api_endpoint()
-        if endpoint not in {"track", "stats"}:
+        if endpoint not in {"track", "stats", "comments"}:
             json_response(self, HTTPStatus.NOT_FOUND, {"error": "not found"})
             return
+        if not self.request_origin_allowed():
+            json_response(self, HTTPStatus.FORBIDDEN, {"error": "origin not allowed"})
+            return
+        if not self.request_is_json():
+            json_response(self, HTTPStatus.UNSUPPORTED_MEDIA_TYPE, {"error": "content type must be application/json"})
+            return
         try:
-            length = min(int(self.headers.get("Content-Length", "0")), MAX_BODY_BYTES)
+            length = int(self.headers.get("Content-Length", "0"))
+            if length < 0:
+                json_response(self, HTTPStatus.BAD_REQUEST, {"error": "invalid content length"})
+                return
+            if length > MAX_BODY_BYTES:
+                json_response(self, HTTPStatus.REQUEST_ENTITY_TOO_LARGE, {"error": "request body too large"})
+                return
             payload = json.loads(self.rfile.read(length) or b"{}")
             if endpoint == "stats":
                 items = payload.get("items") or []
                 if not isinstance(items, list):
                     raise ValueError("items must be a list")
                 result = self.app.store.stats([str(item) for item in items])
+            elif endpoint == "comments":
+                result = self.app.store.add_comment(payload, self.headers, self.client_address[0])
             else:
                 result = self.app.store.track(payload, self.headers, self.client_address[0])
             json_response(self, HTTPStatus.OK, result)
+        except RateLimitError as error:
+            json_response(self, HTTPStatus.TOO_MANY_REQUESTS, {"error": str(error)})
         except (json.JSONDecodeError, ValueError) as error:
             json_response(self, HTTPStatus.BAD_REQUEST, {"error": str(error)})
         except sqlite3.Error as error:
             json_response(self, HTTPStatus.INTERNAL_SERVER_ERROR, {"error": f"database error: {error}"})
+
+    def request_origin_allowed(self) -> bool:
+        return origin_is_allowed(
+            self.headers.get("Origin", ""),
+            self.headers.get("Host", ""),
+            self.app.allowed_origins,
+        )
+
+    def request_is_json(self) -> bool:
+        content_type = self.headers.get("Content-Type", "").split(";", 1)[0].strip().lower()
+        return content_type == "application/json"
 
     def do_GET(self) -> None:
         endpoint = self.api_endpoint()
@@ -406,6 +652,18 @@ class MetricsHandler(BaseHTTPRequestHandler):
                 days = 14
             grain = (query.get("grain") or ["day"])[0]
             json_response(self, HTTPStatus.OK, self.app.store.summary(days, grain))
+            return
+        if endpoint == "comments":
+            query = urllib.parse.parse_qs(urllib.parse.urlparse(self.path).query)
+            page = (query.get("page") or ["overview"])[0]
+            try:
+                limit = int((query.get("limit") or [str(COMMENT_PAGE_SIZE)])[0])
+            except ValueError:
+                limit = COMMENT_PAGE_SIZE
+            try:
+                json_response(self, HTTPStatus.OK, self.app.store.list_comments(page, limit))
+            except ValueError as error:
+                json_response(self, HTTPStatus.BAD_REQUEST, {"error": str(error)})
             return
         if endpoint:
             json_response(self, HTTPStatus.NOT_FOUND, {"error": "not found"})
@@ -503,12 +761,14 @@ class MetricsHTTPServer(ThreadingHTTPServer):
         store: MetricsStore,
         static_root: Path,
         mount: str,
+        allowed_origins: List[str],
         quiet: bool,
     ) -> None:
         super().__init__(server_address, handler_class)
         self.store = store
         self.static_root = static_root
         self.mount = mount.rstrip("/") if mount != "/" else ""
+        self.allowed_origins = {origin.strip().rstrip("/") for origin in allowed_origins if origin.strip()}
         self.quiet = quiet
 
 
@@ -520,13 +780,18 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--static-root", default=os.environ.get("KANGAROO_STATIC_ROOT", "."))
     parser.add_argument("--mount", default=os.environ.get("KANGAROO_MOUNT", "/kangaroo-review"))
     parser.add_argument("--salt", default=os.environ.get("KANGAROO_METRICS_SALT", "kangaroo-review-local"))
+    parser.add_argument("--comment-block-words", default=os.environ.get("KANGAROO_COMMENT_BLOCK_WORDS", ""))
+    parser.add_argument("--allowed-origin", action="append", default=None)
     parser.add_argument("--quiet", action="store_true", default=os.environ.get("KANGAROO_QUIET", "") == "1")
     return parser.parse_args()
 
 
 def main() -> None:
     args = parse_args()
-    store = MetricsStore(Path(args.db), args.salt)
+    block_words = [word for word in args.comment_block_words.split(",") if word.strip()] if args.comment_block_words else None
+    env_allowed_origins = [origin for origin in os.environ.get("KANGAROO_ALLOWED_ORIGINS", "").split(",") if origin.strip()]
+    allowed_origins = list(args.allowed_origin or []) + env_allowed_origins
+    store = MetricsStore(Path(args.db), args.salt, block_words=block_words)
     static_root = Path(args.static_root)
     httpd = MetricsHTTPServer(
         (args.host, args.port),
@@ -534,6 +799,7 @@ def main() -> None:
         store=store,
         static_root=static_root,
         mount=args.mount,
+        allowed_origins=allowed_origins,
         quiet=args.quiet,
     )
     print(

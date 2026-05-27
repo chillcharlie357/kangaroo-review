@@ -80,19 +80,25 @@ python3 server/metrics_server.py --host 127.0.0.1 --port 18080 --static-root . -
 
 统计后端只保存事件类型、对象 key、页面、匿名 session、哈希后的 IP、匿名访客指纹、User-Agent 与 Accept-Language 摘要；不保存明文 IP。访客数用 `X-Forwarded-For` / `X-Real-IP` 中的客户端 IP、User-Agent、Accept-Language 与私有 salt 共同哈希后估算，历史旧数据会退回到 `ip_hash + user_agent` 口径。
 
-隐藏统计面板支持按天/按小时切换趋势折线图。部署时建议把 SQLite 放在 `/home/docs/kangaroo-review-runtime/metrics.sqlite3`，nginx 将 `/kangaroo-review/api/` 反代到本机 `127.0.0.1:18081`，并保留以下请求头：
+隐藏统计面板支持按天/按小时切换趋势折线图，趋势分桶、访问人数统计窗口和近期事件展示均按中国时区（Asia/Shanghai）呈现。部署时建议把 SQLite 放在 `/home/docs/kangaroo-review-runtime/metrics.sqlite3`，nginx 将 `/kangaroo-review/api/` 反代到本机 `127.0.0.1:18081`，并保留以下请求头：
 
 - `X-Real-IP`
 - `X-Forwarded-For`
 - `X-Forwarded-Proto`
 - `Host`
 
+## 复习清单与评论区
+
+复习清单完全保存在浏览器 `localStorage`，不上传服务器。页面底部可以导出可读 TXT，文件里同时包含机器可读 JSON；导入旧版本清单时，仍存在的内容会继承已读/未读状态，新版本新增内容默认未读，旧版本多出来的未知条目会保留在下次导出里。
+
+评论区复用同一个轻量 SQLite 服务，每个页面一组匿名平铺评论。默认昵称是“匿名同学”，用户可自行修改；后端保存昵称、评论正文、页面、创建时间，以及经过私有 salt 哈希后的浏览器/请求标识，不保存明文 IP。评论接口会合并默认屏蔽词和 `KANGAROO_COMMENT_BLOCK_WORDS` 自定义词库，并对同一匿名标识做短时间限流。该过滤只是基础防刷措施，不等同于完整内容审核。
+
 ## 验证记录
 
 - `node --check site/app.js site/metrics.js tools/smoke-site.mjs tools/smoke-metrics.mjs`
 - `jq empty site/data/questions.json site/data/sources.json`
 - `python3 -m unittest tools/test_metrics_server.py`
-- Playwright/Chrome 桌面与移动视口验证：15 个知识点、39 条真题聚类、79 个术语、52 条资料清单、11 张本地图解、4 张画板、免责声明、打赏弹窗，无控制台错误，无横向溢出。
+- Playwright/Chrome 桌面与移动视口验证：15 个知识点、39 条真题聚类、79 个术语、52 条资料清单、11 张本地图解、4 张画板、免责声明、复习清单导入迁移、评论区入口、打赏弹窗，无控制台错误，无横向溢出。
 - Playwright/Chrome 隐藏统计页验证：按天/按小时切换、访问人数卡片、事件图表、Top Items、Recent Events 均可渲染。
 
 ## License

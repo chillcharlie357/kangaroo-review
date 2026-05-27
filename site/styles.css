@@ -39,6 +39,7 @@ body.modal-open {
 
 button,
 input,
+textarea,
 select {
   font: inherit;
 }
@@ -421,6 +422,95 @@ select {
   background: rgba(181, 70, 52, 0.11);
 }
 
+.checklist-tools,
+.comments-panel {
+  border: 1px solid var(--line);
+  background: rgba(255, 253, 248, 0.84);
+  box-shadow: var(--shadow);
+}
+
+.checklist-tools {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.5fr) minmax(260px, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  padding: 12px;
+}
+
+.checklist-tools strong {
+  display: block;
+}
+
+.checklist-tools span,
+.checklist-message,
+.comment-status {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.checklist-tools p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.checklist-actions {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: flex-end;
+}
+
+.checklist-actions button,
+.comment-form button {
+  min-height: 34px;
+  border: 1px solid var(--line);
+  background: var(--ink);
+  color: #fff;
+  padding: 0 12px;
+  cursor: pointer;
+}
+
+.check-control {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  width: fit-content;
+  min-height: 28px;
+  border: 1px solid rgba(53, 95, 145, 0.22);
+  background: rgba(53, 95, 145, 0.07);
+  color: var(--blue);
+  padding: 3px 8px;
+  font-family: "Avenir Next", "PingFang SC", "Helvetica Neue", sans-serif;
+  font-size: 12px;
+  font-weight: 800;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.check-control input {
+  width: 14px;
+  height: 14px;
+  margin: 0;
+  accent-color: var(--blue);
+}
+
+.check-control:has(input:checked) {
+  border-color: rgba(20, 117, 111, 0.28);
+  background: rgba(20, 117, 111, 0.1);
+  color: var(--teal);
+}
+
+.inline-check {
+  margin-right: 6px;
+}
+
+.compact-check {
+  min-height: 26px;
+  padding: 2px 7px;
+}
+
 .fact-list {
   margin: 0;
   padding-left: 22px;
@@ -559,6 +649,13 @@ select {
   color: var(--red);
 }
 
+.route-step-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: center;
+}
+
 .route-step h2 {
   margin: 8px 0 10px;
   font-size: 24px;
@@ -604,7 +701,11 @@ select {
   gap: 8px;
 }
 
-.priority-lane header span {
+.priority-lane header > span {
+  display: inline-flex;
+  flex: 0 0 auto;
+  white-space: nowrap;
+  overflow-wrap: normal;
   width: fit-content;
   border: 1px solid var(--lane-color);
   background: var(--lane-bg);
@@ -968,6 +1069,12 @@ li {
   gap: 12px;
 }
 
+.question-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 14px 10px;
+}
+
 .priority-reason {
   border-left: 4px solid var(--line);
   padding-left: 10px;
@@ -995,6 +1102,13 @@ li {
 .term-row strong,
 .term-row b {
   overflow-wrap: anywhere;
+}
+
+.term-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: flex-end;
 }
 
 .term-row:hover {
@@ -1089,6 +1203,71 @@ li {
   padding: 0 10px;
   text-decoration: none;
   cursor: pointer;
+}
+
+.comments-panel {
+  display: grid;
+  gap: 12px;
+  padding: 18px;
+}
+
+.comment-form {
+  display: grid;
+  grid-template-columns: minmax(150px, 0.28fr) minmax(260px, 1fr) auto;
+  gap: 8px;
+  align-items: stretch;
+}
+
+.comment-form input,
+.comment-form textarea {
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--ink);
+  padding: 9px 10px;
+}
+
+.comment-form textarea {
+  min-height: 44px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.comment-form button:disabled,
+.comment-form input:disabled,
+.comment-form textarea:disabled {
+  cursor: not-allowed;
+  opacity: 0.56;
+}
+
+.comment-list {
+  display: grid;
+  gap: 8px;
+}
+
+.comment-item {
+  border: 1px solid var(--line);
+  background: rgba(240, 234, 223, 0.42);
+  padding: 10px 12px;
+}
+
+.comment-item header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.comment-item strong {
+  color: var(--ink);
+}
+
+.comment-item p {
+  margin: 7px 0 0;
+  color: var(--ink);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
 }
 
 .empty {
@@ -1507,6 +1686,7 @@ li {
   .diagram-card,
   .diagram-card.compact,
   .question-body,
+  .comment-form,
   .whiteboard-row,
   .source-row,
   .priority-lane,
@@ -1514,8 +1694,15 @@ li {
   .coverage-row,
   .term-row,
   .metric-summary,
-  .reward-body {
+  .reward-body,
+  .checklist-tools {
     grid-template-columns: 1fr;
+  }
+
+  .checklist-actions,
+  .term-actions,
+  .question-actions {
+    justify-content: flex-start;
   }
 
   .evidence-band {
