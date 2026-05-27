@@ -13,6 +13,7 @@ const state = {
   metricsSessionId: "",
   lastTrackedPage: "",
   lastTrackedTopic: "",
+  rewardProvider: "wechat",
   questions: [],
   sources: []
 };
@@ -29,9 +30,20 @@ const metricLabels = {
   source_preview: { zh: "预览", en: "previews" },
   source_open: { zh: "打开/下载", en: "opens/downloads" },
   diagram_open: { zh: "图解放大", en: "diagram zooms" },
-  whiteboard_open: { zh: "画板放大", en: "whiteboard zooms" }
+  whiteboard_open: { zh: "画板放大", en: "whiteboard zooms" },
+  reward_open: { zh: "打赏弹窗", en: "reward opens" }
 };
 const metricSessionKey = "kangaroo-review-session";
+const rewardOptions = {
+  wechat: {
+    label: { zh: "微信", en: "WeChat" },
+    src: "assets/reward/wechat.png"
+  },
+  alipay: {
+    label: { zh: "支付宝", en: "Alipay" },
+    src: "assets/reward/alipay.jpg"
+  }
+};
 
 function escapeHtml(text) {
   return String(text ?? "").replace(/[&<>"']/g, (char) => ({
@@ -81,6 +93,13 @@ function textForLanguage(zh, en, mixedSeparator = "\n") {
   if (state.lang === "en") return en;
   if (state.lang === "zh") return zh;
   return `${zh}${mixedSeparator}${en}`;
+}
+
+function reviewDisclaimerText() {
+  return textForLanguage(
+    "本复习资料由 Codex（GPT-5.5）辅助整理生成，未经任课老师确认；可能存在遗漏、误读或过度概括，请以课程原始 slides、复习课纪要和老师说明为准。",
+    "This review material was organized with Codex (GPT-5.5) assistance and has not been endorsed by the instructors. It may contain omissions or mistakes; prefer the original slides, review notes, and instructor guidance."
+  );
 }
 
 function diagramById(id) {
@@ -181,6 +200,7 @@ function pageMetricFooter() {
       ${renderMetricBadge("page_view", key)}
       ${renderMetricBadge("page_click", key)}
       <span>${state.lang === "en" ? "Metrics update after the lightweight SQLite service receives events." : "统计由轻量 SQLite 服务实时累加，服务离线时页面仍可正常复习。"}</span>
+      <button class="reward-trigger" type="button" data-action="open-reward">${state.lang === "en" ? "Help reimburse a little Codex?" : "你想帮我报销一点Codex吗？"}</button>
     </footer>
   `;
 }
@@ -352,6 +372,11 @@ function renderOverview() {
           </div>
         `).join("")}
       </dl>
+    </section>
+
+    <section class="disclaimer-band" aria-label="${state.lang === "en" ? "Accuracy disclaimer" : "准确性提示"}">
+      <strong>${state.lang === "en" ? "Accuracy note" : "准确性提示"}</strong>
+      <p>${htmlText(reviewDisclaimerText())}</p>
     </section>
 
     <section class="panel-grid two">
@@ -949,6 +974,16 @@ function setupEvents() {
           href: target.href
         });
         break;
+      case "open-reward":
+        event.preventDefault();
+        trackMetric("reward_open", "reward", "Reward modal");
+        openReward();
+        break;
+      case "reward-provider":
+        event.preventDefault();
+        state.rewardProvider = rewardOptions[target.dataset.rewardProvider] ? target.dataset.rewardProvider : "wechat";
+        openReward();
+        break;
       case "glossary-term":
         trackMetric("glossary_view", target.dataset.termKey, target.textContent.replace(/\s+/g, " ").trim().slice(0, 120));
         break;
@@ -1038,6 +1073,48 @@ function openDiagram(id) {
       </header>
       <div class="modal-scroll">
         <img class="modal-image" data-zoom="1" src="${escapeHtml(diagram.src)}" alt="${escapeHtml(labelText(diagram.title))}" />
+      </div>
+    </section>
+  `);
+}
+
+function openReward() {
+  const providerKey = rewardOptions[state.rewardProvider] ? state.rewardProvider : "wechat";
+  const provider = rewardOptions[providerKey];
+  openModal(`
+    <div class="modal-backdrop" data-action="close-modal"></div>
+    <section class="modal-panel reward-modal" role="dialog" aria-modal="true" aria-label="${state.lang === "en" ? "Reward QR code" : "打赏收款码"}">
+      <header class="modal-head">
+        <div>
+          <p class="section-kicker">${state.lang === "en" ? "Tiny Support" : "一点点支持"}</p>
+          <h2>${state.lang === "en" ? "Help reimburse a little Codex?" : "你想帮我报销一点Codex吗？"}</h2>
+        </div>
+        <button type="button" data-action="close-modal">${state.lang === "en" ? "Close" : "关闭"}</button>
+      </header>
+      <div class="reward-body">
+        <div class="reward-copy">
+          <p>${state.lang === "en"
+            ? "Thank you for even opening this. A tiny tip helps offset the Codex bill and buys future review notes a little more runway. ✨"
+            : "谢谢你点开这个小角落！一点点投喂都会变成 Codex 账单里的回血，也会变成下一次更认真整理资料的动力。✨"}</p>
+          <p>${state.lang === "en"
+            ? "No pressure at all. If this site saved you time before the exam, that is already a very good ending. 🙌"
+            : "完全不强求，真的。只要这份资料帮你少熬一点夜、多拿一点分，就已经很值得了。🙌"}</p>
+        </div>
+        <div class="reward-card">
+          <div class="reward-tabs" role="tablist" aria-label="${state.lang === "en" ? "Payment method" : "收款方式"}">
+            ${Object.entries(rewardOptions).map(([key, item]) => `
+              <button class="${key === providerKey ? "active" : ""}" type="button" data-action="reward-provider" data-reward-provider="${escapeHtml(key)}">
+                ${escapeHtml(localize(item.label))}
+              </button>
+            `).join("")}
+          </div>
+          <figure>
+            <img class="reward-qr" src="${escapeHtml(provider.src)}" alt="${escapeHtml(localize(provider.label))}" />
+            <figcaption>${state.lang === "en"
+              ? `Scan with ${escapeHtml(localize(provider.label))}. Thank you, genuinely. ☕️`
+              : `使用${escapeHtml(localize(provider.label))}扫码。谢谢你，真的会很开心。☕️`}</figcaption>
+          </figure>
+        </div>
       </div>
     </section>
   `);

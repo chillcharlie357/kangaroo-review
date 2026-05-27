@@ -2,6 +2,8 @@
 
 静态复习网站：把《软件体系结构》课程 slides、复习课纪要、raw 前人资料和往年题整理成可浏览的复习资料。
 
+> 准确性提示：本资料由 Codex（GPT-5.5）辅助整理生成，未经任课老师确认，不一定准确；复习和作答时请优先以课程原始 slides、复习课纪要和老师说明为准。
+
 ## 本地浏览
 
 静态浏览：
@@ -29,6 +31,7 @@ python3 server/metrics_server.py --host 127.0.0.1 --port 18080 --static-root . -
 
 - `site/`：前端页面、样式、交互和可发布数据。
 - `site/metrics.html` / `site/metrics.js`：隐藏访问统计图表页，不在主导航中展示。
+- `site/assets/reward/`：底部低调打赏弹窗使用的微信/支付宝收款码。
 - `site/content.js`：复习路线、15 个知识点、79 条术语、11 张本地图解和画板资源。
 - `site/data/questions.json`：33 条往年题聚类，包含中文完整示例答案、英文关键词和图解关联。
 - `site/data/sources.json`：42 个源文件的抽取状态清单。
@@ -63,15 +66,24 @@ python3 server/metrics_server.py --host 127.0.0.1 --port 18080 --static-root . -
 - `topic_view` / `glossary_view` / `question_view`：知识点、术语、真题查看。
 - `source_preview` / `source_open`：资料库预览和源文件打开，打开一次按下载一次计。
 - `diagram_open` / `whiteboard_open`：图解、画板放大查看。
+- `reward_open`：底部打赏弹窗打开。
 
-统计后端只保存事件类型、对象 key、页面、匿名 session、哈希后的 IP 和 User-Agent 摘要；不保存明文 IP。部署时建议把 SQLite 放在 `/home/docs/kangaroo-review-runtime/metrics.sqlite3`，nginx 将 `/kangaroo-review/api/` 反代到本机 `127.0.0.1:18081`。
+统计后端只保存事件类型、对象 key、页面、匿名 session、哈希后的 IP、匿名访客指纹、User-Agent 与 Accept-Language 摘要；不保存明文 IP。访客数用 `X-Forwarded-For` / `X-Real-IP` 中的客户端 IP、User-Agent、Accept-Language 与私有 salt 共同哈希后估算，历史旧数据会退回到 `ip_hash + user_agent` 口径。
+
+隐藏统计面板支持按天/按小时切换趋势折线图。部署时建议把 SQLite 放在 `/home/docs/kangaroo-review-runtime/metrics.sqlite3`，nginx 将 `/kangaroo-review/api/` 反代到本机 `127.0.0.1:18081`，并保留以下请求头：
+
+- `X-Real-IP`
+- `X-Forwarded-For`
+- `X-Forwarded-Proto`
+- `Host`
 
 ## 验证记录
 
-- `node --check site/app.js site/content.js site/data/questions.js site/data/sources.js tools/smoke-site.mjs`
+- `node --check site/app.js site/metrics.js tools/smoke-site.mjs tools/smoke-metrics.mjs`
 - `jq empty site/data/questions.json site/data/sources.json`
 - `python3 -m unittest tools/test_metrics_server.py`
-- Playwright/Chrome 桌面与移动视口验证：15 个知识点、33 条真题聚类、79 个术语、42 条资料清单、11 张本地图解，无控制台错误，无横向溢出。
+- Playwright/Chrome 桌面与移动视口验证：15 个知识点、33 条真题聚类、79 个术语、42 条资料清单、11 张本地图解、免责声明、打赏弹窗，无控制台错误，无横向溢出。
+- Playwright/Chrome 隐藏统计页验证：按天/按小时切换、访问人数卡片、事件图表、Top Items、Recent Events 均可渲染。
 
 ## License
 

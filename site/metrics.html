@@ -13,9 +13,15 @@
         <div>
           <p class="section-kicker">Hidden Metrics</p>
           <h1>访问统计面板</h1>
-          <p>这个页面不在主站导航中展示，只通过直接输入地址访问。</p>
+          <p>这个页面不在主站导航中展示，只通过直接输入地址访问。访客数由匿名 IP 指纹、User-Agent 等请求头信号估算。</p>
         </div>
-        <button id="refresh-metrics" type="button">刷新</button>
+        <div class="metrics-controls">
+          <div class="segmented metric-grain" aria-label="趋势粒度">
+            <button class="seg active" type="button" data-grain="day">按天</button>
+            <button class="seg" type="button" data-grain="hour">按小时</button>
+          </div>
+          <button id="refresh-metrics" type="button">刷新</button>
+        </div>
       </header>
 
       <section class="metric-summary" id="metric-summary" aria-live="polite"></section>
@@ -31,8 +37,8 @@
 
         <article class="panel">
           <div class="section-head">
-            <p class="section-kicker">Daily Trend</p>
-            <h2>最近趋势</h2>
+            <p class="section-kicker">Trend</p>
+            <h2 id="trend-title">最近趋势</h2>
           </div>
           <div id="daily-chart" class="line-chart"></div>
         </article>

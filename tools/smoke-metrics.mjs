@@ -21,10 +21,22 @@ await page.waitForFunction(() => {
   const summary = document.querySelector("#metric-summary");
   return summary && !summary.textContent.includes("读取中");
 });
+await page.click('button[data-grain="hour"]');
+await page.waitForFunction(() => {
+  const title = document.querySelector("#trend-title");
+  return title && title.textContent.includes("小时");
+});
+await page.waitForFunction(() => {
+  const summary = document.querySelector("#metric-summary");
+  return summary && !summary.textContent.includes("读取中");
+});
 
 const result = await page.evaluate(() => ({
   title: document.title,
   summaryText: document.querySelector("#metric-summary")?.textContent || "",
+  grainText: document.querySelector(".metric-grain .active")?.textContent || "",
+  trendTitle: document.querySelector("#trend-title")?.textContent || "",
+  trendLabels: document.querySelectorAll("#daily-chart .daily-labels span").length,
   eventRows: document.querySelectorAll("#event-chart .bar-row").length,
   topRows: document.querySelectorAll("#top-items tbody tr").length,
   hasError: /统计服务不可用|不可用/.test(document.body.textContent || ""),
@@ -37,6 +49,8 @@ await browser.close();
 if (!result.title.includes("Metrics")) errors.push("metrics title missing");
 if (result.hasError) errors.push("metrics dashboard reports unavailable service");
 if (!/总事件/.test(result.summaryText)) errors.push("summary cards missing");
+if (!/访问人数/.test(result.summaryText)) errors.push("unique visitor card missing");
+if (!/小时/.test(result.grainText) || !/小时/.test(result.trendTitle)) errors.push("hour grain toggle failed");
 if (result.eventRows < 1) errors.push("event chart rows missing");
 if (result.scrollWidth > result.clientWidth + 2) errors.push("dashboard has horizontal overflow");
 

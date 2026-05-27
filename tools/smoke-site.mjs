@@ -20,6 +20,7 @@ async function checkViewport(name, viewport) {
   await page.goto(baseUrl, { waitUntil: "domcontentloaded" });
   await page.waitForSelector(".hero-panel");
   const title = await page.locator(".hero-panel h1").innerText();
+  const disclaimer = await page.locator(".disclaimer-band").innerText();
   const overviewMetricBadges = await page.locator(".page-metrics .metric-badge").count();
   await page.click('button[data-lang="en"]');
   const englishNav = await page.locator(".nav-link").evaluateAll((nodes) => nodes.map((node) => node.textContent.trim()).join("|"));
@@ -76,6 +77,17 @@ async function checkViewport(name, viewport) {
     page.click(".source-actions a")
   ]);
   await sourcePopup.close();
+  await page.click(".reward-trigger");
+  await page.waitForSelector(".reward-modal .reward-qr");
+  const rewardText = await page.locator(".reward-modal").innerText();
+  const rewardImageLoaded = await page.locator(".reward-qr").evaluate((element) => element.complete && element.naturalWidth > 100);
+  await page.click('button[data-reward-provider="alipay"]');
+  await page.waitForFunction(() => {
+    const image = document.querySelector(".reward-qr");
+    return image && image.complete && image.naturalWidth > 100 && image.getAttribute("src").includes("alipay");
+  });
+  const rewardAlipayLoaded = await page.locator(".reward-qr").evaluate((element) => element.getAttribute("src").includes("alipay") && element.naturalWidth > 100);
+  await page.locator('button[data-action="close-modal"]').last().click();
   await page.screenshot({ path: `${screenshots}/kangaroo-review-${name}-sources.png`, fullPage: true });
   const pageWidth = await page.evaluate(() => ({
     clientWidth: document.documentElement.clientWidth,
@@ -86,6 +98,7 @@ async function checkViewport(name, viewport) {
   return {
     name,
     title,
+    disclaimerHasCodex: /Codex|GPT-5\.5/.test(disclaimer),
     overviewMetricBadges,
     englishNavHasOverview: englishNav.includes("Overview") && englishNav.includes("Sources"),
     detailHasModernTopic: /DDD|领域驱动|微服务|Enterprise|企业架构/.test(detail),
@@ -96,6 +109,9 @@ async function checkViewport(name, viewport) {
     sampleAnswerHasChinese: /架构|需求|系统|质量|服务/.test(sampleAnswer),
     whiteboardNaturalWidth,
     sourcePreviewLoaded: !/预览失败|Preview failed/.test(previewSample),
+    rewardHasCopy: /报销一点Codex|Codex bill|谢谢|Thank you/.test(rewardText),
+    rewardImageLoaded,
+    rewardAlipayLoaded,
     noHorizontalOverflow: pageWidth.scrollWidth <= pageWidth.clientWidth + 2,
     pageWidth,
     previewSample: previewSample.slice(0, 120)
@@ -115,6 +131,10 @@ for (const result of [desktop, mobile]) {
     "questionHasChinese",
     "sampleAnswerHasChinese",
     "sourcePreviewLoaded",
+    "disclaimerHasCodex",
+    "rewardHasCopy",
+    "rewardImageLoaded",
+    "rewardAlipayLoaded",
     "noHorizontalOverflow"
   ]) {
     if (!result[key]) errors.push(`${result.name}: ${key} failed`);

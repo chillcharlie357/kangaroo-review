@@ -9,8 +9,14 @@ const eventNames = {
   source_open: "源文件打开/下载",
   diagram_open: "图解放大",
   whiteboard_open: "画板放大",
+  reward_open: "打赏弹窗",
   filter_change: "筛选变更",
   search: "搜索"
+};
+
+const dashboardState = {
+  days: 14,
+  grain: "day"
 };
 
 function escapeHtml(text) {
@@ -44,10 +50,11 @@ function totalsByEvent(rows) {
 function renderSummary(data) {
   const totals = totalsByEvent(data.totals || []);
   const total = Object.values(totals).reduce((sum, value) => sum + value, 0);
+  const visitors = data.visitors || {};
   document.getElementById("metric-summary").innerHTML = [
     ["总事件", total],
+    [`访问人数/${data.days || dashboardState.days}天`, visitors.unique_visitors],
     ["页面查看", totals.page_view],
-    ["知识点查看", totals.topic_view],
     ["源文件打开/下载", totals.source_open]
   ].map(([label, value]) => `
     <article>
@@ -78,26 +85,38 @@ function dailyPoint(point, index, count, max) {
   return { ...point, x, y };
 }
 
-function renderDaily(element, rows) {
-  const byDate = new Map();
+function trendLabel(bucket, grain) {
+  if (!bucket) return "";
+  if (grain === "hour") return bucket.slice(5, 16).replace("T", " ");
+  return bucket.slice(5);
+}
+
+function renderTrend(element, rows, grain) {
+  const byBucket = new Map();
   rows.forEach((row) => {
-    byDate.set(row.event_date, (byDate.get(row.event_date) || 0) + Number(row.total || 0));
+    const bucket = row.bucket || row.event_date;
+    const current = byBucket.get(bucket) || { bucket, total: 0, uniqueVisitors: 0 };
+    current.total += Number(row.total || 0);
+    current.uniqueVisitors = Math.max(current.uniqueVisitors, Number(row.unique_visitors || 0));
+    byBucket.set(bucket, current);
   });
-  const points = Array.from(byDate.entries()).map(([date, total]) => ({ date, total }));
+  const points = Array.from(byBucket.values()).sort((a, b) => a.bucket.localeCompare(b.bucket));
   const max = Math.max(1, ...points.map((point) => point.total));
   const plotted = points.map((point, index) => dailyPoint(point, index, points.length, max));
+  const labelStep = grain === "hour" ? Math.max(1, Math.ceil(points.length / 24)) : 1;
+  const visibleLabels = points.filter((_, index) => index % labelStep === 0 || index === points.length - 1);
   element.innerHTML = points.length ? `
-    <svg viewBox="0 0 640 240" role="img" aria-label="Daily metrics trend">
+    <svg viewBox="0 0 640 240" role="img" aria-label="Metrics trend by ${escapeHtml(grain)}">
       <polyline
         fill="none"
         stroke="#14756f"
         stroke-width="5"
         points="${plotted.map((point) => `${point.x},${point.y}`).join(" ")}"
       />
-      ${plotted.map((point) => `<circle cx="${point.x}" cy="${point.y}" r="6"><title>${escapeHtml(point.date)}: ${point.total}</title></circle>`).join("")}
+      ${plotted.map((point) => `<circle cx="${point.x}" cy="${point.y}" r="6"><title>${escapeHtml(point.bucket)}: ${point.total} events, ${point.uniqueVisitors} visitors</title></circle>`).join("")}
     </svg>
     <div class="daily-labels">
-      ${points.map((point) => `<span>${escapeHtml(point.date.slice(5))}<b>${point.total}</b></span>`).join("")}
+      ${visibleLabels.map((point) => `<span>${escapeHtml(trendLabel(point.bucket, grain))}<b>${formatMetricNumber(point.total)}</b><em>${formatMetricNumber(point.uniqueVisitors)}人</em></span>`).join("")}
     </div>
   ` : `<p class="empty">还没有最近趋势。</p>`;
 }
@@ -122,7 +141,11 @@ function renderTable(element, rows, columns) {
 async function loadMetrics() {
   const base = apiBase();
   if (!base) throw new Error("请通过本地服务或线上部署访问统计页。");
-  const res = await fetch(`${base}/summary?days=14`, { cache: "no-store" });
+  const params = new URLSearchParams({
+    days: String(dashboardState.days),
+    grain: dashboardState.grain
+  });
+  const res = await fetch(`${base}/summary?${params}`, { cache: "no-store" });
   if (!res.ok) throw new Error(`统计服务不可用：HTTP ${res.status}`);
   return res.json();
 }
@@ -130,11 +153,16 @@ async function loadMetrics() {
 async function render() {
   const summary = document.getElementById("metric-summary");
   summary.innerHTML = `<article><span>状态</span><strong>读取中…</strong></article>`;
+  document.querySelectorAll("[data-grain]").forEach((button) => {
+    button.classList.toggle("active", button.dataset.grain === dashboardState.grain);
+  });
+  const trendTitle = document.getElementById("trend-title");
+  if (trendTitle) trendTitle.textContent = dashboardState.grain === "hour" ? "最近趋势（按小时）" : "最近趋势（按天）";
   try {
     const data = await loadMetrics();
     renderSummary(data);
     renderBars(document.getElementById("event-chart"), data.totals || [], (row) => eventName(row.event_type));
-    renderDaily(document.getElementById("daily-chart"), data.daily || []);
+    renderTrend(document.getElementById("daily-chart"), data.trend || data.daily || [], data.grain || dashboardState.grain);
     renderTable(document.getElementById("top-items"), data.top_items || [], [
       { label: "类型", value: (row) => eventName(row.event_type) },
       { label: "对象", value: (row) => row.label || row.metric_key },
@@ -156,4 +184,10 @@ async function render() {
 }
 
 document.getElementById("refresh-metrics").addEventListener("click", render);
+document.querySelectorAll("[data-grain]").forEach((button) => {
+  button.addEventListener("click", () => {
+    dashboardState.grain = button.dataset.grain === "hour" ? "hour" : "day";
+    render();
+  });
+});
 render();

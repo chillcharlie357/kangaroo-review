@@ -9,7 +9,7 @@ import os
 import sqlite3
 import time
 import urllib.parse
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from http import HTTPStatus
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from pathlib import Path
@@ -28,6 +28,7 @@ EVENT_TYPES = {
     "source_open",
     "diagram_open",
     "whiteboard_open",
+    "reward_open",
     "search",
     "filter_change",
 }
@@ -36,6 +37,7 @@ MAX_BODY_BYTES = 64 * 1024
 MAX_LABEL_LENGTH = 180
 MAX_KEY_LENGTH = 240
 MAX_META_LENGTH = 2048
+VISITOR_EXPR = "CASE WHEN visitor_hash != '' THEN visitor_hash ELSE ip_hash || ':' || user_agent END"
 SITE_ROOT_FILES = {
     "index.html",
     "app.js",
@@ -57,6 +59,11 @@ def utc_now_iso() -> str:
 def utc_day(ts: Optional[float] = None) -> str:
     timestamp = time.time() if ts is None else ts
     return datetime.fromtimestamp(timestamp, timezone.utc).strftime("%Y-%m-%d")
+
+
+def utc_cutoff_iso(days: int) -> str:
+    cutoff = datetime.now(timezone.utc) - timedelta(days=max(0, days - 1))
+    return cutoff.replace(hour=0, minute=0, second=0, microsecond=0).isoformat()
 
 
 def clamp_text(value: Any, limit: int) -> str:
@@ -106,7 +113,9 @@ class MetricsStore:
                   target TEXT NOT NULL,
                   session_id TEXT NOT NULL,
                   ip_hash TEXT NOT NULL,
+                  visitor_hash TEXT NOT NULL DEFAULT '',
                   user_agent TEXT NOT NULL,
+                  accept_language TEXT NOT NULL DEFAULT '',
                   referrer TEXT NOT NULL,
                   meta_json TEXT NOT NULL,
                   created_at TEXT NOT NULL
@@ -135,9 +144,31 @@ class MetricsStore:
                 CREATE INDEX IF NOT EXISTS idx_events_type_key ON events(event_type, metric_key);
                 """
             )
+            self.migrate_schema(conn)
+
+    def migrate_schema(self, conn: sqlite3.Connection) -> None:
+        columns = {row["name"] for row in conn.execute("PRAGMA table_info(events)").fetchall()}
+        if "visitor_hash" not in columns:
+            conn.execute("ALTER TABLE events ADD COLUMN visitor_hash TEXT NOT NULL DEFAULT ''")
+        if "accept_language" not in columns:
+            conn.execute("ALTER TABLE events ADD COLUMN accept_language TEXT NOT NULL DEFAULT ''")
+        conn.execute("CREATE INDEX IF NOT EXISTS idx_events_visitor_created_at ON events(visitor_hash, created_at)")
+
+    def client_ip_from_headers(self, headers: Any, client_ip: str) -> str:
+        forwarded_for = clamp_text(headers.get("X-Forwarded-For", ""), 240)
+        if forwarded_for:
+            first = forwarded_for.split(",")[0].strip()
+            if first:
+                return first
+        real_ip = clamp_text(headers.get("X-Real-IP", ""), 120)
+        return real_ip or client_ip
 
     def anonymize_ip(self, ip: str) -> str:
         material = f"{self.salt}:{ip}".encode("utf-8", errors="ignore")
+        return hashlib.sha256(material).hexdigest()[:24]
+
+    def anonymize_visitor(self, ip: str, user_agent: str, accept_language: str) -> str:
+        material = f"{self.salt}:{ip}:{user_agent[:180]}:{accept_language[:80]}".encode("utf-8", errors="ignore")
         return hashlib.sha256(material).hexdigest()[:24]
 
     def track(self, payload: Dict[str, Any], headers: Any, client_ip: str) -> Dict[str, Any]:
@@ -157,8 +188,11 @@ class MetricsStore:
         created_at = utc_now_iso()
         today = utc_day()
         user_agent = clamp_text(headers.get("User-Agent", ""), 240)
+        accept_language = clamp_text(headers.get("Accept-Language", ""), 120)
         referrer = clamp_text(headers.get("Referer", ""), 240)
-        ip_hash = self.anonymize_ip(headers.get("X-Forwarded-For", client_ip).split(",")[0].strip())
+        client_identity_ip = self.client_ip_from_headers(headers, client_ip)
+        ip_hash = self.anonymize_ip(client_identity_ip)
+        visitor_hash = self.anonymize_visitor(client_identity_ip, user_agent, accept_language)
 
         with self.connect() as conn:
             conn.execute("BEGIN IMMEDIATE")
@@ -166,8 +200,8 @@ class MetricsStore:
                 """
                 INSERT INTO events (
                   event_type, metric_key, label, page, target, session_id,
-                  ip_hash, user_agent, referrer, meta_json, created_at
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                  ip_hash, visitor_hash, user_agent, accept_language, referrer, meta_json, created_at
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """,
                 (
                     event_type,
@@ -177,7 +211,9 @@ class MetricsStore:
                     target,
                     session_id,
                     ip_hash,
+                    visitor_hash,
                     user_agent,
+                    accept_language,
                     referrer,
                     meta_json,
                     created_at,
@@ -236,8 +272,44 @@ class MetricsStore:
             counts.setdefault(f"{event_type}::{metric_key}", 0)
         return {"counts": counts, "items": [f"{event_type}::{metric_key}" for event_type, metric_key in pairs]}
 
-    def summary(self, days: int = 14) -> Dict[str, Any]:
+    def trend(self, conn: sqlite3.Connection, days: int, grain: str) -> List[Dict[str, Any]]:
+        bucket_expr = "substr(created_at, 1, 13) || ':00'" if grain == "hour" else "substr(created_at, 1, 10)"
+        cutoff = utc_cutoff_iso(days)
+        return [
+            dict(row)
+            for row in conn.execute(
+                """
+                SELECT {bucket_expr} AS bucket,
+                       COUNT(*) AS total,
+                       COUNT(DISTINCT {visitor_expr}) AS unique_visitors
+                FROM events
+                WHERE created_at >= ?
+                GROUP BY bucket
+                ORDER BY bucket ASC
+                """.format(bucket_expr=bucket_expr, visitor_expr=VISITOR_EXPR),
+                (cutoff,),
+            ).fetchall()
+        ]
+
+    def visitor_totals(self, conn: sqlite3.Connection, days: int) -> Dict[str, int]:
+        cutoff = utc_cutoff_iso(days)
+        row = conn.execute(
+            """
+            SELECT COUNT(DISTINCT {visitor_expr}) AS unique_visitors,
+                   COUNT(DISTINCT session_id) AS sessions
+            FROM events
+            WHERE created_at >= ?
+            """.format(visitor_expr=VISITOR_EXPR),
+            (cutoff,),
+        ).fetchone()
+        return {
+            "unique_visitors": int(row["unique_visitors"] or 0),
+            "sessions": int(row["sessions"] or 0),
+        }
+
+    def summary(self, days: int = 14, grain: str = "day") -> Dict[str, Any]:
         days = max(1, min(days, 90))
+        grain = grain if grain in {"day", "hour"} else "day"
         with self.connect() as conn:
             totals = conn.execute(
                 """
@@ -255,6 +327,8 @@ class MetricsStore:
                 LIMIT 40
                 """
             ).fetchall()
+            visitors = self.visitor_totals(conn, days)
+            trend = self.trend(conn, days, grain)
             daily = conn.execute(
                 """
                 SELECT event_date, event_type, SUM(total) AS total
@@ -277,8 +351,11 @@ class MetricsStore:
         return {
             "generated_at": utc_now_iso(),
             "days": days,
+            "grain": grain,
             "totals": [dict(row) for row in totals],
             "top_items": [dict(row) for row in top_items],
+            "visitors": visitors,
+            "trend": trend,
             "daily": [dict(row) for row in daily],
             "recent": [dict(row) for row in recent],
         }
@@ -327,7 +404,8 @@ class MetricsHandler(BaseHTTPRequestHandler):
                 days = int((query.get("days") or ["14"])[0])
             except ValueError:
                 days = 14
-            json_response(self, HTTPStatus.OK, self.app.store.summary(days))
+            grain = (query.get("grain") or ["day"])[0]
+            json_response(self, HTTPStatus.OK, self.app.store.summary(days, grain))
             return
         if endpoint:
             json_response(self, HTTPStatus.NOT_FOUND, {"error": "not found"})

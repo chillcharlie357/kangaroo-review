@@ -216,6 +216,7 @@ select {
 
 .panel,
 .hero-panel,
+.disclaimer-band,
 .evidence-band {
   border: 1px solid var(--line);
   background: rgba(255, 253, 248, 0.88);
@@ -303,6 +304,27 @@ select {
   font-weight: 800;
 }
 
+.disclaimer-band {
+  display: grid;
+  grid-template-columns: 160px minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+  border-left: 5px solid var(--gold);
+  padding: 14px 18px;
+}
+
+.disclaimer-band strong {
+  color: var(--gold);
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+.disclaimer-band p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.58;
+}
+
 .panel-grid.two {
   display: grid;
   grid-template-columns: minmax(280px, 0.8fr) minmax(320px, 1.2fr);
@@ -378,9 +400,23 @@ select {
   padding: 12px;
 }
 
-.page-metrics > span:last-child {
+.page-metrics > span:not(.metric-badge) {
   color: var(--muted);
   font-size: 12px;
+}
+
+.reward-trigger {
+  margin-left: auto;
+  min-height: 30px;
+  border: 1px dashed rgba(181, 70, 52, 0.35);
+  background: rgba(181, 70, 52, 0.06);
+  color: var(--red);
+  padding: 0 10px;
+  cursor: pointer;
+}
+
+.reward-trigger:hover {
+  background: rgba(181, 70, 52, 0.11);
 }
 
 .fact-list {
@@ -1004,6 +1040,11 @@ li {
   width: min(1180px, calc(100vw - 28px));
 }
 
+.modal-panel.reward-modal {
+  width: min(720px, calc(100vw - 32px));
+  grid-template-rows: auto auto;
+}
+
 .modal-head {
   border-bottom: 1px solid var(--line);
   padding: 14px 16px;
@@ -1047,6 +1088,75 @@ li {
   font-size: 13px;
 }
 
+.reward-body {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(220px, 0.7fr);
+  gap: 18px;
+  padding: 18px;
+}
+
+.reward-copy {
+  display: grid;
+  align-content: center;
+  gap: 10px;
+}
+
+.reward-copy p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.reward-card {
+  display: grid;
+  gap: 12px;
+  border: 1px solid var(--line);
+  background: rgba(240, 234, 223, 0.46);
+  padding: 12px;
+}
+
+.reward-tabs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.reward-tabs button {
+  min-height: 34px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.reward-tabs button.active {
+  background: var(--ink);
+  color: #fff;
+}
+
+.reward-card figure {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  text-align: center;
+}
+
+.reward-qr {
+  display: block;
+  width: min(260px, 100%);
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  justify-self: center;
+  border: 1px solid var(--line);
+  background: #fff;
+}
+
+.reward-card figcaption {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
 .metrics-body {
   background: var(--paper);
 }
@@ -1087,6 +1197,29 @@ li {
   color: #fff;
   padding: 0 16px;
   cursor: pointer;
+}
+
+.metrics-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.metrics-controls .segmented {
+  background: var(--panel);
+}
+
+.metrics-controls .seg {
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  padding: 0 12px;
+}
+
+.metrics-controls .seg.active {
+  background: var(--ink);
+  color: #fff;
 }
 
 .metric-summary {
@@ -1181,6 +1314,9 @@ li {
 }
 
 .daily-labels span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
   border: 1px solid var(--line);
   background: var(--panel-strong);
   color: var(--muted);
@@ -1188,8 +1324,12 @@ li {
 }
 
 .daily-labels b {
-  margin-left: 6px;
   color: var(--ink);
+}
+
+.daily-labels em {
+  color: var(--teal);
+  font-style: normal;
 }
 
 .metrics-table {
@@ -1260,6 +1400,7 @@ li {
 
   .hero-panel,
   .panel-grid.two,
+  .disclaimer-band,
   .metrics-grid,
   .knowledge-layout,
   .detail-columns,
@@ -1275,7 +1416,8 @@ li {
   .coverage-row,
   .term-row,
   .metric-summary,
-  .evidence-band {
+  .evidence-band,
+  .reward-body {
     grid-template-columns: 1fr;
   }
 
