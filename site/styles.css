@@ -984,6 +984,14 @@ li {
 .question-item {
   border: 1px solid var(--line);
   background: var(--panel);
+  scroll-margin-top: 92px;
+  transition: border-color 180ms ease, box-shadow 180ms ease, background 180ms ease;
+}
+
+.question-item.is-targeted {
+  border-color: rgba(181, 70, 52, 0.72);
+  background: linear-gradient(180deg, rgba(181, 70, 52, 0.08), var(--panel) 36%);
+  box-shadow: inset 5px 0 0 rgba(181, 70, 52, 0.72);
 }
 
 .question-item summary {

@@ -107,13 +107,60 @@ async function checkViewport(name, viewport) {
     };
   });
   await page.screenshot({ path: `${screenshots}/kangaroo-review-${name}-knowledge.png`, fullPage: true });
+  await page.evaluate(() => {
+    window.__kangarooTrackPayloads = [];
+    if (window.__kangarooFetchWrapped) return;
+    const originalFetch = window.fetch.bind(window);
+    window.fetch = (input, init = {}) => {
+      const url = typeof input === "string" ? input : input?.url || "";
+      if (url.includes("/track") && init?.body) {
+        try {
+          window.__kangarooTrackPayloads.push(JSON.parse(init.body));
+        } catch {
+          window.__kangarooTrackPayloads.push({ parseError: true });
+        }
+      }
+      return originalFetch(input, init);
+    };
+    window.__kangarooFetchWrapped = true;
+  });
+  const relatedQuestionLink = page.locator('.related-questions a[data-action="jump-question"]').first();
+  const relatedQuestionId = await relatedQuestionLink.getAttribute("data-question-id");
+  await relatedQuestionLink.click();
+  await page.waitForSelector(`.question-item[data-question-id="${relatedQuestionId}"][open]`);
+  await page.waitForFunction((id) => {
+    const item = [...document.querySelectorAll(".question-item")].find((node) => node.dataset.questionId === id);
+    if (!item) return false;
+    const rect = item.getBoundingClientRect();
+    const inView = rect.bottom > 0 && rect.top < window.innerHeight * 0.85;
+    const trackCount = window.__kangarooTrackPayloads?.filter((payload) => payload.event_type === "question_view" && String(payload.key || "").includes(id)).length || 0;
+    const tracked = trackCount === 1;
+    return item.open && inView && tracked;
+  }, relatedQuestionId, { timeout: 5000 });
+  const relatedQuestionJumped = await page.evaluate((id) => {
+    const item = [...document.querySelectorAll(".question-item")].find((node) => node.dataset.questionId === id);
+    if (!item) return { opened: false, inView: false, tracked: false, hash: window.location.hash, cluster: "" };
+    const rect = item.getBoundingClientRect();
+    return {
+      opened: item.open,
+      inView: rect.bottom > 0 && rect.top < window.innerHeight * 0.85,
+      trackCount: window.__kangarooTrackPayloads?.filter((payload) => payload.event_type === "question_view" && String(payload.key || "").includes(id)).length || 0,
+      tracked: (window.__kangarooTrackPayloads?.filter((payload) => payload.event_type === "question_view" && String(payload.key || "").includes(id)).length || 0) === 1,
+      hash: window.location.hash,
+      cluster: document.querySelector("#cluster-select")?.value || ""
+    };
+  }, relatedQuestionId);
 
   await page.click('button[data-lang="zh"]');
   await page.click('a[data-page="papers"]');
   await page.waitForSelector(".question-item");
+  await page.selectOption("#cluster-select", "all");
   const questionCount = await page.locator(".question-item").count();
   const question = await page.locator(".question-item summary strong").first().innerText();
-  const sampleAnswer = await page.locator(".sample-answer").first().innerText();
+  const sampleAnswer = await page.locator(".sample-answer").evaluateAll((nodes) => {
+    const texts = nodes.map((node) => node.innerText || "");
+    return texts.find((text) => /架构|需求|系统|质量|服务/.test(text)) || texts[0] || "";
+  });
 
   await page.click('a[data-page="whiteboards"]');
   await page.waitForSelector(".whiteboard-thumb");
@@ -186,6 +233,7 @@ async function checkViewport(name, viewport) {
     detailHasDeepDive: detailHasDeepDive > 0,
     diagramRendered: diagramBox.complete && diagramBox.width > 120 && diagramBox.height > 60,
     diagramBox,
+    relatedQuestionJumped,
     questionCount,
     questionHasChinese: /软件|架构|需求|列出|解释/.test(question),
     sampleAnswerHasChinese: /架构|需求|系统|质量|服务/.test(sampleAnswer),
@@ -218,6 +266,7 @@ for (const result of [desktop, mobile]) {
     "detailHasModernTopic",
     "detailHasDeepDive",
     "diagramRendered",
+    "relatedQuestionJumped",
     "hasNewSourceGroups",
     "hasAiWhiteboard",
     "aiSourceVisible",
@@ -237,6 +286,13 @@ for (const result of [desktop, mobile]) {
     "commentPosted",
     "noHorizontalOverflow"
   ]) {
+    if (key === "relatedQuestionJumped") {
+      const jump = result[key] || {};
+      if (!(jump.opened && jump.inView && jump.tracked && jump.hash === "#papers" && jump.cluster)) {
+        errors.push(`${result.name}: relatedQuestionJumped failed ${JSON.stringify(jump)}`);
+      }
+      continue;
+    }
     if (!result[key]) errors.push(`${result.name}: ${key} failed`);
   }
   if (result.overviewMetricBadges < 3) errors.push(`${result.name}: metric badges missing`);

@@ -19,7 +19,10 @@ const state = {
   commentsByPage: {},
   commentsStatusByPage: {},
   questions: [],
-  sources: []
+  sources: [],
+  openQuestionId: "",
+  pendingQuestionId: "",
+  suppressedQuestionToggleId: ""
 };
 
 const content = window.reviewContent;
@@ -180,6 +183,14 @@ function glossaryMetricKey(term) {
 
 function questionMetricKey(question) {
   return stableMetricKey("question", question.id || question.canonical_question);
+}
+
+function questionId(question) {
+  return String(question?.id || question?.canonical_question || "");
+}
+
+function questionById(id) {
+  return state.questions.find((question) => questionId(question) === String(id || ""));
 }
 
 function sourceMetricKey(source) {
@@ -1141,6 +1152,9 @@ function renderPapers() {
   const questions = priorityQuestions
     .filter((question) => state.cluster === "all" || question.cluster === state.cluster)
     .filter((question) => includesQuery(question.cluster, question.priority, question.priority_reason_zh, question.priority_reason_en, question.canonical_question, question.question_zh, question.likely_answer_pattern, question.answer_zh, question.sample_answer_zh, question.sample_answer_en, question.recurring_terms, question.english_keywords, question.appearances));
+  const openQuestionId = questions.some((question) => questionId(question) === state.openQuestionId)
+    ? state.openQuestionId
+    : "";
   return `
     <section class="panel">
       <div class="section-head split">
@@ -1159,7 +1173,7 @@ function renderPapers() {
         ? "Cluster priority follows the current review class first, then recent adjacent-course papers, then older historical papers."
         : "题簇优先级先按今年复习课主纲排序，再参考 2025/2022/2021 相邻课程真题，最后才看更早旧题。"}</p>
       <div class="question-list">
-        ${questions.map((question, index) => renderQuestion(question, index === 0)).join("") || `<p class="empty">${state.lang === "en" ? "No question matches current filters." : "当前筛选下没有真题。"}</p>`}
+        ${questions.map((question, index) => renderQuestion(question, openQuestionId ? questionId(question) === openQuestionId : index === 0)).join("") || `<p class="empty">${state.lang === "en" ? "No question matches current filters." : "当前筛选下没有真题。"}</p>`}
       </div>
     </section>
   `;
@@ -1175,8 +1189,9 @@ function renderQuestion(question, open) {
   const answer = textForLanguage(zhAnswer, question.likely_answer_pattern);
   const priority = question.priority || "P2";
   const priorityReason = localizedPair(question, "priority_reason_zh", "priority_reason_en");
+  const id = questionId(question);
   return `
-    <details class="question-item" data-question-id="${escapeHtml(question.id || "")}" ${open ? "open" : ""}>
+    <details class="question-item" data-question-id="${escapeHtml(id)}" ${open ? "open" : ""}>
       <summary>
         <span class="question-kicker">
           <em class="question-priority ${escapeHtml(priority.toLowerCase())}">${escapeHtml(priority)} · ${escapeHtml(priorityName(priority))}</em>
@@ -1387,7 +1402,13 @@ function renderMeta() {
   const searchLabel = document.querySelector(".search span");
   if (searchLabel) searchLabel.textContent = state.lang === "en" ? "Search" : "搜索";
   const searchInput = document.getElementById("search-input");
-  if (searchInput) searchInput.placeholder = state.lang === "en" ? "ASR / DDD / quality attribute" : "ASR / DDD / 质量属性";
+  if (searchInput) {
+    searchInput.placeholder = state.lang === "en" ? "ASR / DDD / quality attribute" : "ASR / DDD / 质量属性";
+    if (searchInput.value !== state.query) searchInput.value = state.query;
+  }
+  document.querySelectorAll("[data-priority]").forEach((button) => {
+    button.classList.toggle("active", button.dataset.priority === state.priority);
+  });
   const railLabel = document.querySelector(".rail-filter > span");
   if (railLabel) railLabel.textContent = state.lang === "en" ? "Priority" : "优先级";
 }
@@ -1406,7 +1427,55 @@ function setPageFromHash() {
   setPage(next);
   renderAll();
   trackPageView(state.page);
+  if (state.page === "papers" && state.pendingQuestionId) {
+    const targetQuestionId = state.pendingQuestionId;
+    state.pendingQuestionId = "";
+    requestAnimationFrame(() => revealQuestion(targetQuestionId, { track: true }));
+    return;
+  }
   window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function trackQuestionOpen(question) {
+  trackMetric("question_view", questionMetricKey(question), question.question_zh || question.canonical_question);
+}
+
+function revealQuestion(targetQuestionId, options = {}) {
+  const item = [...document.querySelectorAll(".question-item")]
+    .find((node) => node.dataset.questionId === String(targetQuestionId || ""));
+  const question = questionById(targetQuestionId);
+  if (!item || !question) return;
+  if (!item.open) {
+    item.dataset.programmaticOpen = "1";
+    item.open = true;
+  }
+  item.classList.add("is-targeted");
+  item.scrollIntoView({ block: "center", behavior: "smooth" });
+  item.querySelector("summary")?.focus({ preventScroll: true });
+  if (options.track) trackQuestionOpen(question);
+  window.setTimeout(() => {
+    if (state.suppressedQuestionToggleId === String(targetQuestionId || "")) {
+      state.suppressedQuestionToggleId = "";
+    }
+  }, 0);
+  window.setTimeout(() => item.classList.remove("is-targeted"), 1600);
+}
+
+function jumpToQuestion(targetQuestionId) {
+  const question = questionById(targetQuestionId);
+  const nextQuestionId = questionId(question);
+  if (!question || !nextQuestionId) return;
+  state.priority = "all";
+  state.cluster = question.cluster || "all";
+  state.query = "";
+  state.openQuestionId = nextQuestionId;
+  state.pendingQuestionId = nextQuestionId;
+  state.suppressedQuestionToggleId = nextQuestionId;
+  if (window.location.hash === "#papers") {
+    setPageFromHash();
+  } else {
+    window.location.hash = "papers";
+  }
 }
 
 function setupEvents() {
@@ -1505,7 +1574,8 @@ function setupEvents() {
         break;
       }
       case "jump-question":
-        state.cluster = "all";
+        event.preventDefault();
+        jumpToQuestion(target.dataset.questionId);
         break;
       case "open-whiteboard":
         event.preventDefault();
@@ -1569,8 +1639,19 @@ function setupEvents() {
   document.addEventListener("toggle", (event) => {
     const item = event.target.closest?.(".question-item");
     if (!item || !item.open) return;
-    const question = state.questions.find((entry) => (entry.id || "") === item.dataset.questionId);
-    if (question) trackMetric("question_view", questionMetricKey(question), question.question_zh || question.canonical_question);
+    if (item.dataset.programmaticOpen === "1") {
+      delete item.dataset.programmaticOpen;
+      return;
+    }
+    if (state.suppressedQuestionToggleId === item.dataset.questionId) {
+      state.suppressedQuestionToggleId = "";
+      return;
+    }
+    const question = questionById(item.dataset.questionId);
+    if (question) {
+      state.openQuestionId = questionId(question);
+      trackQuestionOpen(question);
+    }
   }, true);
 
   document.addEventListener("keydown", (event) => {
