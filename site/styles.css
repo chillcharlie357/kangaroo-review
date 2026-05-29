@@ -856,6 +856,25 @@ li {
   margin: 0 0 12px;
 }
 
+.related-questions-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.related-questions-head h3 {
+  margin: 0;
+}
+
+.related-questions-head span {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
 .deep-dive-list,
 .diagram-grid,
 .mini-question-list {
@@ -944,15 +963,27 @@ li {
 }
 
 
-.mini-question-list a {
+.mini-question-list button {
   display: grid;
   gap: 5px;
+  width: 100%;
   border: 1px solid var(--line);
   background: var(--panel);
   color: var(--ink);
   padding: 10px 12px;
+  font: inherit;
+  text-align: left;
   text-decoration: none;
   cursor: pointer;
+}
+
+.mini-question-list button.active {
+  border-color: rgba(181, 70, 52, 0.42);
+  background: linear-gradient(180deg, rgba(181, 70, 52, 0.08), var(--panel));
+}
+
+.mini-question-list button:hover {
+  border-color: rgba(31, 35, 40, 0.32);
 }
 
 .mini-question-list span {
@@ -1710,6 +1741,7 @@ li {
   .diagram-card,
   .diagram-card.compact,
   .question-body,
+  .mini-question-body .question-body,
   .comment-form,
   .whiteboard-row,
   .source-row,

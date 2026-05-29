@@ -124,14 +124,14 @@ async function checkViewport(name, viewport) {
     };
     window.__kangarooFetchWrapped = true;
   });
-  const relatedQuestionLink = page.locator('.mini-question-list a[data-action="toggle-inline-question"]').first();
+  const relatedQuestionLink = page.locator('.mini-question-list button[data-action="toggle-inline-question"]').first();
   const relatedQuestionId = await relatedQuestionLink.getAttribute("data-question-id");
   await relatedQuestionLink.click();
   await page.waitForFunction((id) => {
     const body = document.querySelector(`.mini-question-body[data-question-id="${id}"]`);
     if (!body || body.hidden) return false;
     const rect = body.getBoundingClientRect();
-    const inView = rect.top >= 0 && rect.bottom <= window.innerHeight;
+    const inView = rect.bottom > 0 && rect.top < window.innerHeight;
     const trackCount = window.__kangarooTrackPayloads?.filter((payload) => payload.event_type === "question_view" && String(payload.key || "").includes(id)).length || 0;
     const tracked = trackCount === 1;
     return inView && tracked;
@@ -142,17 +142,29 @@ async function checkViewport(name, viewport) {
     const rect = body.getBoundingClientRect();
     return {
       opened: true,
-      inView: rect.top >= 0 && rect.bottom <= window.innerHeight,
+      inView: rect.bottom > 0 && rect.top < window.innerHeight,
       trackCount: window.__kangarooTrackPayloads?.filter((payload) => payload.event_type === "question_view" && String(payload.key || "").includes(id)).length || 0,
       tracked: (window.__kangarooTrackPayloads?.filter((payload) => payload.event_type === "question_view" && String(payload.key || "").includes(id)).length || 0) === 1,
       hash: window.location.hash
     };
   }, relatedQuestionId);
+  const relatedChecklistKey = await page
+    .locator(`.mini-question-body[data-question-id="${relatedQuestionId}"] input[data-check-key]`)
+    .first()
+    .getAttribute("data-check-key");
+  await page
+    .locator(`.mini-question-body[data-question-id="${relatedQuestionId}"] input[data-check-key]`)
+    .first()
+    .check();
 
   await page.click('button[data-lang="zh"]');
   await page.click('a[data-page="papers"]');
   await page.waitForSelector(".question-item");
   await page.selectOption("#cluster-select", "all");
+  const relatedQuestionChecklistSynced = await page.evaluate((key) => {
+    return [...document.querySelectorAll("input[data-check-key]")]
+      .some((input) => input.dataset.checkKey === key && input.checked);
+  }, relatedChecklistKey);
   const questionCount = await page.locator(".question-item").count();
   const question = await page.locator(".question-item summary strong").first().innerText();
   const sampleAnswer = await page.locator(".sample-answer").evaluateAll((nodes) => {
@@ -232,6 +244,7 @@ async function checkViewport(name, viewport) {
     diagramRendered: diagramBox.complete && diagramBox.width > 120 && diagramBox.height > 60,
     diagramBox,
     relatedQuestionJumped,
+    relatedQuestionChecklistSynced,
     questionCount,
     questionHasChinese: /软件|架构|需求|列出|解释/.test(question),
     sampleAnswerHasChinese: /架构|需求|系统|质量|服务/.test(sampleAnswer),
@@ -265,6 +278,7 @@ for (const result of [desktop, mobile]) {
     "detailHasDeepDive",
     "diagramRendered",
     "relatedQuestionJumped",
+    "relatedQuestionChecklistSynced",
     "hasNewSourceGroups",
     "hasAiWhiteboard",
     "aiSourceVisible",

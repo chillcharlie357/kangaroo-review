@@ -32,7 +32,7 @@ const metricLabels = {
   page_click: { zh: "导航点击", en: "nav clicks" },
   topic_view: { zh: "知识点查看", en: "topic views" },
   glossary_view: { zh: "词条查看", en: "term views" },
-  question_view: { zh: "真题展开", en: "question opens" },
+  question_view: { zh: "真题查看", en: "question views" },
   source_preview: { zh: "预览", en: "previews" },
   source_open: { zh: "打开/下载", en: "opens/downloads" },
   diagram_open: { zh: "图解放大", en: "diagram zooms" },
@@ -430,6 +430,20 @@ function setChecklistDone(key, done, label = key) {
   };
   saveChecklist();
   updateChecklistSummary();
+  syncChecklistControls(key);
+}
+
+function syncChecklistControls(key) {
+  const checked = Boolean(state.checklist[key]?.done);
+  const text = checked
+    ? (state.lang === "en" ? "Done" : "已读")
+    : (state.lang === "en" ? "Todo" : "未读");
+  document.querySelectorAll("[data-check-key]").forEach((input) => {
+    if (input.dataset.checkKey !== key) return;
+    input.checked = checked;
+    const label = input.closest(".check-control")?.querySelector("span");
+    if (label) label.textContent = text;
+  });
 }
 
 function renderChecklistControl(kind, id, label, extraClass = "") {
@@ -796,6 +810,28 @@ function trackCurrentDetailView() {
   trackMetric("topic_view", topicMetricKey(state.selectedTopicId), topic ? labelText(topic.title) : state.selectedTopicId);
 }
 
+function questionPriorityRank(question) {
+  return { P0: 0, P1: 1, P2: 2 }[question.priority || "P2"] ?? 3;
+}
+
+function sortQuestionsForReview(questions) {
+  return [...questions].sort((left, right) => {
+    const priority = questionPriorityRank(left) - questionPriorityRank(right);
+    if (priority) return priority;
+    const leftCluster = left.cluster || "";
+    const rightCluster = right.cluster || "";
+    if (leftCluster !== rightCluster) return leftCluster.localeCompare(rightCluster);
+    return (left.question_zh || left.canonical_question || "").localeCompare(right.question_zh || right.canonical_question || "");
+  });
+}
+
+function relatedQuestionsForTopic(topic) {
+  if (!topic) return [];
+  return sortQuestionsForReview(
+    state.questions.filter((question) => (question.topicIds || []).includes(topic.id))
+  );
+}
+
 function setPage(page) {
   const nextPage = pages.has(page) ? page : "overview";
   if (state.page !== nextPage) state.lastTrackedTopic = "";
@@ -1034,7 +1070,7 @@ function renderKnowledge() {
 }
 
 function renderTopicDetail(topic) {
-  const relatedQuestions = state.questions.filter((question) => (question.topicIds || []).includes(topic.id));
+  const relatedQuestions = relatedQuestionsForTopic(topic);
   const related = relatedQuestions.length;
   const diagrams = (topic.diagramIds || []).map(diagramById).filter(Boolean);
   return `
@@ -1082,13 +1118,16 @@ function renderTopicDetail(topic) {
     ` : ""}
     ${relatedQuestions.length ? `
       <section class="related-questions">
-        <h3>${state.lang === "en" ? "Related past-paper practice" : "关联真题练习"}</h3>
+        <div class="related-questions-head">
+          <h3>${state.lang === "en" ? "Related past-paper practice" : "关联真题练习"}</h3>
+          <span>${relatedQuestions.length} ${state.lang === "en" ? "questions" : "题"}</span>
+        </div>
         <div class="mini-question-list">
-          ${relatedQuestions.slice(0, 5).map((question) => `
-            <a href="javascript:void(0)" data-action="toggle-inline-question" data-question-id="${escapeHtml(question.id)}">
+          ${relatedQuestions.map((question) => `
+            <button type="button" data-action="toggle-inline-question" data-question-id="${escapeHtml(question.id)}" aria-expanded="false">
               <span>${escapeHtml(question.cluster)}</span>
               <strong>${escapeHtml(state.lang === "en" ? question.canonical_question : question.question_zh || question.canonical_question)}</strong>
-            </a>
+            </button>
             <div class="mini-question-body" data-question-id="${escapeHtml(question.id)}" hidden>
               ${renderQuestionBody(question)}
             </div>
@@ -1565,7 +1604,10 @@ function setupEvents() {
         if (!body) return;
         const wasHidden = body.hidden;
         body.hidden = !body.hidden;
-        if (wasHidden) trackQuestionOpen(questionById(target.dataset.questionId));
+        target.setAttribute("aria-expanded", String(wasHidden));
+        target.classList.toggle("active", wasHidden);
+        const question = questionById(target.dataset.questionId);
+        if (wasHidden && question) trackQuestionOpen(question);
         break;
       }
       case "open-whiteboard":
