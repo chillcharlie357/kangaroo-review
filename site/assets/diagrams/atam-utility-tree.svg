@@ -1,8 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc">
-  <title id="title">ATAM utility tree</title>
+  <title id="title">ASR utility tree</title>
   <desc id="desc">Utility tree with quality attributes, scenarios, and priority tags.</desc>
   <rect width="1280" height="720" fill="#fffdf8"/>
-  <text x="68" y="82" font-family="Georgia,serif" font-size="34" font-weight="700" fill="#1f2328">ATAM: utility tree turns vague quality into prioritized scenarios</text>
+  <text x="68" y="82" font-family="Georgia,serif" font-size="34" font-weight="700" fill="#1f2328">ASR Utility Tree: prioritize quality scenarios</text>
   <text x="68" y="120" font-family="Avenir Next,Arial,sans-serif" font-size="18" fill="#667078">叶子节点常用 H/M/L 表示业务价值与技术难度/风险，优先分析 H/H。</text>
   <defs>
     <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">

@@ -225,8 +225,8 @@
     "diagram_id": "quality-scenario",
     "sample_answer_zh": "质量属性场景用于把模糊的质量需求改写成可测试的架构需求。一个完整场景包含六个部分：刺激源、刺激、环境、制品、响应、响应度量。例子：在系统正常运行时，心跳监控器发现订单服务无响应，系统应自动把请求切换到备用实例，并通知运维人员；用户请求继续得到服务，恢复时间不超过 30 秒，且不丢失已提交订单。六要素分别是：source=heartbeat monitor，stimulus=order service does not respond，environment=normal operation，artifact=order service and failover mechanism，response=fail over and notify operator，measure=recover within 30 seconds and no committed order lost。",
     "sample_answer_en": "A quality attribute scenario makes a vague quality measurable. Example availability scenario: during normal operation, a heartbeat monitor detects that the order service does not respond. The order service and failover mechanism switch requests to a standby instance, notify operators, and continue service. The response measure is recovery within 30 seconds with no committed order lost.",
-    "visual_hint_zh": "画六个节点：刺激源 -> 刺激 -> 环境/制品 -> 响应 -> 响应度量；每个节点写一个具体词，不要空泛。",
-    "visual_hint_en": "Draw six nodes from source to measure; each node needs a concrete phrase.",
+    "visual_hint_zh": "画成六要素表：source / stimulus / artifact / environment / response / response measure；若题目要求具体属性，就按该属性填一行。",
+    "visual_hint_en": "Draw it as a six-part scenario row: source, stimulus, artifact, environment, response, and response measure; fill one row for the requested quality attribute.",
     "priority": "P0",
     "priority_reason_zh": "今年复习课主纲与 2025 最新相邻课程资料同时命中，优先练到能直接成段作答。",
     "priority_reason_en": "Hit by the current review-class outline and the latest 2025 adjacent-course evidence; practice until you can write a full answer."
@@ -353,6 +353,7 @@
       "inputs",
       "outputs"
     ],
+    "diagram_id": "architecture-design-process",
     "sample_answer_zh": "软件架构过程可以概括为五个活动。首先识别和规约 ASR，输入是业务目标、需求、约束和利益相关者关注点，输出是优先级化的架构驱动因素。其次进行架构设计，选择模式、战术和分解方案，输出候选架构。第三是文档化，用视图、接口、约束和设计理由描述架构。第四是架构评估，根据质量属性场景发现风险、敏感点和权衡点。最后是架构演化，在需求和环境变化时维护架构一致性。",
     "sample_answer_en": "The architecture process includes identifying/specifying ASRs, designing architecture with patterns/tactics/decomposition, documenting views/interfaces/rationale, evaluating risks/sensitivity/tradeoffs, and evolving the architecture as requirements and environment change.",
     "priority": "P1",
@@ -392,9 +393,9 @@
       "tactics",
       "interfaces"
     ],
-    "likely_answer_pattern": "Confirm requirements, choose an element, identify ASRs, choose design concepts/patterns/tactics, capture preliminary views, instantiate elements, assign responsibilities, define interfaces, refine requirements, repeat.",
+    "likely_answer_pattern": "Use the Lecture 12 ADD 3.0 seven-step process: review inputs; establish the iteration goal by selecting drivers; choose elements to refine; choose design concepts; instantiate architectural elements, allocate responsibilities, and define interfaces; sketch views and record design decisions; analyze the current design and review the iteration goal/design purpose; iterate if necessary.",
     "question_zh": "描述 Attribute-Driven Design (ADD) 过程。",
-    "answer_zh": "按步骤答：确认需求，选择要分解的元素，识别 ASR，选择设计概念/模式/战术，捕获初步视图，实例化元素，分配职责，定义接口，验证并细化需求，然后重复迭代。",
+    "answer_zh": "按 Lecture 12 的 ADD 3.0 七步答：1 Review inputs；2 Establish iteration goal by selecting drivers；3 Choose one or more elements of the system to refine；4 Choose one or more design concepts that satisfy the selected drivers；5 Instantiate architectural elements, allocate responsibilities, and define interfaces；6 Sketch views and record design decisions；7 Perform analysis of current design and review iteration goal and achievement of design purpose。若目标尚未满足，则从 Step 7 回到 Step 2 继续迭代。",
     "topicIds": [
       "add",
       "design-playbook"
@@ -409,10 +410,10 @@
       "interfaces"
     ],
     "diagram_id": "add-roadmap",
-    "sample_answer_zh": "ADD 是属性驱动的迭代式架构设计方法。一次 ADD 迭代通常先确认已有足够需求信息，然后选择要分解的系统元素；接着识别该元素相关的 ASR，包括功能、质量属性和约束；再选择设计概念，例如架构模式、战术和参考架构，并记录初步视图；随后实例化架构元素，分配职责，定义元素之间的接口；最后检查设计是否满足需求和约束，必要时细化需求并继续下一轮迭代。ADD 的重点不是一次画完架构，而是用驱动因素逐步收敛设计。",
-    "sample_answer_en": "ADD is an iterative attribute-driven design method. In one iteration, confirm requirements, select an element, identify ASRs, choose design concepts such as patterns/tactics/reference architecture, instantiate elements, assign responsibilities, define interfaces, check against drivers, and iterate.",
-    "visual_hint_zh": "画成闭环，不要画成一次性瀑布。每轮都要有 driver、design concept、instantiation、review。",
-    "visual_hint_en": "Draw a loop, not a waterfall. Each iteration needs driver, concept, instantiation, and review.",
+    "sample_answer_zh": "ADD 3.0 是属性驱动、迭代式的软件架构设计方法。首先评审输入，确认 Design Purpose、Primary Functionality、Quality Attributes、Architectural Concerns、Constraints 等 driver 是否可用，并把上一轮设计或 brownfield 既有系统作为输入。然后为本轮迭代选择 driver 并建立 iteration goal；接着选择一个或多个要细化的系统元素；再选择能满足这些 driver 的设计概念，例如 reference architecture、deployment pattern、architectural/design pattern、tactic 或 framework；之后实例化架构元素、分配职责并定义接口；同时绘制视图草图并记录设计决策和 rationale；最后分析当前设计，检查本轮目标和整体 design purpose 是否达到。若还没有覆盖关键 driving architectural requirements 或重要风险，就回到 Step 2 继续下一轮，直到得到 refined software architecture design。",
+    "sample_answer_en": "ADD 3.0 is an iterative, attribute-driven architecture design method. First, review the inputs and check that drivers such as Design Purpose, Primary Functionality, Quality Attributes, Architectural Concerns, and Constraints are available; previous-iteration or brownfield designs can also flow into this step. Then establish the iteration goal by selecting drivers, choose one or more system elements to refine, choose design concepts that satisfy the selected drivers, instantiate architectural elements, allocate responsibilities and define interfaces, sketch views and record design decisions/rationale, and finally analyze the current design and review the iteration goal and achievement of the design purpose. If key driving requirements or risks remain, return to Step 2 for another iteration until a refined software architecture design is produced.",
+    "visual_hint_zh": "按课程图手画：上方五个红色 driver，下面 Step 1-7 纵向流程；Step 3-5 是关键设计步骤；Step 7 标出 Iterate if necessary 回到 Step 2，底部输出 refined architecture design。",
+    "visual_hint_en": "Draw the course figure: five red drivers on top, a vertical Step 1-7 process below, Steps 3-5 as key design steps, Step 7 looping back to Step 2 if necessary, and refined architecture design at the bottom.",
     "priority": "P0",
     "priority_reason_zh": "今年复习课主纲与 2025 最新相邻课程资料同时命中，优先练到能直接成段作答。",
     "priority_reason_en": "Hit by the current review-class outline and the latest 2025 adjacent-course evidence; practice until you can write a full answer."
@@ -1485,8 +1486,8 @@
     "sample_answer_zh": "Availability 是系统在被请求时能够提供正确服务的程度，常用 SLA 百分比表达。MTBF 是 Mean Time Between Failures，即两次故障之间的平均时间；MTTR 是 Mean Time To Repair，即平均修复时间。若用概率近似，系统可用性 = MTBF / (MTBF + MTTR)，也就是正常运行时间占正常运行时间与停机修复时间之和的比例。提高可用性可以通过故障检测、冗余、故障转移和快速恢复，但会增加成本和复杂度。",
     "sample_answer_en": "Availability is the probability or proportion of time that the system delivers correct service when needed. MTBF means Mean Time Between Failures and MTTR means Mean Time To Repair. A common estimate is Availability = MTBF / (MTBF + MTTR), or uptime divided by uptime plus downtime. Tactics include fault detection, redundancy, failover, and recovery, with cost and complexity tradeoffs.",
     "priority": "P2",
-    "priority_reason_zh": "可用性是质量属性例子，但 MTBF/MTTR 计算题源主要是 2022 相邻课程；今年复习只需作为可用性场景的辅助记忆。",
-    "priority_reason_en": "Availability is a useful quality-attribute example, but the MTBF/MTTR calculation prompt mainly comes from the 2022 adjacent course; keep it as supporting memory for availability scenarios."
+    "priority_reason_zh": "可用性和 MTBF/MTTR 公式在本课件出现；计算题型主要来自相邻/往年资料，今年复习时作为可用性场景的辅助记忆。",
+    "priority_reason_en": "Availability and the MTBF/MTTR formula appear in the current course slides; the calculation-style prompt mainly comes from adjacent/past papers, so keep it as supporting memory for availability scenarios."
   },
   {
     "id": "q_pattern_architecture_boundary",
@@ -1660,9 +1661,9 @@
   {
     "id": "q_operability_performance_scenarios",
     "cluster": "quality_attributes_asr",
-    "priority": "P1",
-    "priority_reason_zh": "质量属性六要素是今年复习课明确主线；可操作性/性能这一组合来自 2025 相邻课程和前人资料，作为六要素模板的高频练习例。",
-    "priority_reason_en": "The six-part quality scenario template is current review-class mainline; the operability/performance pairing comes from 2025 adjacent/senior material, so use it as a high-frequency practice example.",
+    "priority": "P2",
+    "priority_reason_zh": "质量属性六要素是今年复习课明确主线；性能场景可按本课件练，operability 组合主要来自 2025 相邻课程和前人资料，作为补充例题。",
+    "priority_reason_en": "The six-part quality scenario template is current review-class mainline; performance scenarios are course-aligned, while the operability pairing mainly comes from 2025 adjacent/senior material, so keep it as supplemental practice.",
     "canonical_question": "Describe operability and performance quality attribute scenarios.",
     "question_zh": "如何描述可操作性和性能的质量属性场景？",
     "appearances": [

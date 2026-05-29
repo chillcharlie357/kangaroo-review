@@ -1269,12 +1269,167 @@ function renderDeepDive(topic) {
   `;
 }
 
+function renderDiagramVisual(diagram, mode = "card") {
+  const label = escapeHtml(labelText(diagram.title));
+  if (diagram.component === "add-roadmap") return renderAddRoadmapDiagram(mode, label);
+  if (diagram.component === "architecture-process") return renderArchitectureProcessDiagram(mode, label);
+  return `<img class="diagram-image" src="${escapeHtml(diagram.src)}" alt="${label}" />`;
+}
+
+function renderAddRoadmapDiagram(mode, label) {
+  const steps = [
+    ["Step 1", "Review inputs", "评审输入"],
+    ["Step 2", "Establish iteration goal by selecting drivers", "选择驱动因素，确定迭代目标"],
+    ["Step 3", "Choose one or more elements of the system to refine", "选择要细化的系统元素"],
+    ["Step 4", "Choose one or more design concepts that satisfy the selected drivers", "选择满足驱动因素的设计概念"],
+    ["Step 5", "Instantiate architectural elements, allocate responsibilities, and define interfaces", "实例化元素、分配职责并定义接口"],
+    ["Step 6", "Sketch views and record design decisions", "草拟视图并记录设计决策"],
+    ["Step 7", "Perform analysis of current design and review iteration goal and achievement of design purpose", "分析当前设计，并复核迭代目标与设计目的"]
+  ];
+  const drivers = [
+    ["Design Purpose", "设计目的"],
+    ["Primary Functionality", "主要功能"],
+    ["Quality Attributes", "质量属性"],
+    ["Architectural Concerns", "架构关注点"],
+    ["Constraints", "约束"]
+  ];
+  return `
+    <div class="html-diagram add-roadmap-html ${escapeHtml(mode)}" role="img" aria-label="${label}">
+      <div class="add-drivers">
+        ${drivers.map(([en, zh]) => `
+          <div class="add-driver">
+            <strong>${escapeHtml(en)}</strong>
+            <span>${escapeHtml(zh)}</span>
+          </div>
+        `).join("")}
+      </div>
+      <div class="add-main">
+        <div class="add-brownfield"><span>From previous round of iterations or from existing system (brownfield development)</span></div>
+        <div class="add-iterate"><span>Iterate if necessary</span></div>
+        <div class="add-steps">
+          ${steps.map(([number, en, zh], index) => `
+            <div class="add-step ${index >= 2 && index <= 4 ? "key" : ""}">
+              <b>${escapeHtml(number)}</b>
+              <span>${escapeHtml(en)}</span>
+              <em>${escapeHtml(zh)}</em>
+            </div>
+          `).join("")}
+        </div>
+        <div class="add-output">
+          <span>(Refined) Software</span>
+          <strong>Architecture Design</strong>
+          <em>细化后的软件架构设计</em>
+        </div>
+        <div class="add-legend">
+          <b>Key</b>
+          <span><i class="driver"></i>Driver</span>
+          <span><i class="design"></i>Architecture design</span>
+          <span><i class="process"></i>Process step</span>
+          <span><i class="key-step"></i>Key design step</span>
+          <span><i class="solid-line"></i>Precedence</span>
+          <span><i class="dashed-line"></i>Artifact flow</span>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderArchitectureProcessDiagram(mode, label) {
+  return `
+    <div class="html-diagram arch-process-html ${escapeHtml(mode)}" role="img" aria-label="${label}">
+      <svg class="arch-links" viewBox="0 0 1200 720" preserveAspectRatio="none" aria-hidden="true">
+        <defs>
+          <marker id="archArrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+            <path d="M1,1 L11,6 L1,11 Z"></path>
+          </marker>
+          <marker id="archSoftArrow" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto">
+            <path d="M1,1 L13,7 L1,13 Z"></path>
+          </marker>
+        </defs>
+        <path class="arch-arrow" d="M125 642 C42 520 52 260 112 176"></path>
+        <path class="arch-arrow" d="M196 224 C180 280 176 330 190 368"></path>
+        <path class="arch-arrow" d="M302 450 C360 430 404 402 435 372"></path>
+        <path class="arch-arrow" d="M496 574 C482 520 482 462 510 424"></path>
+        <path class="arch-arrow" d="M548 232 C575 282 568 330 540 350"></path>
+        <path class="arch-soft" d="M322 246 C382 292 414 326 452 348"></path>
+        <path class="arch-arrow" d="M590 360 C650 318 704 282 760 252"></path>
+        <path class="arch-soft" d="M585 430 C660 492 722 515 798 530"></path>
+        <path class="arch-arrow" d="M872 306 C902 378 898 432 864 472"></path>
+        <path class="arch-arrow" d="M964 526 C1010 486 1048 432 1072 374"></path>
+        <path class="arch-arrow" d="M1103 440 C1128 512 1126 562 1104 604"></path>
+        <path class="arch-soft" d="M966 570 C1012 604 1042 622 1080 640"></path>
+        <path class="arch-arrow" d="M210 650 C420 690 760 690 1030 646"></path>
+        <path class="arch-arrow" d="M234 668 C472 730 834 728 1088 694"></path>
+        <path class="arch-arrow" d="M242 632 C440 620 636 598 802 552"></path>
+      </svg>
+
+      <section class="arch-node arch-asr">
+        <h4>Specifying ASRs</h4>
+        <div class="people-cluster mixed"></div>
+        <p>规约架构显著需求</p>
+      </section>
+
+      <section class="arch-node arch-patterns">
+        <h4>Patterns and tactics</h4>
+        <div class="doc-stack small"><i></i><i></i><i><span></span><span></span></i></div>
+        <p>模式与战术约束设计选择</p>
+      </section>
+
+      <section class="arch-node arch-qas">
+        <div class="scenario-stack"><i></i><i></i><i></i><i></i></div>
+        <h4>Prioritized<br>Quality Attribute<br>Scenarios</h4>
+      </section>
+
+      <section class="arch-node arch-stakeholders">
+        <div class="people-row"></div>
+        <h4>Stakeholders</h4>
+      </section>
+
+      <section class="arch-node arch-design main-circle">
+        <h4>Architecture<br>design</h4>
+        <p>依据 ASR、约束和战术生成候选架构</p>
+      </section>
+
+      <section class="arch-node arch-req">
+        <div class="scenario-stack small"><i></i><i></i><i></i></div>
+        <h4>Requirements,<br>constraints</h4>
+      </section>
+
+      <section class="arch-node arch-candidates">
+        <h4>“Sketches” of candidate views,<br>Determined by patterns</h4>
+        <div class="view-stack">
+          <i></i><i></i><i><span></span><span></span><span></span><span></span></i>
+        </div>
+        <em>test</em>
+      </section>
+
+      <section class="arch-node arch-doc main-circle">
+        <h4>Documenting</h4>
+        <p>记录视图、接口、映射与 rationale</p>
+      </section>
+
+      <section class="arch-node arch-chosen">
+        <h4>Chosen, combined<br>views plus doc'n.<br>beyond views</h4>
+        <div class="doc-stack tall"><i></i><i></i><i><span></span><span></span></i></div>
+      </section>
+
+      <section class="arch-node arch-eval">
+        <h4>Architecture<br>Evaluation</h4>
+        <div class="people-cluster mixed"></div>
+        <p>用场景评估并反馈</p>
+      </section>
+    </div>
+  `;
+}
+
 function renderDiagramCard(diagram, compact = false) {
   return `
-    <article class="diagram-card ${compact ? "compact" : ""}">
+    <article class="diagram-card ${compact ? "compact" : ""} ${diagram.component ? "component-diagram" : ""}">
       <button type="button" data-action="open-diagram" data-diagram-id="${escapeHtml(diagram.id)}">
-        <img src="${escapeHtml(diagram.src)}" alt="${escapeHtml(labelText(diagram.title))}" />
-        <span>${state.lang === "en" ? "Zoom" : "放大"}</span>
+        <div class="diagram-preview">
+          ${renderDiagramVisual(diagram, "card")}
+        </div>
+        <span class="zoom-label">${state.lang === "en" ? "Zoom" : "放大"}</span>
       </button>
       <div>
         <strong>${htmlText(diagram.title)}</strong>
@@ -1757,12 +1912,12 @@ function setupEvents() {
         closeModal();
         break;
       case "zoom-board": {
-        const image = document.querySelector(".modal-image");
-        const current = Number(image?.dataset.zoom || "1");
+        const zoomTarget = document.querySelector(".modal-zoom-target") || document.querySelector(".modal-image");
+        const current = Number(zoomTarget?.dataset.zoom || "1");
         const next = Math.min(3, Math.max(0.75, current + Number(target.dataset.delta)));
-        if (image) {
-          image.dataset.zoom = String(next);
-          image.style.width = `${Math.round(next * 100)}%`;
+        if (zoomTarget) {
+          zoomTarget.dataset.zoom = String(next);
+          zoomTarget.style.width = `${Math.round(next * 100)}%`;
         }
         break;
       }
@@ -1824,7 +1979,7 @@ function openWhiteboard(id) {
         </div>
       </header>
       <div class="modal-scroll">
-        <img class="modal-image" data-zoom="1" src="${escapeHtml(board.src)}" alt="${escapeHtml(labelText(board.title))}" />
+        <img class="modal-image modal-zoom-target" data-zoom="1" src="${escapeHtml(board.src)}" alt="${escapeHtml(labelText(board.title))}" />
       </div>
     </section>
   `);
@@ -1849,7 +2004,9 @@ function openDiagram(id) {
         </div>
       </header>
       <div class="modal-scroll">
-        <img class="modal-image" data-zoom="1" src="${escapeHtml(diagram.src)}" alt="${escapeHtml(labelText(diagram.title))}" />
+        <div class="modal-diagram-wrap modal-zoom-target" data-zoom="1">
+          ${renderDiagramVisual(diagram, "modal")}
+        </div>
       </div>
     </section>
   `);

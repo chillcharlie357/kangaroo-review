@@ -74,8 +74,8 @@ window.reviewContent = {
         "en": "Current Review-Class Focus"
       },
       "summary": {
-        "zh": "先拿这些：ADD 3.0、微服务、DDD、企业架构。李杉杉复习课明确说这些约 30-40 分，设计题大概率继续偏 DDD/ADD。",
-        "en": "Start here: ADD 3.0, microservices, DDD, and enterprise architecture. Li Shanshan's review class said these account for about 30-40 points, with design questions likely around DDD/ADD."
+        "zh": "先拿这些：ADD 3.0、微服务、DDD、企业架构。李杉杉复习课把后几块合计约 30-40 分；20 分设计题往年偏 DDD，今年仍要重点练 DDD/ADD 的流程化作答。",
+        "en": "Start here: ADD 3.0, microservices, DDD, and enterprise architecture. Li Shanshan's review class put the later blocks at about 30-40 points; the 20-point design question has historically leaned DDD, so practice process-based DDD/ADD answers."
       },
       "items": [
         {
@@ -256,7 +256,9 @@ window.reviewContent = {
           }
         }
       ],
-      "diagramIds": []
+      "diagramIds": [
+        "architecture-design-process"
+      ]
     },
     {
       "id": "quality",
@@ -445,6 +447,7 @@ window.reviewContent = {
         }
       ],
       "diagramIds": [
+        "architecture-design-process",
         "atam-utility-tree",
         "quality-scenario"
       ]
@@ -461,60 +464,56 @@ window.reviewContent = {
         "en": "ADD is a structured, iterative architecture design method. The key is not the definition, but using drivers to organize design iterations."
       },
       "answerFrame": {
-        "zh": "按流程答：确认设计目标，选择驱动因素，细化系统元素，选择设计概念，实例化元素并分配职责，定义接口，文档化，评审与迭代。",
-        "en": "Answer by process: establish design purpose, select drivers, refine system elements, choose design concepts, instantiate elements and responsibilities, define interfaces, document, review, iterate."
+        "zh": "按 Lecture 12 的 7 步答：1 Review inputs；2 Establish iteration goal by selecting drivers；3 Choose elements to refine；4 Choose design concepts；5 Instantiate architectural elements / allocate responsibilities / define interfaces；6 Sketch views and record design decisions；7 Perform analysis of current design and review iteration goal and achievement of design purpose，然后必要时继续迭代。",
+        "en": "Use the Lecture 12 seven-step process: 1 Review inputs; 2 Establish the iteration goal by selecting drivers; 3 Choose elements to refine; 4 Choose design concepts; 5 Instantiate architectural elements, allocate responsibilities, and define interfaces; 6 Sketch views and record design decisions; 7 Perform analysis of the current design and review the iteration goal and achievement of the design purpose, then iterate if necessary."
       },
       "bullets": [
         {
-          "zh": "驱动因素包括功能需求、质量属性、设计目标、约束。",
-          "en": "Drivers include functional requirements, quality attributes, design goals, and constraints."
+          "zh": "图中红色 driver 是 Design Purpose、Primary Functionality、Quality Attributes、Architectural Concerns、Constraints；上一轮设计或 brownfield 既有系统通过 artifact flow 进入 Step 1。",
+          "en": "The red drivers in the slide are Design Purpose, Primary Functionality, Quality Attributes, Architectural Concerns, and Constraints; previous-iteration or brownfield designs enter Step 1 through the artifact-flow path."
         },
         {
-          "zh": "复习课提到酒店定价系统案例：可按 roadmap 做 3-4 轮迭代。",
-          "en": "The review class mentioned a hotel pricing case: use a roadmap of about 3-4 design iterations."
+          "zh": "Step 1 是 Review inputs，不是建立目标；Step 2 才是在驱动因素中选择本轮 iteration goal。",
+          "en": "Step 1 is Review inputs, not goal establishment; Step 2 selects the iteration goal from the drivers."
         },
         {
-          "zh": "常见轮次：整体结构、核心功能、质量属性、开发/部署/运营需求。",
-          "en": "Common iterations: overall structure, core functionality, quality attributes, development/deployment/operations concerns."
+          "zh": "复习课案例里的 iteration goal 可参考：整体结构、核心功能、质量属性、开发/部署/运营需求；但这不是 ADD 3.0 固定步骤，固定步骤仍以上面的 Step 1-7 为准。",
+          "en": "Review-class cases may choose iteration goals such as overall structure, core functionality, quality attributes, and development/deployment/operations concerns; these are not fixed ADD 3.0 steps, whose fixed process remains Step 1-7 above."
         },
         {
-          "zh": "ADD 3.0 和博客中的 ADD 2.0 步骤表述不同，但考试可统一成“驱动因素 -> 设计概念 -> 元素/职责/接口 -> 评审迭代”。",
-          "en": "ADD 3.0 and ADD 2.0 are phrased differently, but exam answers can unify them as “drivers -> design concepts -> elements/responsibilities/interfaces -> review iteration”."
-        },
-        {
-          "zh": "酒店定价案例可作为模板：先找外部系统、核心功能、质量属性和约束，再排 3-4 轮 roadmap。",
-          "en": "The hotel pricing case is a useful template: identify external systems, core functions, quality attributes, and constraints, then plan 3-4 roadmap iterations."
+          "zh": "终止条件：所有 driving architectural requirements 已有设计决策、重要技术风险已缓解，或架构设计时间耗尽；不要把 ADD 画成一次性瀑布。",
+          "en": "Termination criteria: design decisions have covered the driving architectural requirements, key technical risks have been mitigated, or the architecture-design timebox is consumed; do not draw ADD as one-shot waterfall."
         }
       ],
       "sources": [
         "Li Shanshan review notes",
-        "Lecture 12/13 extracted text",
+        "Lecture 12 ADD 3.0 slide pages 34-70",
         "Lecture 14 course review slide"
       ],
       "group": "process",
-      "sourceConfidence": "Li review-class + Lecture 12/13 + EagleBear designing notes",
+      "sourceConfidence": "Li review-class + Lecture 12 ADD 3.0 slide + course-figure correction",
       "examWeight": "设计题核心",
       "deepDive": [
         {
           "title": {
-            "zh": "ADD 核心闭环",
-            "en": "ADD core loop"
+            "zh": "ADD 3.0 课程原图口径",
+            "en": "ADD 3.0 slide-faithful process"
           },
           "summary": {
-            "zh": "复习课明确说 ADD 是今年主线之一。",
-            "en": "The review class made ADD a major focus."
+            "zh": "复习课明确说 ADD 是今年主线之一；图解必须以 Lecture 12 的 ADD 3.0 method 图为准。",
+            "en": "The review class made ADD a major focus; the diagram should follow the Lecture 12 ADD 3.0 method figure."
           },
           "must": {
-            "zh": "目标、驱动因素、设计概念、元素实例化、职责分配、接口定义、文档化、评审和下一轮迭代。",
-            "en": "Goal, drivers, design concepts, element instantiation, responsibility assignment, interface definition, documentation, review, next iteration."
+            "zh": "五类 driver + 七步：Review inputs；Establish iteration goal by selecting drivers；Choose elements to refine；Choose design concepts；Instantiate/allocate/define interfaces；Sketch views and record decisions；Perform analysis of current design and review goal/purpose。",
+            "en": "Five driver classes plus seven steps: Review inputs; Establish iteration goal by selecting drivers; Choose elements to refine; Choose design concepts; Instantiate/allocate/define interfaces; Sketch views and record decisions; Perform analysis of current design and review goal/purpose."
           },
           "answer": {
-            "zh": "用图中的闭环答：不是一次画完，而是每轮选择一个元素和一组 driver，逐步细化。",
-            "en": "Answer with the loop: each iteration chooses an element and drivers, then refines architecture."
+            "zh": "手画时先画上方五个红色 driver，再画 Step 1-7 的纵向流程；Step 7 后写 Iterate if necessary，并输出 (Refined) Software Architecture Design。",
+            "en": "When drawing by hand, put the five red drivers on top, then draw the vertical Step 1-7 flow; after Step 7 write Iterate if necessary and output (Refined) Software Architecture Design."
           },
           "trap": {
-            "zh": "不要背成线性瀑布。ADD 重点是以 ASR 驱动的迭代式收敛。",
-            "en": "Do not describe it as waterfall; ADD is ASR-driven and iterative."
+            "zh": "不要用自创简化图替代课程图；不要漏 Architectural Concerns，也不要把 Step 1 写成建立目标。",
+            "en": "Do not replace the course figure with an invented simplification; do not omit Architectural Concerns or turn Step 1 into goal establishment."
           }
         },
         {
@@ -804,8 +803,8 @@ window.reviewContent = {
             "en": "EA maps business goals to multi-layer architecture governance."
           },
           "must": {
-            "zh": "业务架构、应用架构、数据架构、技术架构；5A 可补安全/治理等扩展视角。",
-            "en": "Business, application, data, technology architecture; 5A may add security/governance."
+            "zh": "业务架构、应用架构、数据架构、技术架构；若材料提 5A，优先按安全架构补充，治理作为方法/机制说明。",
+            "en": "Business, application, data, and technology architecture; if a source mentions 5A, add security architecture first, while governance is better treated as a method/mechanism."
           },
           "answer": {
             "zh": "先写现状和目标，再写差距、路线图和治理机制。",
@@ -1026,6 +1025,7 @@ window.reviewContent = {
         }
       ],
       "diagramIds": [
+        "architecture-design-process",
         "views-and-beyond",
         "three-tier"
       ]
@@ -1475,6 +1475,7 @@ window.reviewContent = {
         }
       ],
       "diagramIds": [
+        "architecture-design-process",
         "three-tier",
         "cache-invalidation",
         "add-roadmap"
@@ -2240,8 +2241,8 @@ window.reviewContent = {
       },
       "items": [
         {
-          "zh": "ADD 3.0 流程 + 酒店定价 roadmap 模板",
-          "en": "ADD 3.0 process + hotel pricing roadmap template"
+          "zh": "ADD 3.0 七步流程 + driver/iteration 口径",
+          "en": "ADD 3.0 seven-step process + driver/iteration wording"
         },
         {
           "zh": "微服务拆分/通信/部署/可观测性模式",
@@ -2395,8 +2396,8 @@ window.reviewContent = {
       },
       "points": [
         {
-          "zh": "ADD 3.0：确定目标、选驱动因素、细化元素、设计方案、实例化/文档化/评审，通常 3-4 轮迭代。",
-          "en": "ADD 3.0: establish goal, select drivers, refine elements, design solution, instantiate/document/review, usually 3-4 iterations."
+          "zh": "ADD 3.0：Review inputs；按 driver 建立本轮 iteration goal；选择要细化的元素；选择 design concepts；实例化元素、分配职责、定义接口；画视图并记录决策；分析当前设计并评审本轮目标与 design purpose，必要时继续迭代。",
+          "en": "ADD 3.0: review inputs; establish the iteration goal by selecting drivers; choose elements to refine; choose design concepts; instantiate elements, allocate responsibilities, and define interfaces; sketch views and record decisions; analyze the current design and review the iteration goal/design purpose, then iterate if necessary."
         },
         {
           "zh": "微服务：不重定义，重特性、与 SOA/分层对比、拆分/通信/部署/可观测性模式。",
@@ -2482,16 +2483,16 @@ window.reviewContent = {
       "id": "quality-scenario",
       "src": "assets/diagrams/quality-scenario.svg",
       "title": {
-        "zh": "质量属性场景六要素",
-        "en": "Six-Part Quality Attribute Scenario"
+        "zh": "质量属性场景示例表",
+        "en": "Quality Attribute Scenario Example Table"
       },
       "note": {
-        "zh": "用一个结账性能场景把 source、stimulus、environment、artifact、response、measure 全部填实。",
-        "en": "A concrete checkout latency scenario that fills source, stimulus, environment, artifact, response, and measure."
+        "zh": "按原始资料表格重绘：七列对应质量属性、刺激源、刺激、工件、环境、响应、响应度量。",
+        "en": "Redrawn from the source table: the seven columns are quality attribute, stimulus source, stimulus, artifact, environment, response, and response measure."
       },
       "use": {
-        "zh": "适合质量属性、ASR、设计战术题。手画时画成从左到右的六节点流程。",
-        "en": "Use for quality attribute, ASR, and tactic questions. Draw six nodes from left to right."
+        "zh": "适合直接背六要素和各质量属性例子；考场可画成一行六要素表，再填入题目给定场景。",
+        "en": "Use it to memorize the six scenario slots and examples for each quality attribute; in an exam, draw one row and fill it with the given scenario."
       },
       "topicIds": [
         "quality",
@@ -2504,19 +2505,47 @@ window.reviewContent = {
       ]
     },
     {
-      "id": "add-roadmap",
-      "src": "assets/diagrams/add-roadmap.svg",
+      "id": "architecture-design-process",
+      "component": "architecture-process",
       "title": {
-        "zh": "ADD 3.0 迭代路线图",
-        "en": "ADD 3.0 Iteration Roadmap"
+        "zh": "架构设计、文档化与评估过程图",
+        "en": "Architecture Design, Documentation, and Evaluation Process"
       },
       "note": {
-        "zh": "把 ADD 写成“目标 -> 驱动因素 -> 设计概念 -> 实例化 -> 文档/评审 -> 重复”的闭环。",
-        "en": "Shows ADD as a loop: goal, drivers, concepts, instantiation, documentation/review, repeat."
+        "zh": "按原始过程图重绘：stakeholders、ASR、需求和约束进入架构设计；patterns/tactics 约束候选视图；文档化产出 chosen views 与 beyond-view documentation，再进入架构评估并反馈。",
+        "en": "Redrawn from the source process figure: stakeholders, ASRs, requirements, and constraints feed architecture design; patterns/tactics shape candidate views; documentation produces chosen views and beyond-view documentation for evaluation and feedback."
       },
       "use": {
-        "zh": "适合描述 ADD 过程和架构设计过程。",
-        "en": "Use for ADD process and architecture design process answers."
+        "zh": "适合回答架构活动、ASR 到设计、视图文档化、架构评估闭环这类题；不要只背线性阶段，要说明输入、产物和反馈。",
+        "en": "Use for questions about architecture activities, ASR-to-design flow, documentation, and architecture evaluation; explain inputs, artifacts, and feedback instead of only listing stages."
+      },
+      "topicIds": [
+        "foundation",
+        "asr",
+        "views",
+        "design-playbook"
+      ],
+      "questionIds": [
+        "q_arch_process",
+        "q_asr_sources",
+        "q_different_views",
+        "q_doc_package"
+      ]
+    },
+    {
+      "id": "add-roadmap",
+      "component": "add-roadmap",
+      "title": {
+        "zh": "ADD 3.0 方法流程图",
+        "en": "ADD 3.0 Method Process"
+      },
+      "note": {
+        "zh": "按 Lecture 12 课程原图口径重绘为 HTML 图解：五类 driver 输入 Step 1，Step 1-7 串行推进，Step 7 后必要时回到 Step 2 继续迭代。",
+        "en": "Redrawn as an HTML diagram from the Lecture 12 figure: five driver classes feed Step 1, Steps 1-7 proceed in order, and Step 7 loops back to Step 2 if another iteration is needed."
+      },
+      "use": {
+        "zh": "适合描述 ADD 过程和架构设计过程；手画时保留五个 driver、七个步骤、iterate-if-necessary 和最终 refined design。",
+        "en": "Use for ADD-process answers; when drawing by hand, keep the five drivers, seven steps, iterate-if-necessary path, and final refined design."
       },
       "topicIds": [
         "add",
@@ -2552,12 +2581,12 @@ window.reviewContent = {
       "id": "microservice-migration",
       "src": "assets/diagrams/microservice-migration.svg",
       "title": {
-        "zh": "单体到微服务迁移图",
-        "en": "Monolith-to-Microservices Migration"
+        "zh": "微服务迁移答题综合骨架",
+        "en": "Microservice Migration Answer Skeleton"
       },
       "note": {
-        "zh": "强调边界、独立部署、数据自治、事件通信和可观测性，而不是只说“拆小”。",
-        "en": "Highlights boundaries, deployment autonomy, data ownership, events, and observability instead of merely splitting small services."
+        "zh": "答题综合骨架，非单页 PPT 原图：强调边界、独立部署、数据自治、事件通信和可观测性，而不是只说“拆小”。",
+        "en": "Composite answer skeleton, not a single PPT source figure: highlights boundaries, deployment autonomy, data ownership, events, and observability instead of merely splitting small services."
       },
       "use": {
         "zh": "适合微服务 vs SOA、迁移设计和现代架构论述。",
@@ -2602,16 +2631,16 @@ window.reviewContent = {
       "id": "cache-invalidation",
       "src": "assets/diagrams/cache-invalidation.svg",
       "title": {
-        "zh": "分布式缓存失效时序图",
-        "en": "Distributed Cache Invalidation Sequence"
+        "zh": "分布式缓存失效辅助时序图",
+        "en": "Distributed Cache Invalidation Answer Sequence"
       },
       "note": {
-        "zh": "先提交数据库，再发布失效事件，由 broker/coordinator 通知其他缓存。",
-        "en": "Commit authoritative data first, then publish invalidation through a broker/coordinator."
+        "zh": "辅助答案时序图，非原题 Figure 1：先提交数据库，再发布失效事件，由 broker/coordinator 通知其他缓存。",
+        "en": "Answer-aid sequence, not the original Figure 1: commit authoritative data first, then publish invalidation through a broker/coordinator."
       },
       "use": {
-        "zh": "适合缓存一致性、broker/pub-sub、connector/adapter 设计题。",
-        "en": "Use for cache consistency, broker/pub-sub, and connector/adapter design questions."
+        "zh": "适合缓存一致性、broker/pub-sub、connector/adapter 设计题；原题图有 server/cache cluster，本图只画一种可行方案。",
+        "en": "Use for cache consistency, broker/pub-sub, and connector/adapter design questions; the original prompt has a server/cache cluster, while this diagram shows one possible solution."
       },
       "topicIds": [
         "design-playbook",
@@ -2627,16 +2656,16 @@ window.reviewContent = {
       "id": "atam-utility-tree",
       "src": "assets/diagrams/atam-utility-tree.svg",
       "title": {
-        "zh": "ATAM 效用树",
-        "en": "ATAM Utility Tree"
+        "zh": "ASR 效用树",
+        "en": "ASR Utility Tree"
       },
       "note": {
         "zh": "把 vague quality 变成质量属性、场景、度量和优先级叶节点。",
         "en": "Turns vague qualities into quality attributes, scenarios, measures, and prioritized leaves."
       },
       "use": {
-        "zh": "适合 ASR 识别、效用树、ATAM 输出题。",
-        "en": "Use for ASR identification, utility tree, and ATAM output questions."
+        "zh": "适合 ASR 识别和效用树题；ATAM 输出题作为历史保底一起复习。",
+        "en": "Use for ASR identification and utility-tree questions; keep ATAM output questions as historical fallback practice."
       },
       "topicIds": [
         "asr",

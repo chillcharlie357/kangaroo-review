@@ -304,7 +304,7 @@
     "needs_ocr": false,
     "preview_path": "../data/blog/eaglebear-20764-designing.html",
     "open_path": "https://eaglebear2002.github.io/20764/",
-    "summary": "本科架构设计参考，补充 ASR、设计决定分类、ADD 2.0/3.0 相近流程和设计策略。"
+    "summary": "本科架构设计参考，补充 ASR、设计决定分类和通用设计策略；ADD 流程以本课程 Lecture 12 的 ADD 3.0 七步原图为准。"
   },
   {
     "path": "blog/eaglebear-23562-document",

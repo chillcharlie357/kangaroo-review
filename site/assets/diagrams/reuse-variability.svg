@@ -3,31 +3,37 @@
   <desc id="desc">Software product line architecture with variation points, mechanisms, and binding times.</desc>
   <rect width="1280" height="720" fill="#fffdf8"/>
   <text x="68" y="82" font-family="Georgia,serif" font-size="34" font-weight="700" fill="#1f2328">SPL variability: common core plus controlled variation</text>
-  <text x="68" y="120" font-family="Avenir Next,Arial,sans-serif" font-size="18" fill="#667078">答题不要说“复制改一改”；要写核心资产、变化点、变化机制和绑定时间。</text>
+  <text x="68" y="120" font-family="Avenir Next,Arial,sans-serif" font-size="18" fill="#667078">答题辅助图：不要说“复制改一改”；要写核心资产、变化点、变化机制和绑定时间。</text>
   <g font-family="Avenir Next,Arial,sans-serif">
-    <rect x="90" y="210" width="310" height="250" fill="#ffffff" stroke="#b54634" stroke-width="3"/>
-    <text x="130" y="256" font-size="24" font-weight="700" fill="#b54634">Core Assets</text>
-    <text x="130" y="300" font-size="18" fill="#1f2328">reference architecture</text>
-    <text x="130" y="330" font-size="18" fill="#1f2328">shared components</text>
-    <text x="130" y="360" font-size="18" fill="#1f2328">tests and docs</text>
-    <rect x="485" y="210" width="310" height="250" fill="#ffffff" stroke="#355f91" stroke-width="3"/>
-    <text x="525" y="256" font-size="24" font-weight="700" fill="#355f91">Variation Points</text>
-    <text x="525" y="300" font-size="18" fill="#1f2328">features, plug-ins, configs</text>
-    <text x="525" y="330" font-size="18" fill="#1f2328">optional service</text>
-    <text x="525" y="360" font-size="18" fill="#1f2328">alternative algorithm</text>
-    <rect x="880" y="210" width="310" height="250" fill="#ffffff" stroke="#14756f" stroke-width="3"/>
-    <text x="920" y="256" font-size="24" font-weight="700" fill="#14756f">Binding Time</text>
-    <text x="920" y="300" font-size="18" fill="#1f2328">build time</text>
-    <text x="920" y="330" font-size="18" fill="#1f2328">startup time</text>
-    <text x="920" y="360" font-size="18" fill="#1f2328">runtime</text>
+    <rect x="62" y="210" width="260" height="250" fill="#ffffff" stroke="#b54634" stroke-width="3"/>
+    <text x="96" y="256" font-size="23" font-weight="700" fill="#b54634">Core Assets</text>
+    <text x="96" y="300" font-size="17" fill="#1f2328">reference architecture</text>
+    <text x="96" y="330" font-size="17" fill="#1f2328">shared components</text>
+    <text x="96" y="360" font-size="17" fill="#1f2328">tests and docs</text>
+    <rect x="362" y="210" width="260" height="250" fill="#ffffff" stroke="#355f91" stroke-width="3"/>
+    <text x="396" y="256" font-size="23" font-weight="700" fill="#355f91">Variation Points</text>
+    <text x="396" y="300" font-size="17" fill="#1f2328">optional feature</text>
+    <text x="396" y="330" font-size="17" fill="#1f2328">optional service</text>
+    <text x="396" y="360" font-size="17" fill="#1f2328">alternative algorithm</text>
+    <rect x="662" y="210" width="260" height="250" fill="#ffffff" stroke="#b8841f" stroke-width="3"/>
+    <text x="696" y="256" font-size="23" font-weight="700" fill="#b8841f">Mechanisms</text>
+    <text x="696" y="300" font-size="17" fill="#1f2328">plug-in / extension</text>
+    <text x="696" y="330" font-size="17" fill="#1f2328">configuration</text>
+    <text x="696" y="360" font-size="17" fill="#1f2328">feature flag / generator</text>
+    <rect x="962" y="210" width="260" height="250" fill="#ffffff" stroke="#14756f" stroke-width="3"/>
+    <text x="996" y="256" font-size="23" font-weight="700" fill="#14756f">Binding Time</text>
+    <text x="996" y="300" font-size="17" fill="#1f2328">build time</text>
+    <text x="996" y="330" font-size="17" fill="#1f2328">startup time</text>
+    <text x="996" y="360" font-size="17" fill="#1f2328">runtime</text>
   </g>
   <defs>
     <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
       <path d="M2,2 L10,6 L2,10 Z" fill="#1f2328"/>
     </marker>
   </defs>
-  <line x1="400" y1="335" x2="485" y2="335" stroke="#1f2328" stroke-width="3" marker-end="url(#arrow)"/>
-  <line x1="795" y1="335" x2="880" y2="335" stroke="#1f2328" stroke-width="3" marker-end="url(#arrow)"/>
+  <line x1="322" y1="335" x2="362" y2="335" stroke="#1f2328" stroke-width="3" marker-end="url(#arrow)"/>
+  <line x1="622" y1="335" x2="662" y2="335" stroke="#1f2328" stroke-width="3" marker-end="url(#arrow)"/>
+  <line x1="922" y1="335" x2="962" y2="335" stroke="#1f2328" stroke-width="3" marker-end="url(#arrow)"/>
   <rect x="260" y="535" width="760" height="68" fill="#f0eadf" stroke="#d9d2c4" stroke-width="2"/>
   <text x="295" y="577" font-family="Avenir Next,Arial,sans-serif" font-size="19" font-weight="700" fill="#1f2328">Later binding improves flexibility, but increases test combinations and runtime uncertainty.</text>
 </svg>

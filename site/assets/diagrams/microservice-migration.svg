@@ -3,7 +3,7 @@
   <desc id="desc">A monolith decomposed into services with gateway, databases, events, and observability.</desc>
   <rect width="1280" height="720" fill="#fffdf8"/>
   <text x="68" y="82" font-family="Georgia,serif" font-size="34" font-weight="700" fill="#1f2328">Microservices: do not only define, explain the design consequences</text>
-  <text x="68" y="120" font-family="Avenir Next,Arial,sans-serif" font-size="18" fill="#667078">答题要覆盖：拆分边界、独立部署、数据自治、轻量通信、可观测性、分布式代价。</text>
+  <text x="68" y="120" font-family="Avenir Next,Arial,sans-serif" font-size="18" fill="#667078">综合答题骨架（非单页 PPT 原图）：覆盖拆分边界、独立部署、数据自治、轻量通信、可观测性和分布式代价。</text>
   <defs>
     <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
       <path d="M2,2 L10,6 L2,10 Z" fill="#355f91"/>
