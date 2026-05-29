@@ -1,0 +1,143 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="800" viewBox="0 0 900 800" role="img" aria-labelledby="title desc">
+  <title id="title">ADD 3.0 Method Process</title>
+  <desc id="desc">Five architectural drivers feed Step 1 Review inputs. Seven ADD steps proceed downward, with a necessary iteration path from Step 7 back to Step 2 and a dashed artifact-flow path from previous iterations or brownfield systems.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" markerWidth="9" markerHeight="9" refX="8.4" refY="5" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1f2933"/>
+    </marker>
+    <marker id="dashArrow" viewBox="0 0 10 10" markerWidth="9" markerHeight="9" refX="8.4" refY="5" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#73777f"/>
+    </marker>
+    <style>
+      .font { font-family: "Avenir Next", "Helvetica Neue", Arial, sans-serif; }
+      .small { font-size: 14px; }
+      .tiny { font-size: 12px; }
+      .driver { fill: #9b1d1d; stroke: #6f1515; stroke-width: 2; }
+      .process { fill: #5f82c4; stroke: #3e5f99; stroke-width: 2; }
+      .key-step { fill: #b9cae7; stroke: #7b91b5; stroke-width: 2; }
+      .design { fill: #4a8a3c; stroke: #2f6327; stroke-width: 2; }
+      .solid { fill: none; stroke: #1f2933; stroke-width: 2.4; marker-end: url(#arrow); }
+      .dashed { fill: none; stroke: #73777f; stroke-width: 2; stroke-dasharray: 5 5; marker-end: url(#dashArrow); }
+      .plain-dashed { fill: none; stroke: #73777f; stroke-width: 2; stroke-dasharray: 5 5; }
+      .label { fill: #20262e; font-size: 16px; font-weight: 600; }
+      .box-text { fill: #fff; font-size: 15px; font-weight: 600; text-anchor: middle; dominant-baseline: middle; }
+      .key-text { fill: #20262e; font-size: 15px; font-weight: 600; text-anchor: middle; dominant-baseline: middle; }
+    </style>
+  </defs>
+
+  <rect width="900" height="760" fill="#fff"/>
+
+  <g class="font">
+    <g aria-label="drivers">
+      <g transform="translate(40 28)">
+        <path class="driver" d="M0 0H140V50C102 56 38 56 0 50Z"/>
+        <text class="box-text" x="70" y="21">Design</text>
+        <text class="box-text" x="70" y="39">Purpose</text>
+      </g>
+      <g transform="translate(190 28)">
+        <path class="driver" d="M0 0H140V50C102 56 38 56 0 50Z"/>
+        <text class="box-text" x="70" y="21">Primary</text>
+        <text class="box-text" x="70" y="39">Functionality</text>
+      </g>
+      <g transform="translate(340 28)">
+        <path class="driver" d="M0 0H140V50C102 56 38 56 0 50Z"/>
+        <text class="box-text" x="70" y="21">Quality</text>
+        <text class="box-text" x="70" y="39">Attributes</text>
+      </g>
+      <g transform="translate(490 28)">
+        <path class="driver" d="M0 0H140V50C102 56 38 56 0 50Z"/>
+        <text class="box-text" x="70" y="21">Architectural</text>
+        <text class="box-text" x="70" y="39">Concerns</text>
+      </g>
+      <g transform="translate(640 28)">
+        <path class="driver" d="M0 0H140V50C102 56 38 56 0 50Z"/>
+        <text class="box-text" x="70" y="30">Constraints</text>
+      </g>
+    </g>
+
+    <path class="plain-dashed" d="M110 79V98H710V79"/>
+    <path class="plain-dashed" d="M260 79V98"/>
+    <path class="plain-dashed" d="M410 79V98"/>
+    <path class="plain-dashed" d="M560 79V98"/>
+    <path class="dashed" d="M410 98V132"/>
+
+    <g aria-label="ADD steps">
+      <g transform="translate(250 138)">
+        <rect class="process" width="420" height="46"/>
+        <text class="box-text" x="210" y="24">Step 1: Review inputs</text>
+      </g>
+      <path class="solid" d="M460 184V214"/>
+
+      <g transform="translate(250 218)">
+        <rect class="process" width="420" height="50"/>
+        <text class="box-text" x="210" y="20">Step 2: Establish iteration goal</text>
+        <text class="box-text" x="210" y="38">by selecting drivers</text>
+      </g>
+      <path class="solid" d="M460 268V298"/>
+
+      <g transform="translate(250 302)">
+        <rect class="key-step" width="420" height="50"/>
+        <text class="key-text" x="210" y="20">Step 3: Choose one or more elements of the system to</text>
+        <text class="key-text" x="210" y="38">refine</text>
+      </g>
+      <path class="solid" d="M460 352V382"/>
+
+      <g transform="translate(250 386)">
+        <rect class="key-step" width="420" height="50"/>
+        <text class="key-text" x="210" y="20">Step 4: Choose one or more design concepts that satisfy</text>
+        <text class="key-text" x="210" y="38">the selected drivers</text>
+      </g>
+      <path class="solid" d="M460 436V466"/>
+
+      <g transform="translate(250 470)">
+        <rect class="key-step" width="420" height="56"/>
+        <text class="key-text" x="210" y="21">Step 5: Instantiate architectural elements, allocate</text>
+        <text class="key-text" x="210" y="40">responsibilities, and define interfaces</text>
+      </g>
+      <path class="solid" d="M460 526V556"/>
+
+      <g transform="translate(250 560)">
+        <rect class="process" width="420" height="50"/>
+        <text class="box-text" x="210" y="26">Step 6: Sketch views and record design decisions</text>
+      </g>
+      <path class="solid" d="M460 610V640"/>
+
+      <g transform="translate(250 644)">
+        <rect class="process" width="420" height="56"/>
+        <text class="box-text" x="210" y="20">Step 7: Perform analysis of current design and review</text>
+        <text class="box-text" x="210" y="39">iteration goal and achievement of design purpose</text>
+      </g>
+    </g>
+
+    <path class="dashed" d="M375 748H130V160H248"/>
+    <text class="label" transform="translate(102 455) rotate(-90)" text-anchor="middle">From previous round of iterations or from existing</text>
+    <text class="label" transform="translate(122 455) rotate(-90)" text-anchor="middle">system (brownfield development)</text>
+
+    <path class="solid" d="M250 672H200V243H248"/>
+    <text class="label" transform="translate(185 458) rotate(-90)" text-anchor="middle">Iterate if necessary</text>
+
+    <path class="dashed" d="M460 700V720"/>
+    <g transform="translate(375 722)">
+      <path class="design" d="M0 0H170V38L156 52H14L0 38Z"/>
+      <text class="box-text" x="85" y="20">(Refined) Software</text>
+      <text class="box-text" x="85" y="38">Architecture Design</text>
+    </g>
+
+    <g transform="translate(685 540)" aria-label="legend">
+      <rect x="0" y="0" width="185" height="205" fill="#fff" stroke="#70757d" stroke-width="1.5"/>
+      <text class="small" x="14" y="24" fill="#20262e" font-weight="700">Key</text>
+      <rect x="15" y="42" width="30" height="17" class="driver"/>
+      <text class="small" x="56" y="56" fill="#20262e">Driver</text>
+      <rect x="15" y="75" width="30" height="17" class="design"/>
+      <text class="small" x="56" y="89" fill="#20262e">Architecture design</text>
+      <rect x="15" y="108" width="30" height="17" class="process"/>
+      <text class="small" x="56" y="122" fill="#20262e">Process step</text>
+      <rect x="15" y="141" width="30" height="17" class="key-step"/>
+      <text class="small" x="56" y="155" fill="#20262e">Key design step</text>
+      <path d="M15 172H48" class="solid"/>
+      <text class="tiny" x="56" y="176" fill="#20262e">Precedence</text>
+      <path d="M15 198H48" class="dashed"/>
+      <text class="tiny" x="56" y="202" fill="#20262e">Artifact flow</text>
+    </g>
+  </g>
+</svg>

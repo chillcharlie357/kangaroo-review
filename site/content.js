@@ -2506,14 +2506,14 @@ window.reviewContent = {
     },
     {
       "id": "architecture-design-process",
-      "component": "architecture-process",
+      "src": "assets/diagrams/architecture-design-process.svg",
       "title": {
         "zh": "架构设计、文档化与评估过程图",
         "en": "Architecture Design, Documentation, and Evaluation Process"
       },
       "note": {
-        "zh": "按原始过程图重绘：stakeholders、ASR、需求和约束进入架构设计；patterns/tactics 约束候选视图；文档化产出 chosen views 与 beyond-view documentation，再进入架构评估并反馈。",
-        "en": "Redrawn from the source process figure: stakeholders, ASRs, requirements, and constraints feed architecture design; patterns/tactics shape candidate views; documentation produces chosen views and beyond-view documentation for evaluation and feedback."
+        "zh": "按原始过程图重绘为 SVG：stakeholders、ASR、需求和约束进入架构设计；patterns/tactics 约束候选视图；文档化产出 chosen views 与 beyond-view documentation，再进入架构评估并反馈。",
+        "en": "Redrawn as SVG from the source process figure: stakeholders, ASRs, requirements, and constraints feed architecture design; patterns/tactics shape candidate views; documentation produces chosen views and beyond-view documentation for evaluation and feedback."
       },
       "use": {
         "zh": "适合回答架构活动、ASR 到设计、视图文档化、架构评估闭环这类题；不要只背线性阶段，要说明输入、产物和反馈。",
@@ -2534,14 +2534,14 @@ window.reviewContent = {
     },
     {
       "id": "add-roadmap",
-      "component": "add-roadmap",
+      "src": "assets/diagrams/add-roadmap.svg",
       "title": {
         "zh": "ADD 3.0 方法流程图",
         "en": "ADD 3.0 Method Process"
       },
       "note": {
-        "zh": "按 Lecture 12 课程原图口径重绘为 HTML 图解：五类 driver 输入 Step 1，Step 1-7 串行推进，Step 7 后必要时回到 Step 2 继续迭代。",
-        "en": "Redrawn as an HTML diagram from the Lecture 12 figure: five driver classes feed Step 1, Steps 1-7 proceed in order, and Step 7 loops back to Step 2 if another iteration is needed."
+        "zh": "按 Lecture 12 课程原图口径重绘为 SVG：五类 driver 输入 Step 1，Step 1-7 串行推进，Step 7 后必要时回到 Step 2 继续迭代。",
+        "en": "Redrawn as SVG from the Lecture 12 figure: five driver classes feed Step 1, Steps 1-7 proceed in order, and Step 7 loops back to Step 2 if another iteration is needed."
       },
       "use": {
         "zh": "适合描述 ADD 过程和架构设计过程；手画时保留五个 driver、七个步骤、iterate-if-necessary 和最终 refined design。",
