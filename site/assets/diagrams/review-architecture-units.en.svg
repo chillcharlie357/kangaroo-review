@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 520" role="img" aria-labelledby="title desc">
+  <title id="title">Architecture basic unit shift</title>
+  <desc id="desc">The basic architectural unit shifts from program to layer to service to event and then to model or agent.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#aa7616"/>
+    </marker>
+    <style>
+      .bg{fill:#fbfaf7}
+      .box{fill:#fff;stroke:#c9d1db;stroke-width:2.4;rx:18}
+      .last{fill:#f2e8ff;stroke:#a867e7;stroke-width:2.6;rx:18}
+      .title{font:700 34px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#1f2733}
+      .sub{font:19px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#667386}
+      .name{font:700 27px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#9a6a12}
+      .body{font:18px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#2c3543}
+      .arrow{stroke:#aa7616;stroke-width:3;fill:none;marker-end:url(#arrow)}
+      .note{font:18px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#b61f1f}
+    </style>
+  </defs>
+  <rect class="bg" width="1280" height="520"/>
+  <text class="title" x="640" y="62" text-anchor="middle">How the Basic Architectural Unit Changes</text>
+  <text class="sub" x="640" y="98" text-anchor="middle">When the smallest governance unit changes, testing, platform capability, and organization boundaries change with it.</text>
+
+  <g transform="translate(70,190)">
+    <rect class="box" width="190" height="145"/>
+    <text class="name" x="95" y="47" text-anchor="middle">Program</text>
+    <text class="body" x="95" y="88" text-anchor="middle">The smallest</text>
+    <text class="body" x="95" y="114" text-anchor="middle">delivery unit</text>
+  </g>
+  <path class="arrow" d="M260 262 H315"/>
+  <g transform="translate(315,190)">
+    <rect class="box" width="190" height="145"/>
+    <text class="name" x="95" y="47" text-anchor="middle">Layer</text>
+    <text class="body" x="95" y="88" text-anchor="middle">The smallest</text>
+    <text class="body" x="95" y="114" text-anchor="middle">role boundary</text>
+  </g>
+  <path class="arrow" d="M505 262 H560"/>
+  <g transform="translate(560,190)">
+    <rect class="box" width="190" height="145"/>
+    <text class="name" x="95" y="47" text-anchor="middle">Service</text>
+    <text class="body" x="95" y="88" text-anchor="middle">The smallest</text>
+    <text class="body" x="95" y="114" text-anchor="middle">evolution unit</text>
+  </g>
+  <path class="arrow" d="M750 262 H805"/>
+  <g transform="translate(805,190)">
+    <rect class="box" width="190" height="145"/>
+    <text class="name" x="95" y="47" text-anchor="middle">Event</text>
+    <text class="body" x="95" y="88" text-anchor="middle">The smallest</text>
+    <text class="body" x="95" y="114" text-anchor="middle">collaboration unit</text>
+  </g>
+  <path class="arrow" d="M995 262 H1050"/>
+  <g transform="translate(1050,190)">
+    <rect class="last" width="190" height="145"/>
+    <text class="name" x="95" y="47" text-anchor="middle">Model / Agent</text>
+    <text class="body" x="95" y="88" text-anchor="middle">The smallest</text>
+    <text class="body" x="95" y="114" text-anchor="middle">cognitive unit</text>
+  </g>
+
+  <text class="note" x="640" y="435" text-anchor="middle">Review conclusion: architectural history is not just names; it is the changing basic unit of software systems.</text>
+</svg>

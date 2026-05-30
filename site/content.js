@@ -25,12 +25,12 @@ window.reviewContent = {
     "evidence": [
       {
         "label": {
-          "zh": "主纲来源",
-          "en": "Primary Baseline"
+          "zh": "最高纲领",
+          "en": "Top Ground Truth"
         },
         "body": {
-          "zh": "以张贺、李杉杉、吕骏三份复习课纪要为主线，结合 Lecture 14 复习 slides 与 Lecture 3 复习回顾校对。",
-          "en": "Uses the Zhang He, Li Shanshan, and Lu Jun review notes as the main outline, cross-checked with Lecture 14 review slides and the Lecture 3 review recap."
+          "zh": "以复习课完整录音、术语清洗稿、完整纪要和三份复习课 slides 为最高依据；旧飞书智能纪要仅归档保留，不再作为答案佐证。",
+          "en": "The complete review-class recording, cleaned transcript, complete minutes, and three review-class slide decks are the highest evidence. Old Feishu smart notes are archived only."
         }
       },
       {
@@ -40,7 +40,17 @@ window.reviewContent = {
         },
         "body": {
           "zh": "专门面向 2026 南京大学软件学院研究生《软件体系结构》期末复习；不保证适用于未来年份或本科《软件系统设计》。",
-          "en": "Built specifically for the 2026 NJU Software Institute graduate Software Architecture final review; not guaranteed for future offerings or the undergraduate Software System Design course."
+          "en": "Built specifically for the 2026 NJU Software Institute graduate Software Architecture final review; not guaranteed for future offerings or undergraduate Software System Design."
+        }
+      },
+      {
+        "label": {
+          "zh": "材料优先级",
+          "en": "Evidence Priority"
+        },
+        "body": {
+          "zh": "排序为：完整录音+复习课 slides > 课程 slides > 近年本课/相邻课程真题 > 2025 前人资料与学长博客 > 其他旧资料。",
+          "en": "Priority: complete recording + review slides > course slides > recent current/adjacent past papers > 2025 senior materials and blogs > older auxiliary notes."
         }
       },
       {
@@ -49,18 +59,8 @@ window.reviewContent = {
           "en": "Inclusion Rule"
         },
         "body": {
-          "zh": "相邻课程《软件系统设计》只吸收体系结构重合题；GoF/OOP/代码实现类题排除，ATAM/SPL/MDA 等历史高频但今年未点名内容降权保留。",
-          "en": "Adjacent-course Software System Design material contributes only overlapping architecture questions; GoF/OOP/coding items are excluded, while historical ATAM/SPL/MDA topics stay lower priority."
-        }
-      },
-      {
-        "label": {
-          "zh": "佐证材料",
-          "en": "Evidence Pool"
-        },
-        "body": {
-          "zh": "课程 slides、OCR 文本、raw 前人资料、EagleBear 博客、Mubu 思维导图与 AI Wiki 只作交叉佐证，不替代老师复习课范围。",
-          "en": "Slides, OCR text, raw senior notes, EagleBear posts, the Mubu mind map, and AI Wiki are cross-checking material only; they do not override the review-class scope."
+          "zh": "相邻课程只吸收体系结构重合内容；GoF/OOP/代码实现题排除。复习课明确“不考”的 AI 增强/AI 原生降到 P3 背景。",
+          "en": "Adjacent-course material contributes only overlapping architecture content; GoF/OOP/coding questions are excluded. Review-class non-exam AI-enabled/native content is P3 background."
         }
       }
     ]
@@ -68,98 +68,137 @@ window.reviewContent = {
   "priorities": [
     {
       "level": "P0",
-      "weight": "必看 / Highest",
+      "weight": "必会 / Must know",
       "title": {
-        "zh": "复习课明确点名的主线",
-        "en": "Current Review-Class Focus"
+        "zh": "完整录音明确点名的主线",
+        "en": "Mainline From Complete Review Recording"
       },
       "summary": {
-        "zh": "先拿这些：ADD 3.0、微服务、DDD、企业架构。李杉杉复习课把后几块合计约 30-40 分；20 分设计题往年偏 DDD，今年仍要重点练 DDD/ADD 的流程化作答。",
-        "en": "Start here: ADD 3.0, microservices, DDD, and enterprise architecture. Li Shanshan's review class put the later blocks at about 30-40 points; the 20-point design question has historically leaned DDD, so practice process-based DDD/ADD answers."
+        "zh": "优先啃这些：基础概念、4+1、质量属性/ASR、tactics/patterns/styles、架构演进、七类设计决定、ADD 3.0、微服务和 DDD。它们来自完整录音与复习 slides，是答题语言和设计题骨架。",
+        "en": "Start here: foundations, 4+1, quality/ASR, tactics/patterns/styles, architecture evolution, seven design decisions, ADD 3.0, microservices, and DDD. These come from the complete recording and review slides."
       },
       "items": [
         {
+          "topicId": "foundation",
+          "zh": "软件架构基本概念、架构师职责、架构来源",
+          "en": "Architecture foundations, architect roles, sources of architecture"
+        },
+        {
+          "topicId": "views",
+          "zh": "4+1 views 与架构文档化",
+          "en": "4+1 views and architecture documentation"
+        },
+        {
+          "topicId": "quality",
+          "zh": "质量属性场景：六要素表必须会写",
+          "en": "Quality attribute scenarios: six-part template"
+        },
+        {
+          "topicId": "asr",
+          "zh": "ASR、Utility tree 与优先级排序",
+          "en": "ASRs, utility tree, and prioritization"
+        },
+        {
+          "topicId": "patterns",
+          "zh": "架构演进、风格/模式/战术的差异与取舍",
+          "en": "Architecture evolution and style/pattern/tactic tradeoffs"
+        },
+        {
+          "topicId": "design-decisions",
+          "zh": "七类设计决定与 rationale",
+          "en": "Seven design-decision categories and rationale"
+        },
+        {
           "topicId": "add",
-          "zh": "ADD 3.0：会流程、会迭代目标、会文档化与评审",
-          "en": "ADD 3.0: know the process, iteration goals, documentation, and review"
+          "zh": "ADD 3.0 七步、driver、iteration、documentation",
+          "en": "ADD 3.0 steps, drivers, iteration, documentation"
         },
         {
           "topicId": "microservices",
-          "zh": "微服务：拆分、通信、部署、可观测性模式",
-          "en": "Microservices: decomposition, communication, deployment, and observability patterns"
+          "zh": "微服务特性、对比、拆分/通信/部署/可观测性",
+          "en": "Microservice characteristics, comparison, decomposition, communication, deployment, observability"
         },
         {
           "topicId": "ddd",
-          "zh": "DDD：战略/战术设计、限界上下文、事件风暴",
-          "en": "DDD: strategic/tactical design, bounded context, event storming"
-        },
-        {
-          "topicId": "enterprise",
-          "zh": "企业架构：4A/5A、TOGAF/ADM、CBM、建模落地",
-          "en": "Enterprise architecture: 4A/5A, TOGAF/ADM, CBM, modeling and implementation"
+          "zh": "DDD 适用范围、战略/战术设计、事件风暴",
+          "en": "DDD scope, strategic/tactical design, event storming"
         }
       ]
     },
     {
       "level": "P1",
-      "weight": "高频 / High",
+      "weight": "应会 / Should know",
       "title": {
-        "zh": "往年题高频核心",
-        "en": "Historical High-Frequency Core"
+        "zh": "今年会用到的展开材料",
+        "en": "Useful Expansion Topics"
       },
       "summary": {
-        "zh": "这些是往年题反复出现的基本盘，也是简答题最稳的得分来源。相邻课程真题只用来验证这些架构基本功，不用来抬高今年复习课未点名内容。",
-        "en": "These recur in past papers and are the safest source of short-answer points. Adjacent-course papers are used to practice these architecture basics, not to promote topics outside the current review-class focus."
+        "zh": "用于把 P0 写成完整论述或设计题：企业架构 4A/TOGAF/CBM、HPS ADD case、微服务+DDD 设计题模板。",
+        "en": "Use these to expand P0 answers: EA 4A/TOGAF/CBM, the HPS ADD case, and microservice + DDD design templates."
       },
       "items": [
         {
-          "topicId": "quality",
-          "zh": "质量属性场景：六要素模板必须熟",
-          "en": "Quality attribute scenarios: memorize the six-part template"
+          "topicId": "enterprise",
+          "zh": "企业架构：4A、TOGAF ADM、CBM，案例细节不死背",
+          "en": "Enterprise architecture: 4A, TOGAF ADM, CBM; do not memorize case details"
         },
         {
-          "topicId": "asr",
-          "zh": "ASR：来源、识别、效用树优先级",
-          "en": "ASRs: sources, identification, utility tree priorities"
+          "topicId": "add",
+          "zh": "HPS ADD case：用作流程支撑，不当唯一答案",
+          "en": "HPS ADD case: support the process, not the only answer"
         },
         {
-          "topicId": "views",
-          "zh": "视图与文档：4+1、Views and Beyond、三类 viewtype",
-          "en": "Views and documentation: 4+1, Views and Beyond, three viewtype families"
+          "topicId": "microservices",
+          "zh": "微服务设计题：从操作/业务能力/子域推服务边界",
+          "en": "Microservice design: derive service boundaries from operations/capabilities/subdomains"
         },
         {
-          "topicId": "patterns",
-          "zh": "模式/风格/战术：会比较、会说取舍",
-          "en": "Patterns/styles/tactics: compare and explain tradeoffs"
+          "topicId": "ddd",
+          "zh": "DDD 设计题：子域、限界上下文、聚合、领域事件",
+          "en": "DDD design: subdomains, bounded contexts, aggregates, domain events"
         }
       ]
     },
     {
       "level": "P2",
-      "weight": "辅助 / Support",
+      "weight": "保底 / Backup",
       "title": {
-        "zh": "背景与补充",
-        "en": "Supporting Background"
+        "zh": "历史高频但今年未抬高",
+        "en": "Historical But Lower Priority"
       },
       "summary": {
-        "zh": "用于论述题提气和补充上下文，只留骨架；AI 增强/AI 原生按复习课说法不作为考试重点。",
-        "en": "Useful context for essays; keep only skeletons. AI-enabled/AI-native architecture is not a central exam target according to the review notes."
+        "zh": "ATAM、SPL/MDA/复用、Broker/缓存/三层等旧题保留为保底；遇到能写，但不抢 P0 时间。",
+        "en": "ATAM, SPL/MDA/reuse, Broker/cache/three-tier old questions remain as backup; answer if asked, but do not steal P0 time."
       },
       "items": [
         {
           "topicId": "evaluation-atam",
-          "zh": "ATAM：历史高频输出/角色/风险点，只背骨架",
-          "en": "ATAM: historical outputs/roles/risk points; memorize only the skeleton"
+          "zh": "ATAM：输出、角色、risk/sensitivity/tradeoff 只背骨架",
+          "en": "ATAM: outputs, roles, risk/sensitivity/tradeoff skeleton"
         },
         {
           "topicId": "reuse-variability",
-          "zh": "SPL/MDA/复用与可变性：旧题保底，不抢主线时间",
-          "en": "SPL/MDA/reuse and variability: old-paper baseline, do not steal mainline time"
-        },
+          "zh": "SPL/MDA/复用与可变性：旧题保底",
+          "en": "SPL/MDA/reuse and variability: old-paper backup"
+        }
+      ]
+    },
+    {
+      "level": "P3",
+      "weight": "只读 / Background",
+      "title": {
+        "zh": "明确不考或极低优先级",
+        "en": "Non-Exam Or Very Low Priority"
+      },
+      "summary": {
+        "zh": "吕骏明确说 AI 增强、AI 原生不会考；GoF 设计模式和代码实现题不属于本课程主线。只保留为资料库背景。",
+        "en": "Lu Jun explicitly said AI-enabled and AI-native architecture will not be tested; GoF design-pattern and coding questions are outside this course mainline."
+      },
+      "items": [
         {
           "topicId": "ai",
-          "zh": "AI 赋能架构：背景了解，不当作主复习负担",
-          "en": "AI-enabled architecture: background only, not the main review load"
+          "zh": "AI 增强 / AI 原生：了解概念，不背诵",
+          "en": "AI-enabled/native architecture: understand only, do not memorize"
         }
       ]
     }
@@ -167,7 +206,7 @@ window.reviewContent = {
   "topics": [
     {
       "id": "foundation",
-      "priority": "P1",
+      "priority": "P0",
       "title": {
         "zh": "软件架构基础",
         "en": "Software Architecture Foundations"
@@ -182,8 +221,8 @@ window.reviewContent = {
       },
       "bullets": [
         {
-          "zh": "旧卷五类来源：需求、系统利益相关者、开发组织、架构师、技术/运行环境；今年复习课主线更强调 NFR、质量需求、ASR 与业务目标筛选。",
-          "en": "Old-paper five sources: requirements, system stakeholders, development organization, architects, and technical/operational environment; the 2026 review focus emphasizes NFRs, quality requirements, ASRs, and business-goal prioritization."
+          "zh": "复习 PPT 的稳定来源：NFRs / Quality Requirements、ASRs、Stakeholders、Organisations、Technical Environments；业务目标和既有系统可作为补充约束。旧卷“五类来源”只在对应旧题中使用。",
+          "en": "Stable review-slide sources: NFRs / Quality Requirements, ASRs, Stakeholders, Organisations, and Technical Environments. Business goals and existing systems are supplementary constraints. The old-paper five-source wording is old-question-specific."
         },
         {
           "zh": "架构师四类工作：协调利益相关者、软件工程经验/最佳实践、技术知识、风险管理。",
@@ -203,12 +242,12 @@ window.reviewContent = {
         }
       ],
       "sources": [
-        "Zhang He review notes",
-        "Lecture 14 softarch2026 review",
-        "Lecture 1 OCR"
+        "Complete review recording transcript",
+        "Complete review minutes",
+        "Review-class slides OCR"
       ],
       "group": "core",
-      "sourceConfidence": "review-class + Lecture 1 OCR",
+      "sourceConfidence": "完整录音 + 复习课整理稿 + 对应 review slides/OCR",
       "examWeight": "稳拿基础分",
       "deepDive": [
         {
@@ -239,20 +278,20 @@ window.reviewContent = {
             "en": "Architecture sources"
           },
           "summary": {
-            "zh": "往年喜欢问 “where does architecture come from”。",
-            "en": "Past papers often ask where architecture comes from."
+            "zh": "按复习 PPT 的稳定术语答；旧卷“五类来源”只在旧题语境中使用。",
+            "en": "Use the stable review-slide wording; the old-paper five-source list is only for the old-question wording."
           },
           "must": {
-            "zh": "需求、利益相关者、开发组织、架构师经验、技术/运行环境；可补充业务目标、组织约束、现有系统。",
-            "en": "Requirements, stakeholders, development organization, architect experience, technical/operational environment; plus business goals, organizational constraints, existing systems."
+            "zh": "NFRs / Quality Requirements、ASRs、Stakeholders、Organisations、Technical Environments。可补充业务目标、组织约束、既有系统，但不要扩成无据固定清单。",
+            "en": "NFRs / Quality Requirements, ASRs, Stakeholders, Organisations, Technical Environments. Business goals, organizational constraints, and existing systems may be supplementary, not an unsupported fixed list."
           },
           "answer": {
-            "zh": "列五类来源，再各给一个例子，例如监管方带来安全/审计，运维带来可观测性，组织结构带来团队边界。",
-            "en": "List five sources and give examples such as regulators causing audit needs, operators causing observability, organization causing team boundaries."
+            "zh": "先按 PPT 五组词说明来源，再解释它们如何变成架构 driver：质量需求和 ASR 决定结构，stakeholder/organisation/environment 决定约束与取舍。",
+            "en": "List the five review-slide source groups, then explain how they become architectural drivers: quality requirements and ASRs shape structure; stakeholders, organisations, and environments shape constraints and tradeoffs."
           },
           "trap": {
-            "zh": "不要把来源只写成“需求”。架构常常被非功能目标、组织和技术环境强烈驱动。",
-            "en": "Do not reduce sources to requirements only; organization and environment are strong drivers."
+            "zh": "不要把“业务目标”写成旧卷五源之一；也不要把旧卷五项当今年所有题的唯一标准。",
+            "en": "Do not make business goals one of the old-paper five sources; do not treat the old five-source list as the universal 2026 answer."
           }
         }
       ],
@@ -262,7 +301,7 @@ window.reviewContent = {
     },
     {
       "id": "quality",
-      "priority": "P1",
+      "priority": "P0",
       "title": {
         "zh": "质量属性与场景建模",
         "en": "Quality Attributes and Scenario Modeling"
@@ -272,8 +311,8 @@ window.reviewContent = {
         "en": "Quality attributes are primary drivers of architecture. Only scenario-based quality requirements are suitable architectural inputs."
       },
       "answerFrame": {
-        "zh": "固定六要素按重绘表格顺序背：source of stimulus、stimulus、artifact、environment、response、response measure。题目要画图时，把六个节点都标出来。",
-        "en": "Use the redrawn table order: source of stimulus, stimulus, artifact, environment, response, response measure. If a diagram is requested, label all six nodes."
+        "zh": "固定六要素按 ground-truth 表格顺序背：source of stimulus、stimulus、artifact、environment、response、response measure。可用性原表响应是“通知操作者继续操作”，响应度量是“没有停机时间”。",
+        "en": "Memorize the six-part ground-truth table order: source of stimulus, stimulus, artifact, environment, response, response measure. In the original Availability row, the response is notifying the operator to continue operation and the measure is no downtime."
       },
       "bullets": [
         {
@@ -298,12 +337,12 @@ window.reviewContent = {
         }
       ],
       "sources": [
-        "Zhang He review notes",
-        "Li Shanshan review notes",
-        "Lecture 14 review slide"
+        "Complete review recording transcript",
+        "Complete review minutes",
+        "Review-class slides OCR"
       ],
       "group": "core",
-      "sourceConfidence": "review-class + Lecture 2-4 OCR + EagleBear quality notes",
+      "sourceConfidence": "完整录音 + 复习课整理稿 + 对应 review slides/OCR",
       "examWeight": "质量场景必背",
       "deepDive": [
         {
@@ -352,20 +391,19 @@ window.reviewContent = {
         }
       ],
       "diagramIds": [
-        "quality-scenario",
-        "atam-utility-tree"
+        "quality-scenario-table"
       ]
     },
     {
       "id": "asr",
-      "priority": "P1",
+      "priority": "P0",
       "title": {
         "zh": "ASR 与效用树",
         "en": "ASRs and Utility Tree"
       },
       "takeaway": {
         "zh": "ASR 是会显著影响架构设计决定的需求，不等于所有需求。复习课强调要从需求文档、访谈/workshop 和业务目标中补齐。",
-        "en": "An ASR is a requirement that significantly affects architectural decisions. It is not every requirement. The review notes emphasize documents, interviews/workshops, and business goals."
+        "en": "An ASR is a requirement that significantly affects architectural decisions. It is not every requirement. The complete review recording/minutes emphasize documents, interviews/workshops, and business goals."
       },
       "answerFrame": {
         "zh": "先定义 ASR，再说来源，最后说效用树：系统效用分解为质量属性、场景、度量；叶子节点从用户价值与开发难度/利益两维评估。",
@@ -394,11 +432,12 @@ window.reviewContent = {
         }
       ],
       "sources": [
-        "Zhang He review notes",
-        "Past paper clusters"
+        "Complete review recording transcript",
+        "Complete review minutes",
+        "Review-class slides OCR"
       ],
       "group": "core",
-      "sourceConfidence": "review-class + past papers + EagleBear review",
+      "sourceConfidence": "完整录音 + 复习课整理稿 + 对应 review slides/OCR",
       "examWeight": "高频简答",
       "deepDive": [
         {
@@ -415,8 +454,8 @@ window.reviewContent = {
             "en": "Functions, quality attributes, and constraints can become ASRs; important and hard quality needs are common."
           },
           "answer": {
-            "zh": "先定义，再说来源：需求文档、stakeholder workshop/interview、业务目标、约束、场景/用例分析。",
-            "en": "Define it, then list sources: documents, workshops/interviews, business goals, constraints, scenarios/use cases."
+            "zh": "先定义，再说来源/方法：需求文档、stakeholder workshop/interview 或 QAW、业务目标、约束，以及质量属性场景化表达。",
+            "en": "Define ASR, then list sources/methods: requirement documents, stakeholder workshops/interviews or QAW, business goals, constraints, and scenario-based quality expression."
           },
           "trap": {
             "zh": "不要把 ASR 等同 NFR。某些关键功能和强约束也会成为 ASR。",
@@ -448,8 +487,8 @@ window.reviewContent = {
       ],
       "diagramIds": [
         "architecture-design-process",
-        "atam-utility-tree",
-        "quality-scenario"
+        "utility-tree",
+        "quality-scenario-table"
       ]
     },
     {
@@ -486,12 +525,12 @@ window.reviewContent = {
         }
       ],
       "sources": [
-        "Li Shanshan review notes",
-        "Lecture 12 ADD 3.0 slide pages 34-70",
-        "Lecture 14 course review slide"
+        "Complete review minutes",
+        "Li Shanshan review-class slides",
+        "Lecture 12 ADD 3.0 slide OCR"
       ],
       "group": "process",
-      "sourceConfidence": "Li review-class + Lecture 12 ADD 3.0 slide + course-figure correction",
+      "sourceConfidence": "完整录音李杉杉段 + Lecture 12 ADD 原图 + 复习课 slides",
       "examWeight": "设计题核心",
       "deepDive": [
         {
@@ -589,12 +628,12 @@ window.reviewContent = {
         }
       ],
       "sources": [
-        "Li Shanshan review notes",
-        "Lecture 14 course review slide",
-        "Lecture 6-7 extracted text"
+        "Complete review minutes",
+        "Li Shanshan review-class slides",
+        "Lecture 6-7 Microservices slide OCR"
       ],
       "group": "modern",
-      "sourceConfidence": "Li review-class + Lecture 6-7 + EagleBear microservice notes",
+      "sourceConfidence": "完整录音李杉杉段 + Lecture 6-7 OCR + 复习课 slides",
       "examWeight": "今年高阶重点",
       "deepDive": [
         {
@@ -643,8 +682,8 @@ window.reviewContent = {
         }
       ],
       "diagramIds": [
-        "microservice-migration",
-        "ddd-context-map"
+        "microservice-style-comparison",
+        "review-microservice-decomposition"
       ]
     },
     {
@@ -689,12 +728,12 @@ window.reviewContent = {
         }
       ],
       "sources": [
-        "Li Shanshan review notes",
-        "Lecture 14 course review slide",
-        "Lecture 8-9 extracted text"
+        "Complete review minutes",
+        "Li Shanshan review-class slides",
+        "Lecture 8-9 DDD slide OCR"
       ],
       "group": "modern",
-      "sourceConfidence": "Li review-class + Lecture 8-9 + EagleBear 2025 DDD post",
+      "sourceConfidence": "完整录音李杉杉段 + Lecture 8-9 OCR + 2025 DDD 学长博客辅助",
       "examWeight": "设计分析题高概率",
       "deepDive": [
         {
@@ -743,29 +782,29 @@ window.reviewContent = {
         }
       ],
       "diagramIds": [
-        "ddd-context-map",
-        "microservice-migration"
+        "ddd-core-model",
+        "review-microservice-decomposition"
       ]
     },
     {
       "id": "enterprise",
-      "priority": "P0",
+      "priority": "P1",
       "title": {
         "zh": "企业架构",
         "en": "Enterprise Architecture"
       },
       "takeaway": {
-        "zh": "企业架构题难度高但老师要求偏理论理解：知道 4A/5A、TOGAF/ADM、CBM 以及落地建模思路即可。",
-        "en": "Enterprise architecture questions are hard but expected at a conceptual level: know 4A/5A, TOGAF/ADM, CBM, and implementation/modeling ideas."
+        "zh": "企业架构按 P1 复习：会 4A、TOGAF/ADM、CBM 和基础建模检查视角；案例细节只作背景。",
+        "en": "Review enterprise architecture as P1: know 4A, TOGAF/ADM, CBM, and basic modeling/checking lenses; case details are background."
       },
       "answerFrame": {
         "zh": "回答时围绕“找结构、找关系、定原则”。先分业务/数据/应用/技术架构，再用 TOGAF ADM 或 CBM 说明怎么落地。",
-        "en": "Frame the answer as finding structures, relationships, and principles. Split business/data/application/technology architecture, then use TOGAF ADM or CBM to explain implementation."
+        "en": "Answer around structure, relationships, and principles. Start with business/data/application/technology architecture, then use TOGAF ADM or CBM for implementation."
       },
       "bullets": [
         {
-          "zh": "4A：业务架构、数据架构、应用架构、技术架构；若题目或材料明确提 5A，可把安全架构作为补充可能口径，不写成唯一标准。",
-          "en": "4A: business, data, application, and technology architecture. If a prompt/source explicitly mentions 5A, security architecture can be added as a possible supplement, not the only standard."
+          "zh": "4A：业务架构、数据架构、应用架构、技术架构。复习课与 Lecture 10-11 的稳定口径是 4A；不要把 5A 当主线。",
+          "en": "4A: business, data, application, and technology architecture. The stable review-class and Lecture 10-11 wording is 4A; do not treat 5A as the mainline."
         },
         {
           "zh": "TOGAF ADM：预备、愿景、业务架构、信息系统架构、技术架构、机会与解决方案、迁移规划、实施治理、变更管理。",
@@ -785,26 +824,26 @@ window.reviewContent = {
         }
       ],
       "sources": [
-        "Li Shanshan review notes",
-        "Lecture 14 course review slide",
-        "Lecture 10-11 extracted text"
+        "Complete review minutes",
+        "Li Shanshan review-class slides",
+        "Lecture 10-11 Enterprise Architecture slide OCR"
       ],
       "group": "modern",
-      "sourceConfidence": "Li review-class + Lecture 10-11 + EagleBear review",
+      "sourceConfidence": "完整录音李杉杉段 + Lecture 10-11 OCR",
       "examWeight": "概念理解题",
       "deepDive": [
         {
           "title": {
-            "zh": "4A/5A 主线",
-            "en": "4A/5A line"
+            "zh": "4A 主线",
+            "en": "4A line"
           },
           "summary": {
             "zh": "企业架构把业务目标落到多层架构治理。",
             "en": "EA maps business goals to multi-layer architecture governance."
           },
           "must": {
-            "zh": "业务架构、应用架构、数据架构、技术架构；若题目明确要求 5A，再把安全架构作为补充可能口径，治理更适合作为方法/机制说明。",
-            "en": "Business, application, data, and technology architecture; only when the prompt explicitly asks for 5A, add security architecture as a possible supplement, while governance is better treated as a method/mechanism."
+            "zh": "业务架构、数据架构、应用架构、技术架构；治理、路线图、原则和安全约束作为落地机制/约束说明。",
+            "en": "Business, data, application, and technology architecture; governance, roadmap, principles, and security constraints are implementation mechanisms/constraints."
           },
           "answer": {
             "zh": "先写现状和目标，再写差距、路线图和治理机制。",
@@ -839,19 +878,19 @@ window.reviewContent = {
         }
       ],
       "diagramIds": [
-        "enterprise-architecture"
+        "enterprise-4a"
       ]
     },
     {
       "id": "patterns",
-      "priority": "P1",
+      "priority": "P0",
       "title": {
         "zh": "架构模式、风格与演进",
         "en": "Architectural Patterns, Styles, and Evolution"
       },
       "takeaway": {
-        "zh": "吕骏复习强调：不要死背模式名，要理解每个模式回应了什么时代矛盾、改变了什么管理对象、牺牲了什么质量属性。",
-        "en": "Lu Jun emphasized: do not memorize pattern names mechanically. Understand what historical tension each pattern addresses, what object it manages, and what quality attributes it trades off."
+        "zh": "吕骏复习强调：可能考每一代架构的结构骨架与演进理由。不要死背模式名，要理解旧矛盾如何推出现代架构。",
+        "en": "Lu Jun emphasized that each architecture generation may be tested by skeleton and evolution rationale. Do not memorize names only; explain how old tensions lead to newer architectures."
       },
       "answerFrame": {
         "zh": "按“时代矛盾 -> 架构骨架 -> 解决的痛点 -> 新问题/取舍 -> 适用场景”作答。画图时先画最简单骨架。",
@@ -884,11 +923,12 @@ window.reviewContent = {
         }
       ],
       "sources": [
-        "Lu Jun review notes",
-        "Lecture 3 extracted text"
+        "Complete review minutes",
+        "Lu Jun review-class slides",
+        "Lecture 3 OCR"
       ],
       "group": "patterns",
-      "sourceConfidence": "Lu review-class + Lecture 3 + EagleBear pattern notes",
+      "sourceConfidence": "完整录音吕骏段 + Lecture 3 OCR",
       "examWeight": "今年理解题",
       "deepDive": [
         {
@@ -937,20 +977,21 @@ window.reviewContent = {
         }
       ],
       "diagramIds": [
-        "patterns-taxonomy",
-        "microservice-migration"
+        "review-architecture-evolution",
+        "review-architecture-units",
+        "microservice-style-comparison"
       ]
     },
     {
       "id": "views",
-      "priority": "P1",
+      "priority": "P0",
       "title": {
         "zh": "视图与架构文档化",
         "en": "Views and Architecture Documentation"
       },
       "takeaway": {
-        "zh": "视图是隐藏无关信息、突出某一关注点的系统表示。往年题非常高频，但复习课对今年是否重点有冲突信号，作为高频但降权复习。",
-        "en": "A view represents one concern by hiding irrelevant information. It is frequent in past papers, but review notes give mixed signals for this year, so review it as high-frequency but not the top focus."
+        "zh": "4+1 views 是张贺复习课明确主线；Views and Beyond 用于补充文档化，不要把一堆 UML 图名当答案。",
+        "en": "4+1 views are explicit review-class mainline. Views and Beyond supports documentation; do not answer by listing random UML diagram names."
       },
       "answerFrame": {
         "zh": "4+1：逻辑、过程、物理、开发 + 用例场景。Views and Beyond：先文档化视图，再补充跨视图信息、接口、映射、理由、质量属性。",
@@ -971,12 +1012,12 @@ window.reviewContent = {
         }
       ],
       "sources": [
-        "Past paper clusters",
-        "Lecture 1 OCR",
-        "Zhang He review notes"
+        "Complete review recording transcript",
+        "Complete review minutes",
+        "Review-class slides OCR"
       ],
       "group": "process",
-      "sourceConfidence": "past papers + Lecture 1 + EagleBear document notes",
+      "sourceConfidence": "完整录音 + 复习课整理稿 + 对应 review slides/OCR",
       "examWeight": "历史高频，今年降权",
       "deepDive": [
         {
@@ -1025,17 +1066,16 @@ window.reviewContent = {
         }
       ],
       "diagramIds": [
-        "architecture-design-process",
-        "views-and-beyond",
-        "three-tier"
+        "review-4-plus-1-views",
+        "architecture-design-process"
       ]
     },
     {
       "id": "quality-tactics",
       "group": "core",
-      "priority": "P1",
+      "priority": "P0",
       "examWeight": "质量属性扩展题",
-      "sourceConfidence": "Lecture 2-4 OCR + EagleBear quality notes",
+      "sourceConfidence": "完整录音张贺段 + Lecture 2-4 OCR",
       "title": {
         "zh": "质量属性战术",
         "en": "Quality Attribute Tactics"
@@ -1067,9 +1107,8 @@ window.reviewContent = {
         }
       ],
       "sources": [
-        "Lecture 2-4 OCR",
-        "EagleBear Quality Attributes blog",
-        "Past paper clusters"
+        "Complete review minutes",
+        "Lecture 2-4 Quality Attributes OCR"
       ],
       "deepDive": [
         {
@@ -1118,17 +1157,16 @@ window.reviewContent = {
         }
       ],
       "diagramIds": [
-        "quality-scenario",
-        "patterns-taxonomy",
-        "cache-invalidation"
+        "quality-scenario-table",
+        "utility-tree"
       ]
     },
     {
       "id": "design-decisions",
       "group": "process",
-      "priority": "P1",
+      "priority": "P0",
       "examWeight": "复习课点名概念",
-      "sourceConfidence": "Zhang/Li review notes + EagleBear designing notes",
+      "sourceConfidence": "完整录音 + 复习课整理稿 + 对应 review slides/OCR",
       "title": {
         "zh": "设计决定七分类",
         "en": "Seven Categories of Design Decisions"
@@ -1160,9 +1198,9 @@ window.reviewContent = {
         }
       ],
       "sources": [
-        "Zhang He review notes",
-        "Li Shanshan review notes",
-        "EagleBear Designing Architecture blog"
+        "Complete review recording transcript",
+        "Complete review minutes",
+        "Review-class slides OCR"
       ],
       "deepDive": [
         {
@@ -1211,8 +1249,8 @@ window.reviewContent = {
         }
       ],
       "diagramIds": [
-        "patterns-taxonomy",
-        "reuse-variability"
+        "architecture-design-process",
+        "add-roadmap"
       ]
     },
     {
@@ -1220,7 +1258,7 @@ window.reviewContent = {
       "group": "historical",
       "priority": "P2",
       "examWeight": "往年高频，今年复习课降权",
-      "sourceConfidence": "past papers + EagleBear system-design review",
+      "sourceConfidence": "历史题 + 质量属性/Utility tree 课程资料；今年未抬到主线",
       "title": {
         "zh": "ATAM 架构评估",
         "en": "ATAM Architecture Evaluation"
@@ -1248,8 +1286,8 @@ window.reviewContent = {
         }
       ],
       "sources": [
-        "Past paper clusters",
-        "EagleBear Software System Design review"
+        "Historical past papers",
+        "Lecture 2-4 Quality Attributes OCR"
       ],
       "deepDive": [
         {
@@ -1298,7 +1336,7 @@ window.reviewContent = {
         }
       ],
       "diagramIds": [
-        "atam-utility-tree"
+        "utility-tree"
       ]
     },
     {
@@ -1306,7 +1344,7 @@ window.reviewContent = {
       "group": "historical",
       "priority": "P2",
       "examWeight": "往年题补充",
-      "sourceConfidence": "past papers + raw notes + EagleBear system-design review",
+      "sourceConfidence": "历史题保底；完整录音未作为今年重点",
       "title": {
         "zh": "复用、SPL、MDA 与可变性",
         "en": "Reuse, SPL, MDA, and Variability"
@@ -1334,8 +1372,8 @@ window.reviewContent = {
         }
       ],
       "sources": [
-        "Past paper clusters",
-        "EagleBear Software System Design review"
+        "Historical past papers",
+        "Raw predecessor notes"
       ],
       "deepDive": [
         {
@@ -1383,50 +1421,48 @@ window.reviewContent = {
           }
         }
       ],
-      "diagramIds": [
-        "reuse-variability"
-      ]
+      "diagramIds": []
     },
     {
       "id": "design-playbook",
       "group": "exam",
       "priority": "P0",
       "examWeight": "设计分析题模板",
-      "sourceConfidence": "past papers + review-class DDD/ADD focus",
+      "sourceConfidence": "完整录音 + 微服务/DDD 设计题主线 + 往年题练习",
       "title": {
         "zh": "设计分析题答题模板",
         "en": "Design-Analysis Answer Playbooks"
       },
       "takeaway": {
-        "zh": "设计题要让老师看到你在用架构方法，而不是只堆术语。固定写法能保住结构分。",
-        "en": "Design questions should show architectural method, not terminology dumping. A fixed structure protects structure points."
+        "zh": "设计题要让老师看到你在用架构方法。2026 主模板应围绕 ASR/ADD、微服务、DDD，而不是旧三层/缓存题。",
+        "en": "Design answers should show architectural method. The 2026 main template should center ASR/ADD, microservices, and DDD, not old three-tier/cache questions."
       },
       "answerFrame": {
-        "zh": "通用结构：识别 stakeholders/ASRs/constraints -> 选风格或方法 -> 画核心结构 -> 分配职责和接口 -> 说明质量属性 tradeoff -> 给迭代/验证。",
-        "en": "Generic structure: identify stakeholders/ASRs/constraints -> choose style/method -> draw core structure -> allocate responsibilities/interfaces -> explain quality tradeoffs -> give iteration/validation."
+        "zh": "通用结构：识别 stakeholders/ASRs/constraints -> 用 ADD 或 DDD/微服务推导边界 -> 画核心结构 -> 分配职责/API/数据归属 -> 补质量属性 tradeoff 与验证。",
+        "en": "General structure: identify stakeholders/ASRs/constraints -> use ADD or DDD/microservices to derive boundaries -> draw the core structure -> assign responsibilities/APIs/data ownership -> add quality tradeoffs and validation."
       },
       "bullets": [
         {
-          "zh": "DDD 改错题：先指出违反边界/贫血模型/领域逻辑外泄/聚合不清，再重画限界上下文、聚合和领域事件。",
-          "en": "DDD correction: identify boundary violations, anemic model, leaked domain logic, unclear aggregates; then redraw bounded contexts, aggregates, and domain events."
+          "zh": "ADD/ASR 题：从 stakeholder concerns、质量属性场景和约束选择 driver，再按 ADD 七步组织迭代和文档化。",
+          "en": "ADD/ASR questions: select drivers from stakeholder concerns, quality scenarios, and constraints, then organize iterations and documentation with ADD seven steps."
         },
         {
-          "zh": "三层设计题：画 UI/业务逻辑/数据访问，写每层职责，再用 Views and Beyond 补视图、映射、接口和理由。",
-          "en": "Three-tier design: draw UI/business logic/data access, list responsibilities, then document views, mappings, interfaces, and rationale with Views and Beyond."
+          "zh": "微服务设计题：从系统操作、业务能力或 DDD 子域推服务边界，说明 API、数据归属、部署和可观测性。",
+          "en": "Microservice design: derive boundaries from operations, business capabilities, or DDD subdomains; explain APIs, data ownership, deployment, and observability."
         },
         {
-          "zh": "缓存一致性题：增加协调器或 pub-sub/broker，数据库提交后通知其他缓存失效；异构协议用 connector/adapter/Web Service 统一调用。",
-          "en": "Cache consistency: add a coordinator or pub-sub/broker; notify other caches after DB commit; use connector/adapter/Web Service for heterogeneous protocols."
+          "zh": "DDD 设计题：先划子域/限界上下文，再补聚合、领域事件、上下文映射和与服务边界的关系。",
+          "en": "DDD design: identify subdomains/bounded contexts, then add aggregates, domain events, context mapping, and service-boundary mapping."
         },
         {
-          "zh": "微服务迁移题：服务边界、数据库拆分、通信协议、部署流水线、可观测性、分阶段迁移与验证都要覆盖。",
-          "en": "Microservice migration: cover service boundaries, database split, communication protocol, deployment pipeline, observability, and staged migration/verification."
+          "zh": "旧三层/缓存题只作为 P2 历史题练习，遇到再写，不放进 2026 主模板。",
+          "en": "Old three-tier/cache prompts are P2 historical practice only; answer if asked, but keep them out of the 2026 main template."
         }
       ],
       "sources": [
-        "Past paper clusters",
-        "Li Shanshan review notes",
-        "EagleBear Software System Design review"
+        "Complete review minutes",
+        "Li Shanshan review-class slides",
+        "Recent past-paper clusters"
       ],
       "deepDive": [
         {
@@ -1453,51 +1489,51 @@ window.reviewContent = {
         },
         {
           "title": {
-            "zh": "两类常见图",
-            "en": "Two common diagrams"
+            "zh": "今年主设计模板",
+            "en": "Current design template"
           },
           "summary": {
-            "zh": "三层和缓存失效是往年可练的设计图。",
-            "en": "Three-tier and cache invalidation are useful practice diagrams."
+            "zh": "围绕微服务 + DDD + ADD 文档化，不再让三层/缓存旧题抢主线。",
+            "en": "Center microservices + DDD + ADD documentation; old three-tier/cache prompts should not dominate."
           },
           "must": {
-            "zh": "三层：presentation/business/data；缓存：client/server/DB/coordinator/cache adapter。",
-            "en": "Three-tier: presentation/business/data; cache: client/server/DB/coordinator/cache adapter."
+            "zh": "服务边界、数据边界、API/事件协作、部署与可观测性、质量属性 tradeoff。",
+            "en": "Service boundaries, data boundaries, API/event collaboration, deployment/observability, and quality tradeoffs."
           },
           "answer": {
-            "zh": "三层题写 Views and Beyond；缓存题写先提交 DB 再通知失效，异构协议用 connector/adapter。",
-            "en": "For three-tier, mention Views and Beyond; for cache, commit DB first then invalidate, use connectors/adapters for heterogeneity."
+            "zh": "图上画业务能力/限界上下文到服务的映射，文字说明每个服务职责、数据归属和跨服务协作。",
+            "en": "Draw the mapping from business capabilities/bounded contexts to services, then describe responsibilities, data ownership, and cross-service collaboration."
           },
           "trap": {
-            "zh": "不要把缓存更新直接广播当作原子一致性保证；要说明 eventual consistency 或失败处理。",
-            "en": "Do not imply broadcast gives atomic consistency; mention eventual consistency or failure handling."
+            "zh": "不要把 Saga、API Gateway、某个服务名写成唯一标准答案；它们是可用的示例设计手段。",
+            "en": "Do not treat Saga, API Gateway, or a specific service name as the only standard answer; they are illustrative design choices."
           }
         }
       ],
       "diagramIds": [
         "architecture-design-process",
-        "three-tier",
-        "cache-invalidation",
-        "add-roadmap"
+        "add-roadmap",
+        "ddd-core-model",
+        "review-microservice-decomposition"
       ]
     },
     {
       "id": "ai",
       "group": "modern",
-      "priority": "P2",
+      "priority": "P3",
       "examWeight": "背景了解，不当主线",
-      "sourceConfidence": "review-class caveat + EagleBear review blog",
+      "sourceConfidence": "吕骏完整录音明确 AI 增强/AI 原生不考；仅作背景",
       "title": {
         "zh": "AI 增强 / AI 原生架构",
         "en": "AI-Enabled / AI-Native Architecture"
       },
       "takeaway": {
-        "zh": "复习课明确说考试后两节课讲 AI 相关架构，不作为考试要求；博客中的 AI-native 内容只作为论述题背景素材。",
-        "en": "The review class explicitly said AI-related lectures after the exam are not exam requirements; blog AI-native content is background material only."
+        "zh": "完整录音中吕骏明确说 AI 增强、AI 原生不会考；这里只保留背景概念，P3 只读。",
+        "en": "In the complete recording, Lu Jun explicitly says AI-enabled and AI-native architecture will not be tested. Keep this as P3 background only."
       },
       "answerFrame": {
-        "zh": "如论述题顺带提到，可说模型驱动、数据闭环、agent 协作、云原生集成、可观测治理，但不要把它当作核心背诵负担。",
-        "en": "If an essay mentions it, discuss model-driven design, data loops, agent collaboration, cloud-native integration, and observability/governance, but do not treat it as a core memorization burden."
+        "zh": "不用背。若阅读资料库时看到相关内容，只理解它是架构演进趋势，不写进常规真题答案模板。",
+        "en": "Do not memorize. If encountered in sources, understand it only as an architecture-evolution trend; do not put it into normal answer templates."
       },
       "bullets": [
         {
@@ -1514,8 +1550,8 @@ window.reviewContent = {
         }
       ],
       "sources": [
-        "Zhang He review notes",
-        "Li Shanshan review notes",
+        "Complete review minutes",
+        "Lu Jun recording segment",
         "EagleBear 2025Spring review blog"
       ],
       "deepDive": [
@@ -2253,8 +2289,8 @@ window.reviewContent = {
           "en": "DDD strategic/tactical design, event storming, four-layer architecture"
         },
         {
-          "zh": "企业架构 4A/5A、TOGAF ADM、CBM",
-          "en": "EA 4A/5A, TOGAF ADM, CBM"
+          "zh": "企业架构 4A、TOGAF ADM、CBM（P1，应会不死背案例）",
+          "en": "EA 4A, TOGAF ADM, CBM (P1; know the skeleton, not case details)"
         }
       ]
     },
@@ -2274,8 +2310,8 @@ window.reviewContent = {
           "en": "Read Chinese answer frames for all 39 clusters, then compare English prompts; use only the architecture-filtered parts of 2025/2022/2021 adjacent-course papers and skip GoF/OOP-only questions"
         },
         {
-          "zh": "练 4 个设计模板：DDD 改错、微服务迁移、三层系统、缓存失效",
-          "en": "Practice 4 design templates: DDD correction, microservice migration, three-tier system, cache invalidation"
+          "zh": "主练微服务 + DDD + ADD/ASR 文档化；三层、缓存只作为 P2 历史题过一遍",
+          "en": "Main practice: microservices + DDD + ADD/ASR documentation; skim three-tier/cache as P2 historical prompts only"
         },
         {
           "zh": "ATAM/SPL/MDA/SOA 只保留历史高频简答骨架",
@@ -2291,65 +2327,65 @@ window.reviewContent = {
         "en": "Exam format and answer rules"
       },
       "status": {
-        "zh": "已覆盖",
-        "en": "Covered"
+        "zh": "以完整录音确认",
+        "en": "Confirmed by complete recording"
       },
-      "evidence": "Zhang/Li review notes, EagleBear review"
+      "evidence": "data/review-class/complete-review-minutes.md; data/复习课完整录音-张贺吕骏李杉杉.txt"
     },
     {
       "area": {
-        "zh": "基础概念、质量属性、ASR",
-        "en": "Foundations, QAs, ASRs"
+        "zh": "P0 基础、质量、ASR、4+1、设计决定",
+        "en": "P0 foundations, quality, ASR, 4+1, design decisions"
       },
       "status": {
-        "zh": "已扩充",
-        "en": "Expanded"
+        "zh": "重排为主线",
+        "en": "Promoted to mainline"
       },
-      "evidence": "Lecture 1 OCR, Lecture 2-4 OCR, review notes, blog references, 2021/2022/2025 Software System Design filtered questions, 2025 keyword hints"
+      "evidence": "Complete recording + Lecture 14 softarch2026-review-1 + Lecture 1/2-4 OCR"
     },
     {
       "area": {
-        "zh": "ADD、DDD、微服务、企业架构",
-        "en": "ADD, DDD, microservices, EA"
+        "zh": "P0 架构演进、ADD、微服务、DDD",
+        "en": "P0 evolution, ADD, microservices, DDD"
       },
       "status": {
-        "zh": "重点强化",
-        "en": "Strengthened as focus"
+        "zh": "按复习课强化",
+        "en": "Strengthened from review class"
       },
-      "evidence": "Li review notes, slides 6-13, EagleBear 2025 DDD, 2025 review outline, Mubu 287-node architecture mind map"
+      "evidence": "Lu Jun Lecture 3 review; Li Shanshan review slides; Lecture 6-9/12 OCR"
     },
     {
       "area": {
-        "zh": "架构模式与演进",
-        "en": "Patterns and evolution"
+        "zh": "企业架构",
+        "en": "Enterprise architecture"
       },
       "status": {
-        "zh": "按复习课重排",
-        "en": "Reorganized by review class"
+        "zh": "降为 P1",
+        "en": "Set to P1"
       },
-      "evidence": "Lu review notes, Lecture 3, EagleBear pattern notes"
+      "evidence": "Complete minutes P1; Lecture 10-11 4A/TOGAF/CBM OCR"
     },
     {
       "area": {
-        "zh": "ATAM、SPL/MDA/SOA 复用",
-        "en": "ATAM, SPL/MDA/SOA reuse"
+        "zh": "ATAM、SPL/MDA、旧三层/缓存题",
+        "en": "ATAM, SPL/MDA, old three-tier/cache questions"
       },
       "status": {
-        "zh": "历史高频，降权保留",
-        "en": "Kept as lower-priority historical topics"
+        "zh": "历史保底",
+        "en": "Historical backup"
       },
-      "evidence": "Past papers, EagleBear system-design review, 2021/2022/2025 adjacent-course architecture questions, Mubu architecture notes"
+      "evidence": "Past papers retained but not allowed to override current review-class scope"
     },
     {
       "area": {
-        "zh": "软件详细设计 / GoF 设计模式",
-        "en": "Detailed design / GoF design patterns"
+        "zh": "AI 增强/AI 原生、GoF 设计模式",
+        "en": "AI-enabled/native and GoF design patterns"
       },
       "status": {
-        "zh": "排除主线",
-        "en": "Excluded from mainline"
+        "zh": "明确不考/排除",
+        "en": "Non-exam/excluded"
       },
-      "evidence": "Current course review scope excludes design-pattern-only half; 2021/2022/2025 LSP/OCP, Factory, Command, Observer, Facade/Proxy and pattern-coding questions were filtered out"
+      "evidence": "Complete recording Lu Jun segment; adjacent-course filtering rule"
     }
   ],
   "whiteboards": [
@@ -2408,8 +2444,8 @@ window.reviewContent = {
           "en": "DDD: suitable for complex coupled domains; problem space to solution space, strategic + tactical design + event storming."
         },
         {
-          "zh": "企业架构：4A/5A、TOGAF/ADM、CBM、战略业务建模和能力沉淀。",
-          "en": "EA: 4A/5A, TOGAF/ADM, CBM, strategic business modeling, capability accumulation."
+          "zh": "企业架构：4A、TOGAF/ADM、CBM、战略业务建模和能力沉淀。",
+          "en": "EA: 4A, TOGAF/ADM, CBM, strategic business modeling, capability accumulation."
         }
       ]
     },
@@ -2480,303 +2516,579 @@ window.reviewContent = {
   ],
   "diagrams": [
     {
-      "id": "quality-scenario",
-      "src": "assets/diagrams/quality-scenario.svg",
+      "id": "quality-scenario-table",
+      "src": "assets/diagrams/quality-scenario-table.svg",
+      "srcZh": "assets/diagrams/quality-scenario-table.zh.svg",
+      "srcEn": "assets/diagrams/quality-scenario-table.svg",
       "title": {
-        "zh": "质量属性场景示例表",
-        "en": "Quality Attribute Scenario Example Table"
+        "zh": "质量属性场景 Ground Truth 表",
+        "en": "Quality Attribute Scenario Ground-Truth Table"
       },
       "note": {
-        "zh": "按原始资料表格重绘：七列对应质量属性、刺激源、刺激、工件、环境、响应、响应度量。",
-        "en": "Redrawn from the source table: the seven columns are quality attribute, stimulus source, stimulus, artifact, environment, response, and response measure."
+        "zh": "按原始课程表格重绘：七列对应质量属性、刺激源、刺激、工件、环境、响应、响应度量。",
+        "en": "Redrawn from the original course table: quality attribute, source, stimulus, artifact, environment, response, response measure."
       },
       "use": {
-        "zh": "适合直接背六要素和各质量属性例子；考场可画成一行六要素表，再填入题目给定场景。",
-        "en": "Use it to memorize the six scenario slots and examples for each quality attribute; in an exam, draw one row and fill it with the given scenario."
-      },
-      "topicIds": [
-        "quality",
-        "asr",
-        "quality-tactics"
-      ],
-      "questionIds": [
-        "q_quality_scenarios",
-        "q_req_quality_asr"
-      ]
+        "zh": "质量场景题直接按此表背；Availability 行不要改成自拟切备用实例。",
+        "en": "Use this table directly for quality-scenario questions; do not replace the Availability row with a self-made failover example."
+      }
     },
     {
       "id": "architecture-design-process",
       "src": "assets/diagrams/architecture-design-process.svg",
+      "srcZh": "assets/diagrams/architecture-design-process.zh.svg",
+      "srcEn": "assets/diagrams/architecture-design-process.svg",
       "title": {
         "zh": "架构设计、文档化与评估过程图",
         "en": "Architecture Design, Documentation, and Evaluation Process"
       },
       "note": {
-        "zh": "按原始过程图重绘为 SVG：stakeholders、ASR、需求和约束进入架构设计；patterns/tactics 约束候选视图；文档化产出 chosen views 与 beyond-view documentation，再进入架构评估并反馈。",
-        "en": "Redrawn as SVG from the source process figure: stakeholders, ASRs, requirements, and constraints feed architecture design; patterns/tactics shape candidate views; documentation produces chosen views and beyond-view documentation for evaluation and feedback."
+        "zh": "可信旧图：ASR、需求/约束、patterns/tactics、文档化和评估反馈的过程。",
+        "en": "Trusted existing redraw: process from ASRs, requirements/constraints, patterns/tactics to documentation and evaluation feedback."
       },
       "use": {
-        "zh": "适合回答架构活动、ASR 到设计、视图文档化、架构评估闭环这类题；不要只背线性阶段，要说明输入、产物和反馈。",
-        "en": "Use for questions about architecture activities, ASR-to-design flow, documentation, and architecture evaluation; explain inputs, artifacts, and feedback instead of only listing stages."
-      },
-      "topicIds": [
-        "foundation",
-        "asr",
-        "views",
-        "design-playbook"
-      ],
-      "questionIds": [
-        "q_arch_process",
-        "q_asr_sources",
-        "q_different_views",
-        "q_doc_package"
-      ]
+        "zh": "回答架构过程题时按四活动作答。",
+        "en": "Use four activities for architecture-process answers."
+      }
     },
     {
       "id": "add-roadmap",
       "src": "assets/diagrams/add-roadmap.svg",
+      "srcZh": "assets/diagrams/add-roadmap.zh.svg",
+      "srcEn": "assets/diagrams/add-roadmap.svg",
       "title": {
         "zh": "ADD 3.0 方法流程图",
-        "en": "ADD 3.0 Method Process"
+        "en": "ADD 3.0 Roadmap"
       },
       "note": {
-        "zh": "按 Lecture 12 课程原图口径重绘为 SVG：五类 driver 输入 Step 1，Step 1-7 串行推进，Step 7 后必要时回到 Step 2 继续迭代。",
-        "en": "Redrawn as SVG from the Lecture 12 figure: five driver classes feed Step 1, Steps 1-7 proceed in order, and Step 7 loops back to Step 2 if another iteration is needed."
+        "zh": "可信旧图：五类 driver 输入 Step 1，Step 1-7 串行推进，必要时迭代。",
+        "en": "Trusted existing redraw: five driver categories feed Step 1; Steps 1-7 proceed and iterate if necessary."
       },
       "use": {
-        "zh": "适合描述 ADD 过程和架构设计过程；手画时保留五个 driver、七个步骤、iterate-if-necessary 和最终 refined design。",
-        "en": "Use for ADD-process answers; when drawing by hand, keep the five drivers, seven steps, iterate-if-necessary path, and final refined design."
-      },
-      "topicIds": [
-        "add",
-        "design-playbook"
-      ],
-      "questionIds": [
-        "q_add_process",
-        "q_arch_process"
-      ]
+        "zh": "ADD 真题按七步背。",
+        "en": "Memorize seven steps for ADD questions."
+      }
     },
     {
-      "id": "ddd-context-map",
-      "src": "assets/diagrams/ddd-context-map.svg",
+      "id": "utility-tree",
+      "src": "assets/diagrams/utility-tree.svg",
+      "srcZh": "assets/diagrams/utility-tree.zh.svg",
+      "srcEn": "assets/diagrams/utility-tree.svg",
       "title": {
-        "zh": "DDD 限界上下文图",
-        "en": "DDD Context Map"
-      },
-      "note": {
-        "zh": "用订单、支付、库存上下文说明战略设计和战术设计如何连接。",
-        "en": "Uses ordering, payment, and inventory contexts to connect strategic and tactical DDD."
-      },
-      "use": {
-        "zh": "适合 DDD 论述题、设计题和微服务拆分题。",
-        "en": "Use for DDD essays, design questions, and microservice decomposition."
-      },
-      "topicIds": [
-        "ddd",
-        "microservices"
-      ],
-      "questionIds": []
-    },
-    {
-      "id": "microservice-migration",
-      "src": "assets/diagrams/microservice-migration.svg",
-      "title": {
-        "zh": "微服务迁移答题综合骨架",
-        "en": "Microservice Migration Answer Skeleton"
-      },
-      "note": {
-        "zh": "答题综合骨架，非单页 PPT 原图：强调边界、独立部署、数据自治、事件通信和可观测性，而不是只说“拆小”。",
-        "en": "Composite answer skeleton, not a single PPT source figure: highlights boundaries, deployment autonomy, data ownership, events, and observability instead of merely splitting small services."
-      },
-      "use": {
-        "zh": "适合微服务 vs SOA、迁移设计和现代架构论述。",
-        "en": "Use for microservices vs SOA, migration design, and modern architecture essays."
-      },
-      "topicIds": [
-        "microservices",
-        "ddd",
-        "patterns"
-      ],
-      "questionIds": [
-        "q_microservices_vs_soa",
-        "q_soa_quality"
-      ]
-    },
-    {
-      "id": "three-tier",
-      "src": "assets/diagrams/three-tier.svg",
-      "title": {
-        "zh": "三层架构答题图",
-        "en": "Three-Tier Answer Diagram"
-      },
-      "note": {
-        "zh": "表示层、业务逻辑层、数据访问层加职责、接口和 Views and Beyond 文档化提示。",
-        "en": "Presentation, business logic, and data access tiers with responsibilities, interfaces, and Views and Beyond notes."
-      },
-      "use": {
-        "zh": "适合 ATM/订票系统设计题。",
-        "en": "Use for ATM or booking-system design questions."
-      },
-      "topicIds": [
-        "design-playbook",
-        "views",
-        "patterns"
-      ],
-      "questionIds": [
-        "q_three_tier_design",
-        "q_layered_vs_multitier"
-      ]
-    },
-    {
-      "id": "cache-invalidation",
-      "src": "assets/diagrams/cache-invalidation.svg",
-      "title": {
-        "zh": "分布式缓存失效辅助时序图",
-        "en": "Distributed Cache Invalidation Answer Sequence"
-      },
-      "note": {
-        "zh": "辅助答案时序图，非原题 Figure 1：先提交数据库，再发布失效事件，由 broker/coordinator 通知其他缓存。",
-        "en": "Answer-aid sequence, not the original Figure 1: commit authoritative data first, then publish invalidation through a broker/coordinator."
-      },
-      "use": {
-        "zh": "适合缓存一致性、broker/pub-sub、connector/adapter 设计题；原题图有 server/cache cluster，本图只画一种可行方案。",
-        "en": "Use for cache consistency, broker/pub-sub, and connector/adapter design questions; the original prompt has a server/cache cluster, while this diagram shows one possible solution."
-      },
-      "topicIds": [
-        "design-playbook",
-        "quality-tactics",
-        "patterns"
-      ],
-      "questionIds": [
-        "q_distributed_cache_design",
-        "q_broker_pattern"
-      ]
-    },
-    {
-      "id": "atam-utility-tree",
-      "src": "assets/diagrams/atam-utility-tree.svg",
-      "title": {
-        "zh": "ASR 效用树",
+        "zh": "ASR 效用树 Utility Tree",
         "en": "ASR Utility Tree"
       },
       "note": {
-        "zh": "把 vague quality 变成质量属性、场景、度量和优先级叶节点。",
-        "en": "Turns vague qualities into quality attributes, scenarios, measures, and prioritized leaves."
+        "zh": "把质量属性具体化为场景，再按用户/业务重要性和架构影响排序。",
+        "en": "Turn quality attributes into scenarios, then rank by user/business importance and architectural impact."
       },
       "use": {
-        "zh": "适合 ASR 识别和效用树题；ATAM 输出题作为历史保底一起复习。",
-        "en": "Use for ASR identification and utility-tree questions; keep ATAM output questions as historical fallback practice."
-      },
-      "topicIds": [
-        "asr",
-        "evaluation-atam",
-        "quality"
-      ],
-      "questionIds": [
-        "q_asr_sources",
-        "q_atam_outputs",
-        "q_risk_sensitivity_tradeoff"
-      ]
+        "zh": "ASR 来源、识别、优先级题使用。",
+        "en": "Use for ASR source, identification, and prioritization questions."
+      }
     },
     {
-      "id": "views-and-beyond",
-      "src": "assets/diagrams/views-and-beyond.svg",
+      "id": "review-4-plus-1-views",
+      "src": "assets/diagrams/review-4-plus-1-views.svg",
+      "srcZh": "assets/diagrams/review-4-plus-1-views.zh.svg",
+      "srcEn": "assets/diagrams/review-4-plus-1-views.svg",
       "title": {
-        "zh": "Views and Beyond 文档包",
-        "en": "Views and Beyond Documentation Package"
+        "zh": "4+1 视图模型",
+        "en": "4+1 Views"
       },
       "note": {
-        "zh": "把 module、C&C、allocation 三类视图和 beyond-view 信息放在同一张速记图里。",
-        "en": "Places module, C&C, allocation viewtypes and beyond-view information in one study diagram."
+        "zh": "来自完整录音纪要配套重绘：logical、process、physical、development 与 use-case scenarios。",
+        "en": "Redrawn with the complete review minutes: logical, process, physical, development, and use-case scenarios."
       },
       "use": {
-        "zh": "适合 4+1、视图分类、架构文档包题。",
-        "en": "Use for 4+1, viewtype mapping, and architecture documentation questions."
-      },
-      "topicIds": [
-        "views",
-        "design-playbook"
-      ],
-      "questionIds": [
-        "q_style_view_mapping",
-        "q_different_views",
-        "q_doc_package",
-        "q_4_plus_1",
-        "q_three_tier_design"
-      ]
+        "zh": "4+1 题和文档化题使用。",
+        "en": "Use for 4+1 and documentation questions."
+      }
     },
     {
-      "id": "patterns-taxonomy",
-      "src": "assets/diagrams/patterns-taxonomy.svg",
+      "id": "review-architecture-evolution",
+      "src": "assets/diagrams/review-architecture-evolution.svg",
+      "srcZh": "assets/diagrams/review-architecture-evolution.svg",
+      "srcEn": "assets/diagrams/review-architecture-evolution.en.svg",
       "title": {
-        "zh": "Style / Pattern / Tactic 粒度图",
-        "en": "Style / Pattern / Tactic Granularity"
+        "zh": "软件架构演进主线",
+        "en": "Software Architecture Evolution"
       },
       "note": {
-        "zh": "区分风格、模式、战术的粒度、用途和常见例子。",
-        "en": "Distinguishes style, pattern, and tactic by granularity, intent, and examples."
+        "zh": "吕骏复习段重绘：从主机/终端、C/S、三层、SOA 到微服务、事件驱动/云原生。",
+        "en": "Redrawn from Lu Jun review: from mainframe/terminal, C/S, three-tier, SOA to microservices and event-driven/cloud-native."
       },
       "use": {
-        "zh": "适合模式、风格、战术比较题。",
-        "en": "Use for pattern, style, and tactic comparison questions."
-      },
-      "topicIds": [
-        "patterns",
-        "quality-tactics",
-        "design-decisions"
-      ],
-      "questionIds": [
-        "q_patterns_tactics",
-        "q_generic_design_strategies",
-        "q_cnc_mvc",
-        "q_layered_style"
-      ]
+        "zh": "解释“为什么演进”时按矛盾、结构、质量取舍作答。",
+        "en": "Explain evolution through tension, structure, and quality tradeoffs."
+      }
     },
     {
-      "id": "enterprise-architecture",
-      "src": "assets/diagrams/enterprise-architecture.svg",
+      "id": "review-architecture-units",
+      "src": "assets/diagrams/review-architecture-units.svg",
+      "srcZh": "assets/diagrams/review-architecture-units.svg",
+      "srcEn": "assets/diagrams/review-architecture-units.en.svg",
       "title": {
-        "zh": "企业架构 4A/ADM/CBM 关系图",
-        "en": "EA 4A/ADM/CBM Map"
+        "zh": "架构演进中的基本单元变化",
+        "en": "Changing Units in Architecture Evolution"
       },
       "note": {
-        "zh": "把业务、应用、数据、技术架构与 TOGAF/ADM、CBM 连接起来。",
-        "en": "Connects business, application, data, and technology architecture with TOGAF/ADM and CBM."
+        "zh": "展示不同阶段管理对象从程序/数据到服务、事件和云原生平台的变化。",
+        "en": "Shows the managed unit shifting from programs/data to services, events, and cloud-native platforms."
       },
       "use": {
-        "zh": "适合企业架构高阶论述。",
-        "en": "Use for enterprise architecture essays."
-      },
-      "topicIds": [
-        "enterprise"
-      ],
-      "questionIds": []
+        "zh": "模式/风格演进题辅助。",
+        "en": "Support for pattern/style evolution answers."
+      }
     },
     {
-      "id": "reuse-variability",
-      "src": "assets/diagrams/reuse-variability.svg",
+      "id": "microservice-style-comparison",
+      "src": "assets/diagrams/microservice-style-comparison.svg",
+      "srcZh": "assets/diagrams/microservice-style-comparison.zh.svg",
+      "srcEn": "assets/diagrams/microservice-style-comparison.svg",
       "title": {
-        "zh": "SPL 可变性与绑定时间",
-        "en": "SPL Variability and Binding Time"
+        "zh": "单体/分层/SOA/微服务对比",
+        "en": "Monolith, Layered, SOA, and Microservice Comparison"
       },
       "note": {
-        "zh": "核心资产、变化点、变化机制和绑定时间的关系。",
-        "en": "Shows core assets, variation points, variation mechanisms, and binding time."
+        "zh": "按 Lecture 6-7 表格口径重绘，突出微服务与 SOA 的通信、数据、粒度差异。",
+        "en": "Redrawn from Lecture 6-7 comparison tables, highlighting communication, data, and granularity differences."
       },
       "use": {
-        "zh": "适合 SPL、MDA/SOA 复用、binding time 题。",
-        "en": "Use for SPL, MDA/SOA reuse, and binding-time questions."
+        "zh": "微服务特性与对比题使用。",
+        "en": "Use for microservice characteristics and comparison questions."
+      }
+    },
+    {
+      "id": "review-microservice-decomposition",
+      "src": "assets/diagrams/review-microservice-decomposition.svg",
+      "srcZh": "assets/diagrams/review-microservice-decomposition.zh.svg",
+      "srcEn": "assets/diagrams/review-microservice-decomposition.svg",
+      "title": {
+        "zh": "微服务拆分与 DDD 边界",
+        "en": "Microservice Decomposition and DDD Boundaries"
       },
-      "topicIds": [
-        "reuse-variability",
-        "design-decisions"
-      ],
-      "questionIds": [
-        "q_spl_vs_single",
-        "q_reuse_spl_mda_soa",
-        "q_spl_variability",
-        "q_binding_time"
-      ]
+      "note": {
+        "zh": "来自完整录音纪要配套重绘：业务能力、子域、限界上下文与服务边界的关系。",
+        "en": "Redrawn with complete review minutes: business capabilities, subdomains, bounded contexts, and service boundaries."
+      },
+      "use": {
+        "zh": "微服务/DDD 设计题使用。",
+        "en": "Use for microservice/DDD design questions."
+      }
+    },
+    {
+      "id": "ddd-core-model",
+      "src": "assets/diagrams/ddd-core-model.svg",
+      "srcZh": "assets/diagrams/ddd-core-model.zh.svg",
+      "srcEn": "assets/diagrams/ddd-core-model.svg",
+      "title": {
+        "zh": "DDD 战略/战术设计图",
+        "en": "DDD Strategic and Tactical Design Map"
+      },
+      "note": {
+        "zh": "按 Lecture 8-9 OCR 重绘：子域、限界上下文、上下文映射、聚合和事件风暴。",
+        "en": "Redrawn from Lecture 8-9 OCR: subdomains, bounded contexts, context mapping, aggregates, and event storming."
+      },
+      "use": {
+        "zh": "DDD 设计题按此组织答案。",
+        "en": "Use this to structure DDD design answers."
+      }
+    },
+    {
+      "id": "enterprise-4a",
+      "src": "assets/diagrams/enterprise-4a.svg",
+      "srcZh": "assets/diagrams/enterprise-4a.zh.svg",
+      "srcEn": "assets/diagrams/enterprise-4a.svg",
+      "title": {
+        "zh": "企业架构 4A / TOGAF / CBM",
+        "en": "Enterprise Architecture 4A / TOGAF / CBM"
+      },
+      "note": {
+        "zh": "按 Lecture 10-11 与复习课口径重绘，强调 4A 而不是把 5A 放大成主线。",
+        "en": "Redrawn from Lecture 10-11 and review-class wording; emphasizes 4A rather than over-promoting 5A."
+      },
+      "use": {
+        "zh": "企业架构 P1 题使用。",
+        "en": "Use for P1 enterprise-architecture questions."
+      }
+    },
+    {
+      "id": "three-tier-reference",
+      "src": "assets/diagrams/three-tier-reference.svg",
+      "srcZh": "assets/diagrams/three-tier-reference.zh.svg",
+      "srcEn": "assets/diagrams/three-tier-reference.svg",
+      "title": {
+        "zh": "三层架构旧题参考答案图",
+        "en": "Three-Tier Old-Paper Reference Diagram"
+      },
+      "note": {
+        "zh": "说明性答题图：订票/ATM 三层职责 + Views and Beyond 文档项，不是今年主线 PPT 原图。",
+        "en": "Illustrative answer diagram: booking/ATM three-tier responsibilities plus Views and Beyond documentation; not a current mainline slide."
+      },
+      "use": {
+        "zh": "旧题设计题需要画三层时使用，优先级 P2。",
+        "en": "Use for historical three-tier design questions, priority P2."
+      }
+    },
+    {
+      "id": "cache-invalidation-reference",
+      "src": "assets/diagrams/cache-invalidation-reference.svg",
+      "srcZh": "assets/diagrams/cache-invalidation-reference.zh.svg",
+      "srcEn": "assets/diagrams/cache-invalidation-reference.svg",
+      "title": {
+        "zh": "分布式缓存失效旧题参考图",
+        "en": "Distributed Cache Invalidation Reference"
+      },
+      "note": {
+        "zh": "说明性答题图：先提交 DB，再由协调器/Broker 广播失效事件到缓存适配器。",
+        "en": "Illustrative answer diagram: commit DB first, then coordinator/broker broadcasts invalidation events to cache adapters."
+      },
+      "use": {
+        "zh": "缓存一致性旧题使用，优先级 P2。",
+        "en": "Use for historical cache-consistency design questions, priority P2."
+      }
+    },
+    {
+      "id": "mvc-cnc-reference",
+      "src": "assets/diagrams/mvc-cnc-reference.svg",
+      "srcZh": "assets/diagrams/mvc-cnc-reference.zh.svg",
+      "srcEn": "assets/diagrams/mvc-cnc-reference.svg",
+      "title": {
+        "zh": "MVC 作为 C&C 样式参考图",
+        "en": "MVC as C&C Style Reference"
+      },
+      "note": {
+        "zh": "用 MVC 说明 Component-and-Connector：运行时组件、连接件和交互约束。",
+        "en": "Uses MVC to explain Component-and-Connector: runtime components, connectors, and interaction constraints."
+      },
+      "use": {
+        "zh": "C&C/MVC 例题使用。",
+        "en": "Use for C&C/MVC example questions."
+      }
+    },
+    {
+      "id": "soa-cnc-reference",
+      "src": "assets/diagrams/soa-cnc-reference.svg",
+      "srcZh": "assets/diagrams/soa-cnc-reference.zh.svg",
+      "srcEn": "assets/diagrams/soa-cnc-reference.svg",
+      "title": {
+        "zh": "SOA 作为 C&C 样式参考图",
+        "en": "SOA as C&C Style Reference"
+      },
+      "note": {
+        "zh": "说明性答题图：服务是组件，契约/协议/ESB/消息总线是连接件。",
+        "en": "Illustrative answer diagram: services are components; contracts, protocols, ESB, and messaging are connectors."
+      },
+      "use": {
+        "zh": "SOA/C&C、Web Service/ESB 旧题使用。",
+        "en": "Use for SOA/C&C and Web Service/ESB historical questions."
+      }
+    },
+    {
+      "id": "pipe-filter-text-pipeline",
+      "src": "assets/diagrams/pipe-filter-text-pipeline.svg",
+      "srcZh": "assets/diagrams/pipe-filter-text-pipeline.zh.svg",
+      "srcEn": "assets/diagrams/pipe-filter-text-pipeline.svg",
+      "title": {
+        "zh": "Pipe-and-Filter 文本处理参考图",
+        "en": "Pipe-and-Filter Text Pipeline Reference"
+      },
+      "note": {
+        "zh": "说明性答题图：每个 Filter 做单步转换，每条 Pipe 标明数据格式。",
+        "en": "Illustrative answer diagram: each filter performs one transformation and each pipe labels the data format."
+      },
+      "use": {
+        "zh": "Pipe-and-Filter 旧设计题使用，优先级 P2。",
+        "en": "Use for historical Pipe-and-Filter design questions, priority P2."
+      }
+    },
+    {
+      "id": "broker-pattern-topology",
+      "src": "assets/diagrams/broker-pattern-topology.svg",
+      "srcZh": "assets/diagrams/broker-pattern-topology.zh.svg",
+      "srcEn": "assets/diagrams/broker-pattern-topology.svg",
+      "title": {
+        "zh": "Broker 架构模式拓扑参考图",
+        "en": "Broker Pattern Topology Reference"
+      },
+      "note": {
+        "zh": "说明性答题图：Client Proxy、Broker、Server Proxy、Server 与可选注册目录。",
+        "en": "Illustrative answer diagram: client proxy, broker, server proxy, server, and optional registry."
+      },
+      "use": {
+        "zh": "Broker 旧题使用，优先级 P2。",
+        "en": "Use for historical Broker questions, priority P2."
+      }
+    },
+    {
+      "id": "atam-phase-outputs",
+      "src": "assets/diagrams/atam-phase-outputs.svg",
+      "srcZh": "assets/diagrams/atam-phase-outputs.zh.svg",
+      "srcEn": "assets/diagrams/atam-phase-outputs.svg",
+      "title": {
+        "zh": "ATAM 阶段输出参考表",
+        "en": "ATAM Phase Outputs Reference"
+      },
+      "note": {
+        "zh": "旧题说明性表格：只保留 Phase 0-3 输出骨架，不把 ATAM 放成 2026 主线。",
+        "en": "Historical reference table: keep only the Phase 0-3 output skeleton and do not promote ATAM to the 2026 mainline."
+      },
+      "use": {
+        "zh": "ATAM 旧题快速回忆用，优先级 P2。",
+        "en": "Use as a quick recall aid for historical ATAM questions, priority P2."
+      }
     }
-  ]
+  ],
+  "examMindmap": {
+    "title": {
+      "zh": "复习课完整录音思维导图",
+      "en": "Complete Review-Class Scope Mind Map"
+    },
+    "note": {
+      "zh": "以完整录音和复习课 slides 为最高纲领；节点点击会统计，勾选会进入本地 checklist。",
+      "en": "Highest-level outline from the complete recording and review slides; node clicks are counted and checklist state is local."
+    },
+    "groups": [
+      {
+        "id": "shape",
+        "priority": "",
+        "title": {
+          "zh": "考试形态",
+          "en": "Exam Shape"
+        },
+        "nodes": [
+          {
+            "id": "exam-short-answer",
+            "title": {
+              "zh": "简答题 / 论述问答 / 设计分析",
+              "en": "Short answers / essays / design analysis"
+            },
+            "note": {
+              "zh": "英文题面；中文或英文作答，但同一题不要混用。",
+              "en": "English questions; answer in Chinese or English, but do not mix languages in one answer."
+            }
+          },
+          {
+            "id": "exam-diagram",
+            "title": {
+              "zh": "个别题可能画图",
+              "en": "Some questions may require diagrams"
+            },
+            "note": {
+              "zh": "ADD、4+1、质量场景、微服务/DDD 设计题要能手画骨架。",
+              "en": "Be ready to sketch ADD, 4+1, quality scenarios, and microservice/DDD design skeletons."
+            }
+          }
+        ]
+      },
+      {
+        "id": "p0",
+        "priority": "P0",
+        "title": {
+          "zh": "P0 必须会",
+          "en": "P0 Must Know"
+        },
+        "nodes": [
+          {
+            "id": "mind-foundation",
+            "topicId": "foundation",
+            "title": {
+              "zh": "软件架构基本概念",
+              "en": "Architecture foundations"
+            },
+            "note": {
+              "zh": "Structure / Elements / Relationships / Design decisions。",
+              "en": "Structure / Elements / Relationships / Design decisions."
+            }
+          },
+          {
+            "id": "mind-views",
+            "topicId": "views",
+            "title": {
+              "zh": "4+1 Views",
+              "en": "4+1 Views"
+            },
+            "note": {
+              "zh": "Logical、Process、Physical、Development + Use case scenarios。",
+              "en": "Logical, Process, Physical, Development + Use case scenarios."
+            }
+          },
+          {
+            "id": "mind-quality",
+            "topicId": "quality",
+            "title": {
+              "zh": "质量属性六要素",
+              "en": "Six-part quality scenarios"
+            },
+            "note": {
+              "zh": "刺激源、刺激、工件、环境、响应、响应度量。",
+              "en": "Source, stimulus, artifact, environment, response, response measure."
+            }
+          },
+          {
+            "id": "mind-asr",
+            "topicId": "asr",
+            "title": {
+              "zh": "ASR 与 Utility Tree",
+              "en": "ASRs and Utility Tree"
+            },
+            "note": {
+              "zh": "需求文档、访谈/workshop、业务目标，按重要性和架构影响排序。",
+              "en": "Documents, interviews/workshops, business goals; rank by value and architectural impact."
+            }
+          },
+          {
+            "id": "mind-evolution",
+            "topicId": "patterns",
+            "title": {
+              "zh": "架构演进与模式/风格/战术",
+              "en": "Architecture evolution and patterns/styles/tactics"
+            },
+            "note": {
+              "zh": "按时代矛盾、结构抓手、质量属性取舍来答。",
+              "en": "Answer by historical tension, structural mechanism, and quality tradeoffs."
+            }
+          },
+          {
+            "id": "mind-add",
+            "topicId": "add",
+            "title": {
+              "zh": "ADD 3.0 七步",
+              "en": "ADD 3.0 seven steps"
+            },
+            "note": {
+              "zh": "driver 输入、iteration goal、refine element、design concept、instantiate、sketch/document、analyze。",
+              "en": "Drivers, iteration goal, refine element, design concept, instantiate, sketch/document, analyze."
+            }
+          },
+          {
+            "id": "mind-ms",
+            "topicId": "microservices",
+            "title": {
+              "zh": "微服务：特性/对比/模式",
+              "en": "Microservices: characteristics/comparison/patterns"
+            },
+            "note": {
+              "zh": "不背定义，重点拆分、通信、部署、可观测性。",
+              "en": "Do not memorize definition; focus on decomposition, communication, deployment, observability."
+            }
+          },
+          {
+            "id": "mind-ddd",
+            "topicId": "ddd",
+            "title": {
+              "zh": "DDD：战略/战术/事件风暴",
+              "en": "DDD: strategic/tactical/event storming"
+            },
+            "note": {
+              "zh": "子域、限界上下文、上下文映射、聚合、领域事件。",
+              "en": "Subdomains, bounded contexts, context maps, aggregates, domain events."
+            }
+          }
+        ]
+      },
+      {
+        "id": "p1",
+        "priority": "P1",
+        "title": {
+          "zh": "P1 应会展开",
+          "en": "P1 Expansion"
+        },
+        "nodes": [
+          {
+            "id": "mind-ea",
+            "topicId": "enterprise",
+            "title": {
+              "zh": "企业架构 4A/TOGAF/CBM",
+              "en": "EA 4A/TOGAF/CBM"
+            },
+            "note": {
+              "zh": "P1：会基础分析和检查视角，不死背案例。",
+              "en": "P1: know analysis/checking lenses, not case details."
+            }
+          },
+          {
+            "id": "mind-hps",
+            "topicId": "add",
+            "title": {
+              "zh": "HPS ADD case",
+              "en": "HPS ADD case"
+            },
+            "note": {
+              "zh": "理解 CQRS、Kafka、command/query/export side 如何支持 ADD 流程。",
+              "en": "Understand CQRS, Kafka, command/query/export side as ADD process support."
+            }
+          }
+        ]
+      },
+      {
+        "id": "p2",
+        "priority": "P2",
+        "title": {
+          "zh": "P2 历史保底",
+          "en": "P2 Historical Backup"
+        },
+        "nodes": [
+          {
+            "id": "mind-atam",
+            "topicId": "evaluation-atam",
+            "title": {
+              "zh": "ATAM 骨架",
+              "en": "ATAM skeleton"
+            },
+            "note": {
+              "zh": "输出、参与者、risk/sensitivity/tradeoff。",
+              "en": "Outputs, participants, risk/sensitivity/tradeoff."
+            }
+          },
+          {
+            "id": "mind-reuse",
+            "topicId": "reuse-variability",
+            "title": {
+              "zh": "SPL/MDA/复用可变性",
+              "en": "SPL/MDA/reuse and variability"
+            },
+            "note": {
+              "zh": "旧题保底，不抢 P0 时间。",
+              "en": "Old-paper backup; do not steal P0 time."
+            }
+          }
+        ]
+      },
+      {
+        "id": "p3",
+        "priority": "P3",
+        "title": {
+          "zh": "P3 明确不考/只读",
+          "en": "P3 Non-Exam / Read Only"
+        },
+        "nodes": [
+          {
+            "id": "mind-ai",
+            "topicId": "ai",
+            "title": {
+              "zh": "AI 增强 / AI 原生",
+              "en": "AI-enabled / AI-native"
+            },
+            "note": {
+              "zh": "吕骏完整录音明确不考。",
+              "en": "Lu Jun explicitly said this will not be tested."
+            }
+          },
+          {
+            "id": "mind-gof",
+            "title": {
+              "zh": "GoF 设计模式与代码实现题",
+              "en": "GoF design patterns and coding questions"
+            },
+            "note": {
+              "zh": "相邻课程材料中剔除，不纳入本课程主线。",
+              "en": "Filtered from adjacent-course material and excluded from this course mainline."
+            }
+          }
+        ]
+      }
+    ]
+  }
 };

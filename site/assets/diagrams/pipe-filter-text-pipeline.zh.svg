@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1380 500" role="img" aria-labelledby="title desc">
+  <title id="title">Pipe-and-Filter 文本处理参考答案图</title>
+  <desc id="desc">旧题说明性答题图：输入文本文件到排序去重词表的流水线。</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#9a6a12"/>
+    </marker>
+    <style>
+      .bg{fill:#fbfaf7}
+      .file{fill:#f3f6fa;stroke:#c9d1db;stroke-width:2.3;rx:14}
+      .filter{fill:#fff;stroke:#c9d1db;stroke-width:2.4;rx:16}
+      .title{font:700 34px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#1f2733}
+      .sub{font:18px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#667386}
+      .name{font:700 20px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#1f2733}
+      .body{font:15px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#536171}
+      .pipe{stroke:#9a6a12;stroke-width:4;fill:none;marker-end:url(#arrow)}
+      .small{font:14px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#687486}
+    </style>
+  </defs>
+  <rect class="bg" width="1380" height="500"/>
+  <text class="title" x="690" y="58" text-anchor="middle">参考答案图：Pipe-and-Filter 文本处理</text>
+  <text class="sub" x="690" y="92" text-anchor="middle">每个 Filter 做一个转换；每条 Pipe 传递约定好的数据格式。</text>
+
+  <g transform="translate(40,195)">
+    <rect class="file" width="135" height="86"/>
+    <text class="name" x="67" y="36" text-anchor="middle">输入文件</text>
+    <text class="small" x="67" y="61" text-anchor="middle">文本流</text>
+  </g>
+  <path class="pipe" d="M175 238 H230"/>
+  <g transform="translate(230,175)">
+    <rect class="filter" width="155" height="126"/>
+    <text class="name" x="77" y="34" text-anchor="middle">FileReader</text>
+    <text class="body" x="77" y="64" text-anchor="middle">读取字符</text>
+    <text class="small" x="77" y="92" text-anchor="middle">pipe: 字符流</text>
+  </g>
+  <path class="pipe" d="M385 238 H440"/>
+  <g transform="translate(440,175)">
+    <rect class="filter" width="155" height="126"/>
+    <text class="name" x="77" y="34" text-anchor="middle">Tokenizer</text>
+    <text class="body" x="77" y="64" text-anchor="middle">切分单词</text>
+    <text class="small" x="77" y="92" text-anchor="middle">pipe: tokens</text>
+  </g>
+  <path class="pipe" d="M595 238 H650"/>
+  <g transform="translate(650,175)">
+    <rect class="filter" width="155" height="126"/>
+    <text class="name" x="77" y="34" text-anchor="middle">Normalizer</text>
+    <text class="body" x="77" y="64" text-anchor="middle">统一大小写</text>
+    <text class="small" x="77" y="92" text-anchor="middle">去除标点</text>
+  </g>
+  <path class="pipe" d="M805 238 H860"/>
+  <g transform="translate(860,175)">
+    <rect class="filter" width="175" height="126"/>
+    <text class="name" x="87" y="34" text-anchor="middle">DuplicateRemover</text>
+    <text class="body" x="87" y="64" text-anchor="middle">过滤重复词</text>
+    <text class="small" x="87" y="92" text-anchor="middle">集合状态</text>
+  </g>
+  <path class="pipe" d="M1035 238 H1090"/>
+  <g transform="translate(1090,175)">
+    <rect class="filter" width="135" height="126"/>
+    <text class="name" x="67" y="34" text-anchor="middle">Sorter</text>
+    <text class="body" x="67" y="64" text-anchor="middle">排序</text>
+    <text class="small" x="67" y="92" text-anchor="middle">有序词表</text>
+  </g>
+  <path class="pipe" d="M1225 238 H1270"/>
+  <g transform="translate(1270,195)">
+    <rect class="file" width="90" height="86"/>
+    <text class="name" x="45" y="36" text-anchor="middle">Writer</text>
+    <text class="small" x="45" y="61" text-anchor="middle">输出</text>
+  </g>
+  <text class="small" x="690" y="410" text-anchor="middle">怎么画：Filter 画成方框，Pipe 画成箭头，同时标职责和数据格式。</text>
+</svg>

@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 620" role="img" aria-labelledby="title desc">
+  <title id="title">SOA as a component-and-connector style</title>
+  <desc id="desc">SOA reference diagram showing service components, contracts, ESB or messaging connectors, and registry/governance.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#1c5c74"/>
+    </marker>
+    <style>
+      .bg{fill:#fbfaf7}
+      .box{fill:#fff;stroke:#c9d1db;stroke-width:2.4;rx:16}
+      .bus{fill:#f0f7f9;stroke:#1c5c74;stroke-width:2.6;rx:18}
+      .service{fill:#fff8e9;stroke:#c9952e;stroke-width:2.2;rx:16}
+      .title{font:700 32px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#1f2733}
+      .sub{font:18px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#667386}
+      .name{font:700 23px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#1f2733}
+      .body{font:17px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#536171}
+      .small{font:15px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#687486}
+      .arrow{stroke:#1c5c74;stroke-width:3;fill:none;marker-end:url(#arrow)}
+      .dash{stroke:#9a6a12;stroke-width:3;fill:none;stroke-dasharray:8 7;marker-end:url(#arrow)}
+    </style>
+  </defs>
+  <rect class="bg" width="1180" height="620"/>
+  <text class="title" x="590" y="58" text-anchor="middle">SOA as Component-and-Connector Style</text>
+  <text class="sub" x="590" y="92" text-anchor="middle">Components are services; connectors are contracts, protocols, ESB/messaging, and governance mechanisms.</text>
+
+  <g transform="translate(70,255)">
+    <rect class="box" width="180" height="95"/>
+    <text class="name" x="90" y="38" text-anchor="middle">Consumer</text>
+    <text class="small" x="90" y="66" text-anchor="middle">business process / app</text>
+  </g>
+  <path class="arrow" d="M250 303 H350"/>
+  <g transform="translate(350,225)">
+    <rect class="bus" width="260" height="155"/>
+    <text class="name" x="130" y="38" text-anchor="middle">ESB / Message Bus</text>
+    <text class="body" x="130" y="75" text-anchor="middle">routing, mediation</text>
+    <text class="body" x="130" y="103" text-anchor="middle">protocol conversion</text>
+    <text class="small" x="130" y="130" text-anchor="middle">connector boundary</text>
+  </g>
+  <path class="arrow" d="M610 265 H725"/>
+  <path class="arrow" d="M610 303 H725"/>
+  <path class="arrow" d="M610 341 H725"/>
+  <g transform="translate(725,145)">
+    <rect class="service" width="210" height="90"/>
+    <text class="name" x="105" y="36" text-anchor="middle">Payment Service</text>
+    <text class="small" x="105" y="63" text-anchor="middle">contract + endpoint</text>
+  </g>
+  <g transform="translate(725,265)">
+    <rect class="service" width="210" height="90"/>
+    <text class="name" x="105" y="36" text-anchor="middle">Order Service</text>
+    <text class="small" x="105" y="63" text-anchor="middle">contract + endpoint</text>
+  </g>
+  <g transform="translate(725,385)">
+    <rect class="service" width="210" height="90"/>
+    <text class="name" x="105" y="36" text-anchor="middle">Inventory Service</text>
+    <text class="small" x="105" y="63" text-anchor="middle">contract + endpoint</text>
+  </g>
+  <g transform="translate(945,255)">
+    <rect class="box" width="165" height="95"/>
+    <text class="name" x="82" y="36" text-anchor="middle">Registry</text>
+    <text class="small" x="82" y="64" text-anchor="middle">discover / govern</text>
+  </g>
+  <text class="small" x="590" y="540" text-anchor="middle">How to draw: put services as runtime components, put service contracts/protocols/ESB as connectors, then add registry/governance and quality tradeoffs.</text>
+</svg>

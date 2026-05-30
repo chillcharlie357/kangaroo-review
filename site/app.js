@@ -31,7 +31,7 @@ const state = {
 };
 
 const content = window.reviewContent;
-const pages = new Set(["overview", "plan", "knowledge", "papers", "glossary", "whiteboards", "sources"]);
+const pages = new Set(["overview", "scope", "plan", "knowledge", "papers", "glossary", "whiteboards", "sources"]);
 const metricLabels = {
   site_visit: { zh: "站点访问", en: "site visits" },
   page_view: { zh: "本页查看", en: "page views" },
@@ -42,6 +42,7 @@ const metricLabels = {
   source_preview: { zh: "预览", en: "previews" },
   source_open: { zh: "打开/下载", en: "opens/downloads" },
   diagram_open: { zh: "图解放大", en: "diagram zooms" },
+  mindmap_node_click: { zh: "节点点击", en: "node clicks" },
   whiteboard_open: { zh: "画板放大", en: "whiteboard zooms" },
   reward_open: { zh: "打赏弹窗", en: "reward opens" }
 };
@@ -91,8 +92,37 @@ function htmlText(value) {
     .join("");
 }
 
+function toTextList(value) {
+  if (!value) return [];
+  if (Array.isArray(value)) return value.filter(Boolean).map(String);
+  return String(value).split("\n").filter(Boolean);
+}
+
+function localizedList(item, zhKey, enKey) {
+  if (!item) return [];
+  const zh = toTextList(item[zhKey]);
+  const en = toTextList(item[enKey]);
+  if (state.lang === "zh") return zh.length ? zh : en;
+  if (state.lang === "en") return en.length ? en : zh;
+  const max = Math.max(zh.length, en.length);
+  return Array.from({ length: max }, (_, index) => {
+    const zhLine = zh[index] || "";
+    const enLine = en[index] || "";
+    if (!zhLine) return enLine;
+    if (!enLine || zhLine === enLine) return zhLine;
+    return `${zhLine}\n${enLine}`;
+  }).filter(Boolean);
+}
+
 function labelText(value) {
   return localize(value).replace(/\n/g, " / ");
+}
+
+function diagramSource(diagram) {
+  if (!diagram) return "";
+  if (state.lang === "zh") return diagram.srcZh || diagram.src || diagram.srcEn || "";
+  if (state.lang === "en") return diagram.srcEn || diagram.src || diagram.srcZh || "";
+  return diagram.src || diagram.srcZh || diagram.srcEn || "";
 }
 
 function localizedPair(item, zhKey, enKey) {
@@ -114,8 +144,8 @@ function textForLanguage(zh, en, mixedSeparator = "\n") {
 
 function reviewDisclaimerText() {
   return textForLanguage(
-    "本复习资料由 Codex（GPT-5.5）辅助整理生成，专门针对 2026 南京大学软件学院研究生《软件体系结构》期末复习；未经任课老师确认，不保证适用于未来年份或本科《软件系统设计》，请以课程原始 slides、复习课纪要和老师说明为准。",
-    "This review material was organized with Codex (GPT-5.5) assistance for the 2026 NJU Software Institute graduate Software Architecture final review. It has not been endorsed by the instructors and is not guaranteed for future offerings or the undergraduate Software System Design course; prefer the original slides, review notes, and instructor guidance."
+    "本复习资料由 Codex（GPT-5.5）辅助整理生成，专门针对 2026 南京大学软件学院研究生《软件体系结构》期末复习；未经任课老师确认，不保证适用于未来年份或本科《软件系统设计》，请以课程原始 slides、完整复习课录音/整理纪要和老师说明为准。",
+    "This review material was organized with Codex (GPT-5.5) assistance for the 2026 NJU Software Institute graduate Software Architecture final review. It has not been endorsed by the instructors and is not guaranteed for future offerings or the undergraduate Software System Design course; prefer the original slides, complete review-class recording/minutes, and instructor guidance."
   );
 }
 
@@ -185,6 +215,10 @@ function topicMetricKey(topicId) {
 
 function glossaryMetricKey(term) {
   return stableMetricKey("glossary", `${term.category}:${term.en || term.zh}`);
+}
+
+function mindmapNodeMetricKey(nodeId) {
+  return stableMetricKey("mindmap", nodeId);
 }
 
 function questionMetricKey(question) {
@@ -310,6 +344,17 @@ function routeStepId(step, index) {
   return stableMetricKey("route-step", zhTitle);
 }
 
+function mindmapNodes() {
+  return (content.examMindmap?.groups || []).flatMap((group) =>
+    (group.nodes || []).map((node) => ({
+      ...node,
+      groupId: group.id,
+      groupTitle: group.title,
+      priority: node.priority || group.priority || ""
+    }))
+  );
+}
+
 function checklistCurrentItems() {
   const items = [];
   content.topics.forEach((topic) => {
@@ -364,6 +409,15 @@ function checklistCurrentItems() {
       label: labelText(step.title),
       priority: "",
       page: "plan"
+    });
+  });
+  mindmapNodes().forEach((node) => {
+    items.push({
+      key: checklistKey("mindmap", node.id),
+      kind: "mindmap",
+      label: labelText(node.title),
+      priority: node.priority || "",
+      page: "scope"
     });
   });
   return items;
@@ -933,7 +987,7 @@ function trackCurrentDetailView() {
 }
 
 function questionPriorityRank(question) {
-  return { P0: 0, P1: 1, P2: 2 }[question.priority || "P2"] ?? 3;
+  return { P0: 0, P1: 1, P2: 2, P3: 3 }[question.priority || "P2"] ?? 4;
 }
 
 function sortQuestionsForReview(questions) {
@@ -969,22 +1023,49 @@ function sourceLabel(source) {
 
 function sourceGroupName(group) {
   return ({
-    review_class_notes: state.lang === "en" ? "Review notes" : "复习课纪要",
+    primary_review_recording: state.lang === "en" ? "Complete recording baseline" : "完整录音最高纲领",
+    primary_review_outline: state.lang === "en" ? "Review-class outline" : "复习课整理纲领",
+    review_class_slides: state.lang === "en" ? "Review-class slides" : "复习课课件",
+    archived_feishu_notes: state.lang === "en" ? "Archived Feishu notes" : "飞书纪要归档",
     teacher_slides: state.lang === "en" ? "Teacher slides" : "教师课件",
-    senior_blog_reference: state.lang === "en" ? "Senior blog" : "学长博客",
+    recent_current_past_papers: state.lang === "en" ? "Recent current-course papers" : "近年本课真题",
+    adjacent_recent_past_papers: state.lang === "en" ? "Recent adjacent papers" : "近年相邻课程真题",
+    historical_past_papers: state.lang === "en" ? "Historical papers" : "历史真题",
+    current_course_2025_review: state.lang === "en" ? "2025 current-course review" : "2025 本课冲刺资料",
+    current_course_2025_reference: state.lang === "en" ? "2025 senior blog" : "2025 学长博客",
+    adjacent_2025_notes: state.lang === "en" ? "2025 adjacent notes" : "2025 相邻课程笔记",
     raw_predecessor_notes: state.lang === "en" ? "Past notes" : "前人资料",
-    adjacent_past_papers: state.lang === "en" ? "Adjacent papers" : "相邻课程真题",
-    current_senior_review: state.lang === "en" ? "2025 senior review" : "2025 前人冲刺",
-    adjacent_course_notes: state.lang === "en" ? "Adjacent course notes" : "相邻课程笔记",
-    ai_generated_notes: state.lang === "en" ? "AI notes" : "AI 整理资料"
+    peer_ai_notes: state.lang === "en" ? "Peer AI notes" : "同学 AI 整理",
+    ai_generated_notes: state.lang === "en" ? "Peer AI notes" : "同学 AI 整理"
   })[group] || group || "Other";
+}
+
+function sourceGroupRank(group) {
+  const order = {
+    primary_review_recording: 0,
+    primary_review_outline: 1,
+    review_class_slides: 2,
+    teacher_slides: 3,
+    recent_current_past_papers: 4,
+    adjacent_recent_past_papers: 5,
+    historical_past_papers: 6,
+    current_course_2025_review: 7,
+    current_course_2025_reference: 8,
+    adjacent_2025_notes: 9,
+    raw_predecessor_notes: 10,
+    peer_ai_notes: 11,
+    ai_generated_notes: 11,
+    archived_feishu_notes: 12
+  };
+  return order[group || "other"] ?? 99;
 }
 
 function priorityName(priority) {
   return ({
     P0: state.lang === "en" ? "Must know" : "必考/必会",
     P1: state.lang === "en" ? "High frequency" : "高频",
-    P2: state.lang === "en" ? "Support" : "补充"
+    P2: state.lang === "en" ? "Support" : "补充",
+    P3: state.lang === "en" ? "Background" : "只读背景"
   })[priority] || priority;
 }
 
@@ -998,7 +1079,12 @@ function currentTopics() {
 function currentSources() {
   return state.sources
     .filter((source) => state.sourceGroup === "all" || (source.source_group || "other") === state.sourceGroup)
-    .filter((source) => includesQuery(source.title, source.path, source.url, source.kind, source.source_group, source.trust, source.summary, source.extraction));
+    .filter((source) => includesQuery(source.title, source.path, source.url, source.kind, source.source_group, source.trust, source.summary, source.extraction))
+    .sort((left, right) => {
+      const groupRank = sourceGroupRank(left.source_group) - sourceGroupRank(right.source_group);
+      if (groupRank) return groupRank;
+      return sourceLabel(left).localeCompare(sourceLabel(right));
+    });
 }
 
 function renderOverview() {
@@ -1094,6 +1180,61 @@ function renderOverview() {
         }).join("")}
       </div>
     </section>
+  `;
+}
+
+function renderScope() {
+  const groups = content.examMindmap?.groups || [];
+  return `
+    <section class="panel scope-panel">
+      <div class="section-head split">
+        <div>
+          <p class="section-kicker">Review-Class Scope</p>
+          <h1>${htmlText(content.examMindmap?.title || { zh: "复习课纲领", en: "Review Scope" })}</h1>
+          <p>${htmlText(content.examMindmap?.note || "")}</p>
+        </div>
+        <span class="count-pill">${mindmapNodes().length} ${state.lang === "en" ? "nodes" : "节点"}</span>
+      </div>
+      <div class="scope-board">
+        ${groups.map((group) => renderMindmapGroup(group)).join("")}
+      </div>
+    </section>
+  `;
+}
+
+function renderMindmapGroup(group) {
+  const priorityClass = group.priority ? group.priority.toLowerCase() : "scope";
+  const nodes = group.nodes || [];
+  return `
+    <section class="mindmap-group ${priorityClass}">
+      <header>
+        <span>${escapeHtml(group.priority || "scope")}</span>
+        <h2>${htmlText(group.title)}</h2>
+      </header>
+      <div class="mindmap-nodes">
+        ${nodes.map((node) => renderMindmapNode(node, group)).join("")}
+      </div>
+    </section>
+  `;
+}
+
+function renderMindmapNode(node, group) {
+  const priority = node.priority || group.priority || "";
+  const metricKey = mindmapNodeMetricKey(node.id);
+  const topic = node.topicId ? content.topics.find((item) => item.id === node.topicId) : null;
+  return `
+    <article class="mindmap-node ${priority ? priority.toLowerCase() : ""}" data-action="mindmap-node" data-node-id="${escapeHtml(node.id)}" tabindex="0">
+      <div class="mindmap-node-main">
+        <span>${escapeHtml(priority || "scope")}</span>
+        <strong>${htmlText(node.title)}</strong>
+        <p>${htmlText(node.note || "")}</p>
+      </div>
+      <div class="mindmap-node-actions">
+        ${renderMetricBadge("mindmap_node_click", metricKey)}
+        ${renderChecklistControl("mindmap", node.id, labelText(node.title), "compact-check")}
+        ${topic ? `<a href="#knowledge" data-action="jump-topic" data-topic-id="${escapeHtml(topic.id)}">${state.lang === "en" ? "Open topic" : "打开知识点"}</a>` : ""}
+      </div>
+    </article>
   `;
 }
 
@@ -1294,7 +1435,7 @@ function renderDeepDive(topic) {
 
 function renderDiagramVisual(diagram, mode = "card") {
   const label = escapeHtml(labelText(diagram.title));
-  return `<img class="diagram-image" src="${escapeHtml(diagram.src)}" alt="${label}" />`;
+  return `<img class="diagram-image" src="${escapeHtml(diagramSource(diagram))}" alt="${label}" />`;
 }
 
 function renderDiagramCard(diagram, compact = false) {
@@ -1354,6 +1495,7 @@ function renderQuestionBody(question) {
   const sample = localizedPair(question, "sample_answer_zh", "sample_answer_en");
   const sourceAudit = localizedPair(question, "source_audit_zh", "source_audit_en");
   const visualHint = localizedPair(question, "visual_hint_zh", "visual_hint_en");
+  const drawingSteps = localizedList(question, "drawing_steps_zh", "drawing_steps_en");
   const diagram = question.diagram_id ? diagramById(question.diagram_id) : null;
   const answer = textForLanguage(zhAnswer, question.likely_answer_pattern);
   const priorityReason = localizedPair(question, "priority_reason_zh", "priority_reason_en");
@@ -1379,9 +1521,17 @@ function renderQuestionBody(question) {
           <p>${htmlText(sourceAudit)}</p>
         </section>
       ` : ""}
+      ${drawingSteps.length ? `
+        <section class="drawing-guide">
+          <h3>${state.lang === "en" ? "How to draw it in the exam" : "考场怎么画图"}</h3>
+          <ol>
+            ${drawingSteps.map((step) => `<li>${htmlText(step)}</li>`).join("")}
+          </ol>
+        </section>
+      ` : ""}
       ${diagram ? `
         <section class="question-diagram">
-          <h3>${state.lang === "en" ? "Useful diagram" : "配套图解"}</h3>
+          <h3>${state.lang === "en" ? "Reference diagram" : "参考答案图 / 配套图解"}</h3>
           ${renderDiagramCard(diagram, true)}
           ${visualHint ? `<p>${htmlText(visualHint)}</p>` : ""}
         </section>
@@ -1491,7 +1641,14 @@ function renderWhiteboards() {
 }
 
 function renderSources() {
-  const groups = ["all", ...new Set(state.sources.map((source) => source.source_group || "other").sort())];
+  const groups = ["all", ...new Set(state.sources.map((source) => source.source_group || "other"))]
+    .sort((left, right) => {
+      if (left === "all") return -1;
+      if (right === "all") return 1;
+      const rank = sourceGroupRank(left) - sourceGroupRank(right);
+      if (rank) return rank;
+      return sourceGroupName(left).localeCompare(sourceGroupName(right));
+    });
   const rows = currentSources();
   return `
     <section class="panel">
@@ -1557,6 +1714,7 @@ function renderCurrentPage() {
   const view = document.getElementById("app-view");
   const renderers = {
     overview: renderOverview,
+    scope: renderScope,
     plan: renderPlan,
     knowledge: renderKnowledge,
     papers: renderPapers,
@@ -1572,6 +1730,7 @@ function renderMeta() {
   document.getElementById("page-title").innerHTML = htmlText(content.meta.title);
   const navLabels = {
     overview: { zh: "总览", en: "Overview" },
+    scope: { zh: "纲领", en: "Scope" },
     plan: { zh: "路线", en: "Plan" },
     knowledge: { zh: "知识库", en: "Knowledge" },
     papers: { zh: "真题", en: "Papers" },
@@ -1730,9 +1889,20 @@ function setupEvents() {
         renderAll();
         break;
       case "jump-topic": {
+        const mindmapNode = target.closest(".mindmap-node");
+        if (mindmapNode?.dataset.nodeId) {
+          const node = mindmapNodes().find((item) => item.id === mindmapNode.dataset.nodeId);
+          trackMetric("mindmap_node_click", mindmapNodeMetricKey(mindmapNode.dataset.nodeId), node ? labelText(node.title) : mindmapNode.dataset.nodeId);
+        }
         state.selectedTopicId = target.dataset.topicId;
         const topic = content.topics.find((item) => item.id === state.selectedTopicId);
         state.topicGroup = topic?.group || "all";
+        break;
+      }
+      case "mindmap-node": {
+        const nodeId = target.dataset.nodeId;
+        const node = mindmapNodes().find((item) => item.id === nodeId);
+        trackMetric("mindmap_node_click", mindmapNodeMetricKey(nodeId), node ? labelText(node.title) : nodeId);
         break;
       }
       case "toggle-inline-question": {
@@ -1893,7 +2063,7 @@ function openDiagram(id) {
         </div>
       </header>
       <div class="modal-scroll">
-        <img class="modal-image modal-zoom-target" data-zoom="1" src="${escapeHtml(diagram.src)}" alt="${escapeHtml(labelText(diagram.title))}" />
+        <img class="modal-image modal-zoom-target" data-zoom="1" src="${escapeHtml(diagramSource(diagram))}" alt="${escapeHtml(labelText(diagram.title))}" />
       </div>
     </section>
   `);

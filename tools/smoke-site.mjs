@@ -109,6 +109,48 @@ async function checkViewport(name, viewport) {
       height: rect.height
     };
   });
+  await page.click('button[data-lang="zh"]');
+  await page.waitForFunction(() => document.querySelector(".diagram-card img")?.getAttribute("src")?.includes(".zh.svg"));
+  const zhDiagramSrc = await page.locator(".diagram-card img").first().getAttribute("src");
+  await page.click('button[data-lang="en"]');
+  await page.waitForFunction(() => {
+    const src = document.querySelector(".diagram-card img")?.getAttribute("src") || "";
+    return src && !src.includes(".zh.svg");
+  });
+  const enDiagramSrc = await page.locator(".diagram-card img").first().getAttribute("src");
+  await page.click('button[data-lang="mix"]');
+  const diagramLanguageSwitches = zhDiagramSrc.includes(".zh.svg") && !enDiagramSrc.includes(".zh.svg");
+  const diagramAssetChecks = await page.evaluate(async () => {
+    const diagrams = window.reviewContent?.diagrams || [];
+    const pickSource = (diagram, lang) => {
+      if (lang === "zh") return diagram.srcZh || diagram.src || diagram.srcEn;
+      if (lang === "en") return diagram.srcEn || diagram.src || diagram.srcZh;
+      return diagram.src || diagram.srcZh || diagram.srcEn;
+    };
+    const loadImage = (src) => new Promise((resolve) => {
+      const image = new Image();
+      image.onload = () => resolve({ src, loaded: true, naturalWidth: image.naturalWidth });
+      image.onerror = () => resolve({ src, loaded: false, naturalWidth: 0 });
+      image.src = src;
+    });
+    const checks = [];
+    for (const diagram of diagrams) {
+      for (const lang of ["zh", "en"]) {
+        const src = pickSource(diagram, lang);
+        const result = await loadImage(src);
+        checks.push({
+          id: diagram.id,
+          lang,
+          src,
+          loaded: result.loaded,
+          naturalWidth: result.naturalWidth
+        });
+      }
+    }
+    return checks;
+  });
+  const allDiagramAssetsLoaded = diagramAssetChecks.every((item) => item.loaded && item.naturalWidth > 100);
+  const checkedDiagramAssetCount = diagramAssetChecks.length;
   await page.screenshot({ path: `${screenshots}/kangaroo-review-${name}-knowledge.png`, fullPage: true });
   await page.evaluate(() => {
     window.__kangarooTrackPayloads = [];
@@ -164,6 +206,10 @@ async function checkViewport(name, viewport) {
   await page.click('a[data-page="papers"]');
   await page.waitForSelector(".question-item");
   await page.selectOption("#cluster-select", "all");
+  const drawingGuideCount = await page.locator(".drawing-guide").count();
+  const drawingGuideText = drawingGuideCount
+    ? await page.locator(".drawing-guide").first().textContent()
+    : "";
   const relatedQuestionChecklistSynced = await page.evaluate((key) => {
     return [...document.querySelectorAll("input[data-check-key]")]
       .some((input) => input.dataset.checkKey === key && input.checked);
@@ -188,7 +234,7 @@ async function checkViewport(name, viewport) {
   await page.click('a[data-page="sources"]');
   await page.waitForSelector(".source-row");
   const sourceGroups = await page.locator("#source-select option").evaluateAll((nodes) => nodes.map((node) => node.value));
-  await page.selectOption("#source-select", "ai_generated_notes");
+  await page.selectOption("#source-select", "peer_ai_notes");
   await page.waitForSelector(".source-row");
   const aiSourceText = await page.locator(".source-row").first().innerText();
   await page.click(".source-actions button");
@@ -247,20 +293,28 @@ async function checkViewport(name, viewport) {
     detailHasModernTopic: /DDD|领域驱动|微服务|Enterprise|企业架构/.test(detail),
     detailHasDeepDive: detailHasDeepDive > 0,
     diagramRendered: diagramBox.complete && diagramBox.width > 120 && diagramBox.height > 60,
+    diagramLanguageSwitches,
+    allDiagramAssetsLoaded,
+    checkedDiagramAssetCount,
+    zhDiagramSrc,
+    enDiagramSrc,
     diagramBox,
     relatedQuestionJumped,
     relatedQuestionChecklistSynced,
     questionCount,
     questionHasChinese: /软件|架构|需求|列出|解释/.test(question),
     sampleAnswerHasChinese: /架构|需求|系统|质量|服务/.test(sampleAnswer),
+    drawingGuideVisible: drawingGuideCount > 0 && /画|Draw|How to draw|考场/.test(drawingGuideText),
+    drawingGuideCount,
     whiteboardCount,
     hasAiWhiteboard: hasAiWhiteboard > 0,
     whiteboardNaturalWidth,
     sourceGroups,
-    hasNewSourceGroups: sourceGroups.includes("ai_generated_notes")
-      && sourceGroups.includes("adjacent_past_papers")
-      && sourceGroups.includes("current_senior_review")
-      && sourceGroups.includes("adjacent_course_notes"),
+    hasNewSourceGroups: sourceGroups.includes("primary_review_recording")
+      && sourceGroups.includes("primary_review_outline")
+      && sourceGroups.includes("review_class_slides")
+      && sourceGroups.includes("peer_ai_notes")
+      && sourceGroups.includes("archived_feishu_notes"),
     aiSourceVisible: /AI 整理|Wiki|画板|期末复习/.test(aiSourceText),
     sourcePreviewLoaded: !/预览失败|Preview failed/.test(previewSample),
     rewardHasCopy: /报销一点Codex|Codex bill|谢谢|Thank you/.test(rewardText),
@@ -282,6 +336,8 @@ for (const result of [desktop, mobile]) {
     "detailHasModernTopic",
     "detailHasDeepDive",
     "diagramRendered",
+    "diagramLanguageSwitches",
+    "allDiagramAssetsLoaded",
     "relatedQuestionJumped",
     "relatedQuestionChecklistSynced",
     "hasNewSourceGroups",
@@ -289,6 +345,7 @@ for (const result of [desktop, mobile]) {
     "aiSourceVisible",
     "questionHasChinese",
     "sampleAnswerHasChinese",
+    "drawingGuideVisible",
     "sourcePreviewLoaded",
     "disclaimerHasCodex",
     "rewardHasCopy",

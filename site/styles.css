@@ -277,6 +277,7 @@ select {
 .diagram-card small span,
 .sample-answer p span,
 .source-audit p span,
+.drawing-guide li span,
 .question-diagram p span {
   display: block;
 }
@@ -661,7 +662,8 @@ select {
 }
 
 .route-board,
-.priority-lanes {
+.priority-lanes,
+.scope-board {
   display: grid;
   gap: 14px;
 }
@@ -691,6 +693,129 @@ select {
 .route-step h2 {
   margin: 8px 0 10px;
   font-size: 24px;
+}
+
+.scope-panel .section-head p {
+  max-width: 780px;
+}
+
+.scope-board {
+  grid-template-columns: 1fr;
+}
+
+.mindmap-group {
+  --map-color: var(--teal);
+  --map-bg: rgba(20, 117, 111, 0.08);
+  display: grid;
+  grid-template-columns: minmax(190px, 0.24fr) minmax(0, 1fr);
+  gap: 14px;
+  border: 1px solid var(--line);
+  border-top: 5px solid var(--map-color);
+  background: linear-gradient(180deg, var(--map-bg), rgba(255, 253, 248, 0.92) 46%);
+  padding: 16px;
+}
+
+.mindmap-group.p0 {
+  --map-color: var(--red);
+  --map-bg: rgba(181, 70, 52, 0.08);
+}
+
+.mindmap-group.p1 {
+  --map-color: var(--blue);
+  --map-bg: rgba(53, 95, 145, 0.08);
+}
+
+.mindmap-group.p2 {
+  --map-color: var(--gold);
+  --map-bg: rgba(184, 132, 31, 0.1);
+}
+
+.mindmap-group.p3 {
+  --map-color: var(--muted);
+  --map-bg: rgba(31, 35, 40, 0.06);
+}
+
+.mindmap-group header {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+}
+
+.mindmap-group header span,
+.mindmap-node-main > span {
+  width: fit-content;
+  border: 1px solid var(--map-color);
+  background: var(--map-bg);
+  color: var(--map-color);
+  padding: 4px 9px;
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.mindmap-group h2 {
+  margin: 0;
+  font-size: 24px;
+  line-height: 1.25;
+}
+
+.mindmap-nodes {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.mindmap-node {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  min-width: 0;
+  border: 1px solid var(--line);
+  background: rgba(255, 253, 248, 0.92);
+  padding: 12px;
+}
+
+.mindmap-node:focus-visible {
+  outline: 3px solid rgba(53, 95, 145, 0.3);
+  outline-offset: 2px;
+}
+
+.mindmap-node-main {
+  display: grid;
+  gap: 7px;
+  min-width: 0;
+}
+
+.mindmap-node-main strong span,
+.mindmap-node-main p span {
+  display: block;
+}
+
+.mindmap-node-main p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.mindmap-node-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-content: start;
+  justify-content: flex-end;
+  min-width: 150px;
+}
+
+.mindmap-node-actions a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  border: 1px solid var(--line);
+  background: var(--panel-strong);
+  color: var(--ink);
+  padding: 3px 8px;
+  font-size: 12px;
+  text-decoration: none;
 }
 
 .priority-lane {
@@ -727,6 +852,11 @@ select {
 .priority-lane.p2 {
   --lane-color: var(--gold);
   --lane-bg: rgba(184, 132, 31, 0.12);
+}
+
+.priority-lane.p3 {
+  --lane-color: var(--muted);
+  --lane-bg: rgba(31, 35, 40, 0.08);
 }
 
 .priority-lane header {
@@ -1130,6 +1260,12 @@ li {
   color: var(--muted);
 }
 
+.question-priority.p3 {
+  border-color: rgba(31, 35, 40, 0.2);
+  background: rgba(31, 35, 40, 0.06);
+  color: var(--muted);
+}
+
 .question-item summary strong {
   font-size: 18px;
   line-height: 1.45;
@@ -1154,6 +1290,7 @@ li {
 
 .sample-answer,
 .source-audit,
+.drawing-guide,
 .question-diagram {
   grid-column: 1 / -1;
   border-top: 1px solid var(--line);
@@ -1174,6 +1311,28 @@ li {
 
 .source-audit h3 {
   color: var(--ink);
+}
+
+.drawing-guide {
+  border-left: 5px solid rgba(154, 106, 18, 0.75);
+  background: rgba(255, 248, 233, 0.85);
+  padding: 14px;
+}
+
+.drawing-guide ol {
+  margin: 0;
+  padding-left: 22px;
+}
+
+.drawing-guide li {
+  margin: 8px 0;
+  color: var(--ink);
+  line-height: 1.65;
+}
+
+.drawing-guide li::marker {
+  color: var(--red);
+  font-weight: 800;
 }
 
 .question-diagram .diagram-card {
@@ -1811,6 +1970,9 @@ li {
   .disclaimer-band,
   .metrics-grid,
   .knowledge-layout,
+  .mindmap-group,
+  .mindmap-nodes,
+  .mindmap-node,
   .detail-columns,
   .deep-dive-row,
   .diagram-grid,

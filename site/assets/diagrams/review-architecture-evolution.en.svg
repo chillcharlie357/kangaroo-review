@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1480 860" role="img" aria-labelledby="title desc">
+  <title id="title">Software architecture evolution mainline</title>
+  <desc id="desc">Architecture evolution is not a replacement story, but a migration of dominant tensions and boundaries.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#ad7a18"/>
+    </marker>
+    <style>
+      .bg{fill:#fbfaf7}
+      .stage{fill:#fff;stroke:#c9d1db;stroke-width:2.2;rx:16}
+      .stage2{fill:#f3f6fa;stroke:#c9d1db;stroke-width:2.2;rx:16}
+      .ai{fill:#f2e8ff;stroke:#a867e7;stroke-width:2.4;rx:16}
+      .title{font:700 32px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#1f2733}
+      .sub{font:20px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#667386}
+      .name{font:700 24px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#1f2733}
+      .body{font:17px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#536171}
+      .small{font:15px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#7c8796}
+      .arrow{stroke:#ad7a18;stroke-width:3;fill:none;marker-end:url(#arrow)}
+      .summary{fill:#fff8e9;stroke:#c9952e;stroke-width:2}
+      .red{fill:#b61f1f;font:700 18px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    </style>
+  </defs>
+  <rect class="bg" width="1480" height="860"/>
+  <text class="title" x="740" y="62" text-anchor="middle">Mainline: the dominant constraint redraws system boundaries</text>
+  <text class="sub" x="740" y="98" text-anchor="middle">Architecture evolution is not a replacement story; it is a migration of dominant tensions.</text>
+
+  <g transform="translate(50,155)">
+    <rect class="stage" width="140" height="138"/>
+    <text class="name" x="70" y="37" text-anchor="middle">Earliest</text>
+    <text class="body" x="70" y="73" text-anchor="middle">Make machines</text>
+    <text class="body" x="70" y="99" text-anchor="middle">run reliably</text>
+    <text class="small" x="70" y="125" text-anchor="middle">scarce compute</text>
+  </g>
+  <path class="arrow" d="M190 224 H230"/>
+  <g transform="translate(230,155)">
+    <rect class="stage2" width="150" height="138"/>
+    <text class="name" x="75" y="37" text-anchor="middle">Mainframe</text>
+    <text class="body" x="75" y="73" text-anchor="middle">Shared core</text>
+    <text class="body" x="75" y="99" text-anchor="middle">transactions</text>
+    <text class="small" x="75" y="125" text-anchor="middle">centralized</text>
+  </g>
+  <path class="arrow" d="M380 224 H420"/>
+  <g transform="translate(420,155)">
+    <rect class="stage" width="140" height="138"/>
+    <text class="name" x="70" y="37" text-anchor="middle">C/S</text>
+    <text class="body" x="70" y="73" text-anchor="middle">Move UI to</text>
+    <text class="body" x="70" y="99" text-anchor="middle">desktop</text>
+    <text class="small" x="70" y="125" text-anchor="middle">thick client</text>
+  </g>
+  <path class="arrow" d="M560 224 H600"/>
+  <g transform="translate(600,155)">
+    <rect class="stage2" width="150" height="138"/>
+    <text class="name" x="75" y="37" text-anchor="middle">Layered</text>
+    <text class="body" x="75" y="73" text-anchor="middle">Unified entry</text>
+    <text class="body" x="75" y="99" text-anchor="middle">inside roles</text>
+    <text class="small" x="75" y="125" text-anchor="middle">responsibility</text>
+  </g>
+  <path class="arrow" d="M750 224 H790"/>
+  <g transform="translate(790,155)">
+    <rect class="stage" width="140" height="138"/>
+    <text class="name" x="70" y="37" text-anchor="middle">SOA</text>
+    <text class="body" x="70" y="73" text-anchor="middle">Cross-system</text>
+    <text class="body" x="70" y="99" text-anchor="middle">reuse</text>
+    <text class="small" x="70" y="125" text-anchor="middle">contracts</text>
+  </g>
+  <path class="arrow" d="M930 224 H970"/>
+  <g transform="translate(970,155)">
+    <rect class="stage2" width="150" height="138"/>
+    <text class="name" x="75" y="37" text-anchor="middle">Microservices</text>
+    <text class="body" x="75" y="73" text-anchor="middle">Business</text>
+    <text class="body" x="75" y="99" text-anchor="middle">capabilities</text>
+    <text class="small" x="75" y="125" text-anchor="middle">team autonomy</text>
+  </g>
+  <path class="arrow" d="M1120 224 H1160"/>
+  <g transform="translate(1160,155)">
+    <rect class="stage2" width="170" height="138"/>
+    <text class="name" x="85" y="37" text-anchor="middle">Event-driven</text>
+    <text class="body" x="85" y="73" text-anchor="middle">Resilience and</text>
+    <text class="body" x="85" y="99" text-anchor="middle">platform ops</text>
+    <text class="small" x="85" y="125" text-anchor="middle">async / cloud</text>
+  </g>
+  <g transform="translate(1115,335)">
+    <rect class="ai" width="150" height="118"/>
+    <text class="name" x="75" y="36" text-anchor="middle">AI-assisted</text>
+    <text class="body" x="75" y="72" text-anchor="middle">Semantic</text>
+    <text class="small" x="75" y="99" text-anchor="middle">not tested</text>
+  </g>
+  <path class="arrow" d="M1245 293 C1240 320 1238 330 1230 345"/>
+  <path class="arrow" d="M1265 394 H1305"/>
+  <g transform="translate(1305,335)">
+    <rect class="ai" width="150" height="118"/>
+    <text class="name" x="75" y="36" text-anchor="middle">AI-native</text>
+    <text class="body" x="75" y="74" text-anchor="middle">Task execution</text>
+    <text class="small" x="75" y="101" text-anchor="middle">not tested</text>
+  </g>
+
+  <rect class="summary" x="120" y="535" width="1240" height="180"/>
+  <text class="title" x="740" y="595" text-anchor="middle">One-sentence summary</text>
+  <text class="sub" x="740" y="642" text-anchor="middle">Software architecture history is the history of redrawing boundaries and collaboration under new cost structures.</text>
+  <text class="red" x="740" y="690" text-anchor="middle">Exam answer: explain why the old style fails, how the new style redraws boundaries, and which quality tradeoffs change.</text>
+  <text class="small" x="740" y="775" text-anchor="middle">Sources: Lecture 3 pages 6 and 69; complete review recording, Lu Jun segment 37:13-50:23.</text>
+</svg>

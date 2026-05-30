@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1680" height="1100" viewBox="0 0 1680 1100" role="img" aria-labelledby="title desc">
+  <title id="title">Domain-Driven Design exam map</title>
+  <desc id="desc">A grounded DDD review diagram covering strategic design, tactical design, event storming, and its connection to microservice boundaries.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M2,2 L10,6 L2,10 Z" fill="#333"/>
+    </marker>
+    <style>
+      .bg{fill:#fffdf8}
+      .panel{fill:#fff;stroke:#d9d2c4;stroke-width:2}
+      .strategy{fill:#e9f4f2;stroke:#14756f;stroke-width:2}
+      .tactic{fill:#fff7e8;stroke:#bd861b;stroke-width:2}
+      .event{fill:#f8e7e4;stroke:#b54634;stroke-width:2}
+      .ctx{fill:#e9eef5;stroke:#38669b;stroke-width:2}
+      .line{fill:none;stroke:#333;stroke-width:2.6;marker-end:url(#arrow)}
+      .title{font:700 36px Georgia,"Times New Roman",serif;fill:#1f2328}
+      .sub{font:600 18px "Avenir Next","PingFang SC","Noto Sans CJK SC",sans-serif;fill:#667078}
+      .label{font:800 22px "Avenir Next","PingFang SC","Noto Sans CJK SC",sans-serif;fill:#b54634}
+      .h{font:800 22px "Avenir Next","PingFang SC","Noto Sans CJK SC",sans-serif;fill:#1f2328}
+      .txt{font:500 19px "Avenir Next","PingFang SC","Noto Sans CJK SC",sans-serif;fill:#1f2328}
+      .small{font:500 16px "Avenir Next","PingFang SC","Noto Sans CJK SC",sans-serif;fill:#667078}
+    </style>
+  </defs>
+  <rect class="bg" width="1680" height="1100"/>
+  <text class="title" x="48" y="58">DDD：战略设计、战术设计、事件风暴如何合成设计题答案</text>
+  <text class="sub" x="48" y="88">Grounded in Lecture 8-9 and the review class: use DDD for high business complexity; do not force it onto low-complexity systems.</text>
+
+  <rect class="panel" x="48" y="126" width="1584" height="260" rx="14"/>
+  <text class="label" x="82" y="168">Strategic Design / 战略设计</text>
+  <g>
+    <rect class="strategy" x="88" y="210" width="230" height="96" rx="10"/>
+    <text class="h" x="203" y="248" text-anchor="middle">业务需求</text>
+    <text class="small" x="203" y="276" text-anchor="middle">Business needs</text>
+    <rect class="strategy" x="390" y="210" width="230" height="96" rx="10"/>
+    <text class="h" x="505" y="248" text-anchor="middle">统一语言</text>
+    <text class="small" x="505" y="276" text-anchor="middle">Ubiquitous language</text>
+    <rect class="strategy" x="692" y="210" width="230" height="96" rx="10"/>
+    <text class="h" x="807" y="248" text-anchor="middle">子领域</text>
+    <text class="small" x="807" y="276" text-anchor="middle">Core / supporting / generic</text>
+    <rect class="strategy" x="994" y="210" width="230" height="96" rx="10"/>
+    <text class="h" x="1109" y="248" text-anchor="middle">限界上下文</text>
+    <text class="small" x="1109" y="276" text-anchor="middle">Knowledge boundary</text>
+    <rect class="strategy" x="1296" y="210" width="230" height="96" rx="10"/>
+    <text class="h" x="1411" y="248" text-anchor="middle">上下文映射</text>
+    <text class="small" x="1411" y="276" text-anchor="middle">Context map</text>
+    <path class="line" d="M318 258H380"/>
+    <path class="line" d="M620 258H682"/>
+    <path class="line" d="M922 258H984"/>
+    <path class="line" d="M1224 258H1286"/>
+  </g>
+  <text class="txt" x="88" y="350">答题口径：从 problem space 出发，划分核心/支撑/通用子域；限界上下文是知识边界，也是候选服务边界。</text>
+
+  <rect class="panel" x="48" y="426" width="760" height="430" rx="14"/>
+  <text class="label" x="82" y="468">Tactical Design / 战术设计</text>
+  <rect class="tactic" x="96" y="506" width="310" height="86" rx="10"/>
+  <text class="h" x="251" y="540" text-anchor="middle">Entity / 实体</text>
+  <text class="small" x="251" y="566" text-anchor="middle">有身份，生命周期中状态会变化。</text>
+  <rect class="tactic" x="450" y="506" width="310" height="86" rx="10"/>
+  <text class="h" x="605" y="540" text-anchor="middle">Value Object / 值对象</text>
+  <text class="small" x="605" y="566" text-anchor="middle">无身份，用属性值描述概念。</text>
+  <rect class="ctx" x="96" y="632" width="664" height="114" rx="10"/>
+  <text class="h" x="428" y="670" text-anchor="middle">Aggregate / 聚合</text>
+  <text class="txt" x="128" y="708">由 Aggregate Root 作为唯一入口/出口；外部只能通过根访问内部对象。</text>
+  <text class="small" x="128" y="734">Aggregates reference each other through aggregate roots.</text>
+  <rect class="tactic" x="96" y="782" width="200" height="56" rx="10"/>
+  <text class="txt" x="196" y="817" text-anchor="middle">Domain Service</text>
+  <rect class="tactic" x="330" y="782" width="200" height="56" rx="10"/>
+  <text class="txt" x="430" y="817" text-anchor="middle">Repository</text>
+  <rect class="tactic" x="560" y="782" width="200" height="56" rx="10"/>
+  <text class="txt" x="660" y="817" text-anchor="middle">Factory</text>
+
+  <rect class="panel" x="872" y="426" width="760" height="430" rx="14"/>
+  <text class="label" x="906" y="468">Event Storming / 事件风暴</text>
+  <rect class="event" x="920" y="506" width="170" height="64" rx="10"/>
+  <text class="h" x="1005" y="546" text-anchor="middle">Role</text>
+  <rect class="event" x="1140" y="506" width="184" height="64" rx="10"/>
+  <text class="h" x="1232" y="546" text-anchor="middle">Command</text>
+  <rect class="event" x="1374" y="506" width="210" height="64" rx="10"/>
+  <text class="h" x="1479" y="546" text-anchor="middle">Domain Event</text>
+  <path class="line" d="M1090 538H1130"/>
+  <path class="line" d="M1324 538H1364"/>
+  <rect class="ctx" x="1030" y="642" width="210" height="72" rx="10"/>
+  <text class="h" x="1135" y="685" text-anchor="middle">Aggregate</text>
+  <rect class="ctx" x="1304" y="642" width="230" height="72" rx="10"/>
+  <text class="h" x="1419" y="685" text-anchor="middle">Bounded Context</text>
+  <path class="line" d="M1479 570C1479 610 1419 610 1419 634"/>
+  <path class="line" d="M1240 678H1294"/>
+  <rect class="event" x="920" y="764" width="184" height="56" rx="10"/>
+  <text class="h" x="1012" y="799" text-anchor="middle">Policy</text>
+  <rect class="event" x="1162" y="764" width="184" height="56" rx="10"/>
+  <text class="h" x="1254" y="799" text-anchor="middle">Read Model</text>
+  <rect class="event" x="1404" y="764" width="184" height="56" rx="10"/>
+  <text class="h" x="1496" y="799" text-anchor="middle">External System</text>
+  <text class="txt" x="906" y="846">答题口径：按时间线找领域事件，再识别命令、聚合、策略、读模型和限界上下文。</text>
+
+  <rect class="ctx" x="164" y="908" width="1352" height="118" rx="12"/>
+  <text class="h" x="208" y="948">与微服务设计题的连接</text>
+  <text class="txt" x="208" y="986">限界上下文通常对应一个或一组服务；服务边界要和业务能力、数据所有权、API 协作、部署与可观测性一起说明。</text>
+</svg>

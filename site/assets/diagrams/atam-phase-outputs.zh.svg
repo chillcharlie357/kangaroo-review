@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1320 720" role="img" aria-labelledby="title desc">
+  <title id="title">ATAM 阶段输出参考表</title>
+  <desc id="desc">旧题说明性答题表：ATAM 各阶段的参与者和输出。</desc>
+  <style>
+    .bg{fill:#fbfaf7}
+    .head{fill:#9a2f23}
+    .phase{fill:#fff;stroke:#c9d1db;stroke-width:2.2;rx:14}
+    .phase2{fill:#f3f6fa;stroke:#c9d1db;stroke-width:2.2;rx:14}
+    .title{font:700 34px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#1f2733}
+    .sub{font:18px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#667386}
+    .h{font:700 22px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#fff}
+    .name{font:700 22px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#1f2733}
+    .body{font:17px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#536171}
+    .small{font:15px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#687486}
+  </style>
+  <rect class="bg" width="1320" height="720"/>
+  <text class="title" x="660" y="58" text-anchor="middle">参考表：ATAM 各阶段输出</text>
+  <text class="sub" x="660" y="92" text-anchor="middle">历史 P2 主题：保留阶段产物骨架，不把 ATAM 放成 2026 主线。</text>
+
+  <rect class="head" x="70" y="135" width="1180" height="54" rx="12"/>
+  <text class="h" x="660" y="170" text-anchor="middle">阶段 -> 主要参与者 -> 输出</text>
+
+  <g transform="translate(70,220)">
+    <rect class="phase" width="280" height="330"/>
+    <text class="name" x="140" y="38" text-anchor="middle">Phase 0</text>
+    <text class="body" x="28" y="80">准备 / 建立合作</text>
+    <text class="body" x="28" y="122">- 评估计划 evaluation plan</text>
+    <text class="body" x="28" y="154">- 范围与时间安排</text>
+    <text class="body" x="28" y="186">- 参与者与报告对象</text>
+  </g>
+  <g transform="translate(370,220)">
+    <rect class="phase2" width="280" height="330"/>
+    <text class="name" x="140" y="38" text-anchor="middle">Phase 1</text>
+    <text class="body" x="28" y="80">决策者 + 架构师</text>
+    <text class="body" x="28" y="122">- business drivers</text>
+    <text class="body" x="28" y="154">- 架构陈述</text>
+    <text class="body" x="28" y="186">- utility tree 与场景</text>
+    <text class="body" x="28" y="218">- risks / non-risks</text>
+    <text class="body" x="28" y="250">- 敏感点 / 权衡点</text>
+  </g>
+  <g transform="translate(670,220)">
+    <rect class="phase" width="280" height="330"/>
+    <text class="name" x="140" y="38" text-anchor="middle">Phase 2</text>
+    <text class="body" x="28" y="80">更广泛 stakeholders</text>
+    <text class="body" x="28" y="122">- stakeholder scenarios</text>
+    <text class="body" x="28" y="154">- 优先场景列表</text>
+    <text class="body" x="28" y="186">- 场景分析结果</text>
+    <text class="body" x="28" y="218">- risk themes</text>
+  </g>
+  <g transform="translate(970,220)">
+    <rect class="phase2" width="280" height="330"/>
+    <text class="name" x="140" y="38" text-anchor="middle">Phase 3</text>
+    <text class="body" x="28" y="80">报告</text>
+    <text class="body" x="28" y="122">- final report</text>
+    <text class="body" x="28" y="154">- 场景与分析过程</text>
+    <text class="body" x="28" y="186">- 风险与风险主题</text>
+    <text class="body" x="28" y="218">- 敏感点 / 权衡点</text>
+  </g>
+  <text class="small" x="660" y="635" text-anchor="middle">怎么画：四个阶段框即可；每框写输出，Phase 2 记得更广泛 stakeholder。</text>
+</svg>

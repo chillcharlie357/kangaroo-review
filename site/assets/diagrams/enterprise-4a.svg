@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="940" viewBox="0 0 1500 940" role="img" aria-labelledby="title desc">
+  <title id="title">Enterprise architecture 4A, TOGAF ADM and CBM</title>
+  <desc id="desc">A grounded enterprise architecture review diagram: 4A, TOGAF ADM, CBM, and implementation lenses.</desc>
+  <defs>
+    <style>
+      .bg{fill:#fffdf8}
+      .panel{fill:#fff;stroke:#d9d2c4;stroke-width:2}
+      .biz{fill:#f7e8e5;stroke:#b54634;stroke-width:2}
+      .data{fill:#e9f4f2;stroke:#14756f;stroke-width:2}
+      .app{fill:#e9eef5;stroke:#38669b;stroke-width:2}
+      .tech{fill:#fff7e8;stroke:#bd861b;stroke-width:2}
+      .title{font:700 34px Georgia,"Times New Roman",serif;fill:#1f2328}
+      .sub{font:600 18px "Avenir Next","PingFang SC","Noto Sans CJK SC",sans-serif;fill:#667078}
+      .label{font:800 22px "Avenir Next","PingFang SC","Noto Sans CJK SC",sans-serif;fill:#b54634}
+      .h{font:800 22px "Avenir Next","PingFang SC","Noto Sans CJK SC",sans-serif;fill:#1f2328}
+      .txt{font:500 18px "Avenir Next","PingFang SC","Noto Sans CJK SC",sans-serif;fill:#1f2328}
+      .small{font:500 15px "Avenir Next","PingFang SC","Noto Sans CJK SC",sans-serif;fill:#667078}
+    </style>
+  </defs>
+  <rect class="bg" width="1500" height="940"/>
+  <text class="title" x="48" y="58">企业架构：今年按 4A + TOGAF ADM + CBM 背骨架</text>
+  <text class="sub" x="48" y="88">Review-class priority is P1: know the analysis/checking lens, not detailed vendor case memorization.</text>
+
+  <rect class="panel" x="62" y="128" width="1376" height="470" rx="16"/>
+  <text class="label" x="96" y="168">4A / Four Architecture Domains</text>
+  <rect class="biz" x="118" y="206" width="610" height="140" rx="12"/>
+  <text class="h" x="148" y="248">Business Architecture</text>
+  <text class="txt" x="148" y="286">客户、产品、渠道策略、业务流程、业务组件。</text>
+  <text class="small" x="148" y="318">Find business capabilities and principles first.</text>
+  <rect class="data" x="772" y="206" width="610" height="140" rx="12"/>
+  <text class="h" x="802" y="248">Data Architecture</text>
+  <text class="txt" x="802" y="286">逻辑/物理数据资产、数据标准、数据责任。</text>
+  <text class="small" x="802" y="318">Use data ownership and standards to check boundaries.</text>
+  <rect class="app" x="118" y="392" width="610" height="140" rx="12"/>
+  <text class="h" x="148" y="434">Application Architecture</text>
+  <text class="txt" x="148" y="472">应用蓝图、组件化设计、服务共享。</text>
+  <text class="small" x="148" y="504">Map business capability to application components.</text>
+  <rect class="tech" x="772" y="392" width="610" height="140" rx="12"/>
+  <text class="h" x="802" y="434">Technology Architecture</text>
+  <text class="txt" x="802" y="472">技术组件、基础设施、平台和标准化。</text>
+  <text class="small" x="802" y="504">Constrain choices with platforms and operating environments.</text>
+
+  <rect class="panel" x="62" y="650" width="420" height="204" rx="14"/>
+  <text class="label" x="92" y="692">TOGAF / ADM</text>
+  <text class="txt" x="92" y="734">核心是架构开发周期：</text>
+  <text class="txt" x="92" y="764">业务、数据、应用、技术架构</text>
+  <text class="txt" x="92" y="794">围绕需求管理迭代。</text>
+  <text class="small" x="92" y="828">Answer as framework/process.</text>
+  <rect class="panel" x="540" y="650" width="420" height="204" rx="14"/>
+  <text class="label" x="570" y="692">CBM</text>
+  <text class="txt" x="570" y="734">业务能力是核心，组件是能力载体；</text>
+  <text class="txt" x="570" y="764">强调高内聚、低耦合、可复用、</text>
+  <text class="txt" x="570" y="794">可组装。</text>
+  <text class="small" x="570" y="828">Use it for business componentization.</text>
+  <rect class="panel" x="1018" y="650" width="420" height="204" rx="14"/>
+  <text class="label" x="1048" y="692">Implementation lens</text>
+  <text class="txt" x="1048" y="734">自顶向下：战略业务建模；</text>
+  <text class="txt" x="1048" y="764">自底向上：通用能力沉淀、</text>
+  <text class="txt" x="1048" y="794">中台建设。</text>
+  <text class="small" x="1048" y="828">Case details are background.</text>
+</svg>

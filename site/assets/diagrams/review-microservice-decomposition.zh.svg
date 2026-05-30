@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 760" role="img" aria-labelledby="title desc">
+  <title id="title">微服务拆分与 DDD 边界（中文背诵版）</title>
+  <desc id="desc">微服务拆分从系统操作和需求故事出发，识别服务边界，再定义 API 与协作关系；核心原则是高内聚、松耦合、SRP、CCP 和团队自治。</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#2d7c59"/>
+    </marker>
+    <style>
+      .bg{fill:#fbfaf7}
+      .panel{fill:#fff;stroke:#c7d0dc;stroke-width:2.4;rx:18}
+      .highlight{fill:#edf7f1;stroke:#2d7c59;stroke-width:2.6;rx:18}
+      .service{fill:#dff2ff;stroke:#527da3;stroke-width:2;rx:14}
+      .req{fill:#fff8e9;stroke:#c9952e;stroke-width:2;rx:10}
+      .title{font:700 34px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#1f2733}
+      .label{font:700 24px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#1f2733}
+      .body{font:17px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#536171}
+      .small{font:15px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#6b7686}
+      .arrow{stroke:#2d7c59;stroke-width:3;fill:none;marker-end:url(#arrow)}
+      .api{font:600 16px ui-monospace,SFMono-Regular,Menlo,monospace;fill:#1f2733}
+    </style>
+  </defs>
+  <rect class="bg" width="1280" height="760"/>
+  <text class="title" x="640" y="65" text-anchor="middle">微服务架构拆分模式</text>
+  <text class="body" x="640" y="102" text-anchor="middle">问题：如何将应用拆分为微服务？目标是高内聚、松耦合、SRP、CCP、双披萨团队和团队自治。</text>
+
+  <g transform="translate(55,155)">
+    <rect class="panel" width="330" height="390"/>
+    <text class="label" x="30" y="48">Step 1：识别系统操作</text>
+    <text class="body" x="30" y="88">从 requirements / user stories 出发。</text>
+    <rect class="req" x="35" y="125" width="260" height="78"/>
+    <text class="body" x="55" y="158">作为消费者，</text>
+    <text class="body" x="55" y="184">我想下单...</text>
+    <rect class="req" x="35" y="230" width="260" height="78"/>
+    <text class="body" x="55" y="263">作为餐厅，</text>
+    <text class="body" x="55" y="289">我想接单...</text>
+    <text class="api" x="190" y="348">createOrder()</text>
+    <text class="api" x="190" y="380">acceptOrder()</text>
+  </g>
+  <path class="arrow" d="M385 350 H455"/>
+
+  <g transform="translate(455,155)">
+    <rect class="highlight" width="360" height="390"/>
+    <text class="label" x="30" y="48">Step 2：识别服务边界</text>
+    <text class="body" x="30" y="88">根据业务能力或子域确定边界。</text>
+    <rect class="service" x="70" y="140" width="120" height="76"/>
+    <text class="body" x="130" y="171" text-anchor="middle">订单服务</text>
+    <text class="body" x="130" y="197" text-anchor="middle">Order Service</text>
+    <rect class="service" x="205" y="175" width="120" height="76"/>
+    <text class="body" x="265" y="206" text-anchor="middle">餐厅服务</text>
+    <text class="body" x="265" y="232" text-anchor="middle">Restaurant</text>
+    <rect class="service" x="95" y="250" width="120" height="76"/>
+    <text class="body" x="155" y="281" text-anchor="middle">厨房服务</text>
+    <text class="body" x="155" y="307" text-anchor="middle">Kitchen Service</text>
+    <text class="small" x="180" y="355" text-anchor="middle">按业务能力 / 子域拆分</text>
+  </g>
+  <path class="arrow" d="M815 350 H885"/>
+
+  <g transform="translate(885,155)">
+    <rect class="panel" width="340" height="390"/>
+    <text class="label" x="30" y="48">Step 3：定义 API 与协作</text>
+    <text class="body" x="30" y="88">定义服务 API 与协作关系。</text>
+    <rect class="service" x="55" y="145" width="110" height="70"/>
+    <text class="body" x="110" y="174" text-anchor="middle">订单</text>
+    <text class="body" x="110" y="198" text-anchor="middle">服务</text>
+    <rect class="service" x="205" y="145" width="110" height="70"/>
+    <text class="body" x="260" y="174" text-anchor="middle">餐厅</text>
+    <text class="body" x="260" y="198" text-anchor="middle">服务</text>
+    <rect class="service" x="130" y="265" width="110" height="70"/>
+    <text class="body" x="185" y="294" text-anchor="middle">厨房</text>
+    <text class="body" x="185" y="318" text-anchor="middle">服务</text>
+    <path class="arrow" d="M165 180 H200"/>
+    <path class="arrow" d="M115 215 C155 232 176 244 185 265"/>
+    <text class="api" x="165" y="135">verifyOrder()</text>
+    <text class="api" x="32" y="255">createTicket()</text>
+  </g>
+
+  <rect class="panel" x="120" y="605" width="1040" height="95"/>
+  <text class="label" x="150" y="645">考试答题提醒</text>
+  <text class="body" x="150" y="676">不要只列服务名。先说明拆分原则，再给系统操作、服务边界、API/事件协作、数据边界和分布式代价。</text>
+</svg>

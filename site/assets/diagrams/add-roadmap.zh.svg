@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="900" height="820" viewBox="0 0 900 820" role="img" aria-labelledby="title desc">
-  <title id="title">ADD 3.0 Method Process</title>
-  <desc id="desc">Five architectural drivers feed Step 1 Review inputs. Seven ADD steps proceed downward, with a necessary iteration path from Step 7 back to Step 2 and a dashed artifact-flow path from previous iterations or brownfield systems.</desc>
+  <title id="title">ADD 3.0 方法流程（中文背诵版）</title>
+  <desc id="desc">五类架构驱动因素进入 Step 1。ADD 3.0 七步自上而下推进；必要时从 Step 7 回到 Step 2 继续迭代；已有系统或上一轮迭代产物通过虚线进入流程。</desc>
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" markerWidth="9" markerHeight="9" refX="8.4" refY="5" orient="auto-start-reverse">
       <path d="M 0 0 L 10 5 L 0 10 z" fill="#1f2933"/>
@@ -30,27 +30,28 @@
     <g aria-label="drivers">
       <g transform="translate(40 28)">
         <path class="driver" d="M0 0H140V50C102 56 38 56 0 50Z"/>
-        <text class="box-text" x="70" y="21">Design</text>
-        <text class="box-text" x="70" y="39">Purpose</text>
+        <text class="box-text" x="70" y="21">设计目的</text>
+        <text class="box-text" x="70" y="39">Design Purpose</text>
       </g>
       <g transform="translate(190 28)">
         <path class="driver" d="M0 0H140V50C102 56 38 56 0 50Z"/>
-        <text class="box-text" x="70" y="21">Primary</text>
-        <text class="box-text" x="70" y="39">Functionality</text>
+        <text class="box-text" x="70" y="21">主要功能</text>
+        <text class="box-text" x="70" y="39">Primary Function</text>
       </g>
       <g transform="translate(340 28)">
         <path class="driver" d="M0 0H140V50C102 56 38 56 0 50Z"/>
-        <text class="box-text" x="70" y="21">Quality</text>
-        <text class="box-text" x="70" y="39">Attributes</text>
+        <text class="box-text" x="70" y="21">质量属性</text>
+        <text class="box-text" x="70" y="39">Quality Attributes</text>
       </g>
       <g transform="translate(490 28)">
         <path class="driver" d="M0 0H140V50C102 56 38 56 0 50Z"/>
-        <text class="box-text" x="70" y="21">Architectural</text>
-        <text class="box-text" x="70" y="39">Concerns</text>
+        <text class="box-text" x="70" y="21">架构关注点</text>
+        <text class="box-text" x="70" y="39">Arch. Concerns</text>
       </g>
       <g transform="translate(640 28)">
         <path class="driver" d="M0 0H140V50C102 56 38 56 0 50Z"/>
-        <text class="box-text" x="70" y="30">Constraints</text>
+        <text class="box-text" x="70" y="21">约束</text>
+        <text class="box-text" x="70" y="39">Constraints</text>
       </g>
     </g>
 
@@ -63,80 +64,80 @@
     <g aria-label="ADD steps">
       <g transform="translate(250 138)">
         <rect class="process" width="420" height="46"/>
-        <text class="box-text" x="210" y="24">Step 1: Review inputs</text>
+        <text class="box-text" x="210" y="24">Step 1：审查输入（Review inputs）</text>
       </g>
       <path class="solid" d="M460 184V214"/>
 
       <g transform="translate(250 218)">
         <rect class="process" width="420" height="50"/>
-        <text class="box-text" x="210" y="20">Step 2: Establish iteration goal</text>
-        <text class="box-text" x="210" y="38">by selecting drivers</text>
+        <text class="box-text" x="210" y="20">Step 2：选择驱动因素</text>
+        <text class="box-text" x="210" y="38">建立本轮迭代目标</text>
       </g>
       <path class="solid" d="M460 268V298"/>
 
       <g transform="translate(250 302)">
         <rect class="key-step" width="420" height="50"/>
-        <text class="key-text" x="210" y="20">Step 3: Choose one or more elements of the system to</text>
-        <text class="key-text" x="210" y="38">refine</text>
+        <text class="key-text" x="210" y="20">Step 3：选择一个或多个</text>
+        <text class="key-text" x="210" y="38">要细化的系统元素</text>
       </g>
       <path class="solid" d="M460 352V382"/>
 
       <g transform="translate(250 386)">
         <rect class="key-step" width="420" height="50"/>
-        <text class="key-text" x="210" y="20">Step 4: Choose one or more design concepts that satisfy</text>
-        <text class="key-text" x="210" y="38">the selected drivers</text>
+        <text class="key-text" x="210" y="20">Step 4：选择满足已选驱动因素的</text>
+        <text class="key-text" x="210" y="38">一个或多个设计概念</text>
       </g>
       <path class="solid" d="M460 436V466"/>
 
       <g transform="translate(250 470)">
         <rect class="key-step" width="420" height="56"/>
-        <text class="key-text" x="210" y="21">Step 5: Instantiate architectural elements, allocate</text>
-        <text class="key-text" x="210" y="40">responsibilities, and define interfaces</text>
+        <text class="key-text" x="210" y="21">Step 5：实例化架构元素、分配职责</text>
+        <text class="key-text" x="210" y="40">并定义接口</text>
       </g>
       <path class="solid" d="M460 526V556"/>
 
       <g transform="translate(250 560)">
         <rect class="process" width="420" height="50"/>
-        <text class="box-text" x="210" y="26">Step 6: Sketch views and record design decisions</text>
+        <text class="box-text" x="210" y="26">Step 6：绘制视图并记录设计决策</text>
       </g>
       <path class="solid" d="M460 610V640"/>
 
       <g transform="translate(250 644)">
         <rect class="process" width="420" height="56"/>
-        <text class="box-text" x="210" y="20">Step 7: Perform analysis of current design and review</text>
-        <text class="box-text" x="210" y="39">iteration goal and achievement of design purpose</text>
+        <text class="box-text" x="210" y="20">Step 7：分析当前设计并评审</text>
+        <text class="box-text" x="210" y="39">迭代目标与设计目的是否达成</text>
       </g>
     </g>
 
     <path class="dashed" d="M375 748H130V160H248"/>
-    <text class="label" transform="translate(102 455) rotate(-90)" text-anchor="middle">From previous round of iterations or from existing</text>
-    <text class="label" transform="translate(122 455) rotate(-90)" text-anchor="middle">system (brownfield development)</text>
+    <text class="label" transform="translate(102 455) rotate(-90)" text-anchor="middle">来自上一轮迭代，或来自已有系统</text>
+    <text class="label" transform="translate(122 455) rotate(-90)" text-anchor="middle">（brownfield development）</text>
 
     <path class="solid" d="M250 672H200V243H248"/>
-    <text class="label" transform="translate(185 458) rotate(-90)" text-anchor="middle">Iterate if necessary</text>
+    <text class="label" transform="translate(185 458) rotate(-90)" text-anchor="middle">必要时迭代（Iterate if necessary）</text>
 
     <path class="dashed" d="M460 700V720"/>
     <g transform="translate(375 722)">
       <path class="design" d="M0 0H170V38L156 52H14L0 38Z"/>
-      <text class="box-text" x="85" y="20">(Refined) Software</text>
-      <text class="box-text" x="85" y="38">Architecture Design</text>
+      <text class="box-text" x="85" y="20">细化后的软件</text>
+      <text class="box-text" x="85" y="38">架构设计</text>
     </g>
 
     <g transform="translate(685 520)" aria-label="legend">
       <rect x="0" y="0" width="185" height="225" fill="#fff" stroke="#70757d" stroke-width="1.5"/>
-      <text class="small" x="14" y="24" fill="#20262e" font-weight="700">Key</text>
+      <text class="small" x="14" y="24" fill="#20262e" font-weight="700">图例</text>
       <rect x="15" y="42" width="30" height="17" class="driver"/>
-      <text class="small" x="56" y="56" fill="#20262e">Driver</text>
+      <text class="small" x="56" y="56" fill="#20262e">驱动因素 Driver</text>
       <rect x="15" y="75" width="30" height="17" class="design"/>
-      <text class="small" x="56" y="89" fill="#20262e">Architecture design</text>
+      <text class="small" x="56" y="89" fill="#20262e">架构设计</text>
       <rect x="15" y="108" width="30" height="17" class="process"/>
-      <text class="small" x="56" y="122" fill="#20262e">Process step</text>
+      <text class="small" x="56" y="122" fill="#20262e">过程步骤</text>
       <rect x="15" y="141" width="30" height="17" class="key-step"/>
-      <text class="small" x="56" y="155" fill="#20262e">Key design step</text>
+      <text class="small" x="56" y="155" fill="#20262e">关键设计步骤</text>
       <path d="M15 172H48" class="solid"/>
-      <text class="tiny" x="56" y="176" fill="#20262e">Precedence</text>
+      <text class="tiny" x="56" y="176" fill="#20262e">先后顺序</text>
       <path d="M15 198H48" class="dashed"/>
-      <text class="tiny" x="56" y="202" fill="#20262e">Artifact flow</text>
+      <text class="tiny" x="56" y="202" fill="#20262e">制品流</text>
     </g>
   </g>
 </svg>

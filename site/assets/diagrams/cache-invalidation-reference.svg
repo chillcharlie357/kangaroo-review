@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc">
+  <title id="title">Distributed cache invalidation reference answer</title>
+  <desc id="desc">Illustrative sequence-style answer for distributed cache update and invalidation.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#1c5c74"/>
+    </marker>
+    <style>
+      .bg{fill:#fbfaf7}
+      .box{fill:#fff;stroke:#c9d1db;stroke-width:2.4;rx:16}
+      .broker{fill:#f0f7f9;stroke:#1c5c74;stroke-width:2.5;rx:16}
+      .cache{fill:#fff8e9;stroke:#c9952e;stroke-width:2;rx:14}
+      .title{font:700 32px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#1f2733}
+      .sub{font:18px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#667386}
+      .name{font:700 22px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#1f2733}
+      .body{font:17px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#536171}
+      .small{font:15px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#687486}
+      .arrow{stroke:#1c5c74;stroke-width:3;fill:none;marker-end:url(#arrow)}
+      .dash{stroke:#9a6a12;stroke-width:3;fill:none;stroke-dasharray:9 7;marker-end:url(#arrow)}
+    </style>
+  </defs>
+  <rect class="bg" width="1280" height="720"/>
+  <text class="title" x="640" y="58" text-anchor="middle">Reference Answer: Distributed Cache Invalidation</text>
+  <text class="sub" x="640" y="92" text-anchor="middle">Illustrative old-paper answer: coordinator/broker + cache adapters; not a review-class core diagram.</text>
+
+  <g transform="translate(70,160)">
+    <rect class="box" width="150" height="80"/>
+    <text class="name" x="75" y="34" text-anchor="middle">Client</text>
+    <text class="small" x="75" y="60" text-anchor="middle">state change</text>
+  </g>
+  <path class="arrow" d="M220 200 H300"/>
+  <g transform="translate(300,145)">
+    <rect class="box" width="200" height="110"/>
+    <text class="name" x="100" y="35" text-anchor="middle">Server A</text>
+    <text class="body" x="100" y="65" text-anchor="middle">update local cache</text>
+    <text class="body" x="100" y="91" text-anchor="middle">then commit DB</text>
+  </g>
+  <path class="arrow" d="M500 200 H590"/>
+  <g transform="translate(590,145)">
+    <rect class="box" width="170" height="110"/>
+    <text class="name" x="85" y="35" text-anchor="middle">Database</text>
+    <text class="body" x="85" y="70" text-anchor="middle">commit first</text>
+  </g>
+  <path class="arrow" d="M760 200 H860"/>
+  <g transform="translate(860,145)">
+    <rect class="broker" width="270" height="110"/>
+    <text class="name" x="135" y="35" text-anchor="middle">Invalidation Broker</text>
+    <text class="body" x="135" y="68" text-anchor="middle">publish invalidate(BSI)</text>
+    <text class="small" x="135" y="94" text-anchor="middle">Observer / pub-sub / connector</text>
+  </g>
+
+  <path class="dash" d="M995 255 C970 320 760 320 730 390"/>
+  <path class="dash" d="M995 255 C1030 330 1035 360 1035 390"/>
+  <path class="dash" d="M995 255 C1085 320 1165 340 1165 390"/>
+  <g transform="translate(250,390)">
+    <rect class="cache" width="250" height="120"/>
+    <text class="name" x="125" y="35" text-anchor="middle">Server B Cache Adapter</text>
+    <text class="body" x="125" y="68" text-anchor="middle">invalidate or mark stale</text>
+    <text class="small" x="125" y="95" text-anchor="middle">reload from DB on next read</text>
+  </g>
+  <g transform="translate(580,390)">
+    <rect class="cache" width="250" height="120"/>
+    <text class="name" x="125" y="35" text-anchor="middle">Server C Cache Adapter</text>
+    <text class="body" x="125" y="68" text-anchor="middle">invalidate or mark stale</text>
+    <text class="small" x="125" y="95" text-anchor="middle">protocol-specific adapter</text>
+  </g>
+  <g transform="translate(910,390)">
+    <rect class="cache" width="250" height="120"/>
+    <text class="name" x="125" y="35" text-anchor="middle">Legacy Cache Adapter</text>
+    <text class="body" x="125" y="68" text-anchor="middle">translate unified API</text>
+    <text class="small" x="125" y="95" text-anchor="middle">RMI / HTTP / SOAP</text>
+  </g>
+  <text class="small" x="640" y="615" text-anchor="middle">How to draw: use a sequence-like flow, commit DB first, then broadcast invalidate events through a coordinator/broker to every cache adapter.</text>
+</svg>

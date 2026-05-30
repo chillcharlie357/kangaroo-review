@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1900" height="1180" viewBox="0 0 1900 1180" role="img" aria-labelledby="title desc">
-  <title id="title">Architecture Design, Documentation, and Evaluation Process</title>
-  <desc id="desc">Stakeholders specify ASRs and quality attribute scenarios. ASRs, requirements, constraints, patterns, and tactics feed architecture design. Design yields candidate views, documentation combines chosen views and beyond-view documentation, and architecture evaluation feeds results back to stakeholders and earlier work.</desc>
+  <title id="title">架构设计、文档化与评估过程（中文背诵版）</title>
+  <desc id="desc">利益相关者规约 ASR 和质量属性场景；ASR、需求、约束、模式与战术进入架构设计；设计产生候选视图；文档化选择并组合视图及视图之外的文档；架构评估把反馈返回给利益相关者和前序活动。</desc>
   <defs>
     <marker id="blackArrow" viewBox="0 0 18 18" markerWidth="18" markerHeight="18" refX="16" refY="9" orient="auto-start-reverse" markerUnits="userSpaceOnUse">
       <path d="M1 1L17 9L1 17Z" fill="#0c0c0c"/>
@@ -98,13 +98,13 @@
       <path class="black-flow" d="M260 988C620 1085 1170 1078 1530 955"/>
     </g>
 
-    <text class="headline" x="65" y="105">Specifying ASRs</text>
-    <text class="blue-title" x="450" y="88">Patterns and tactics</text>
-    <text class="blue-title" x="1085" y="80" text-anchor="middle">“Sketches” of candidate views,</text>
-    <text class="blue-title" x="1085" y="127" text-anchor="middle">Determined by patterns</text>
-    <text class="blue-title" x="1585" y="80" text-anchor="middle">Chosen, combined</text>
-    <text class="blue-title" x="1585" y="126" text-anchor="middle">views plus doc'n.</text>
-    <text class="blue-title" x="1585" y="172" text-anchor="middle">beyond views</text>
+    <text class="headline" x="65" y="105">规约 ASR</text>
+    <text class="blue-title" x="450" y="88">模式与战术</text>
+    <text class="blue-title" x="1085" y="80" text-anchor="middle">候选视图草图</text>
+    <text class="blue-title" x="1085" y="127" text-anchor="middle">由 patterns 决定</text>
+    <text class="blue-title" x="1585" y="80" text-anchor="middle">选择并组合视图</text>
+    <text class="blue-title" x="1585" y="126" text-anchor="middle">加上视图之外</text>
+    <text class="blue-title" x="1585" y="172" text-anchor="middle">的文档</text>
 
     <g id="asr-circle">
       <circle class="circle" cx="220" cy="280" r="145"/>
@@ -126,20 +126,20 @@
       <path class="scenario" d="M0 78L160 43L234 75L72 111Z"/>
       <path class="scenario" d="M0 61L160 26L234 58L72 94Z"/>
       <path class="scenario" d="M0 44L160 9L234 41L72 77Z"/>
-      <text class="caption" x="117" y="192">Prioritized</text>
-      <text class="caption" x="117" y="242">Quality Attribute</text>
-      <text class="caption" x="117" y="292">Scenarios</text>
+      <text class="caption" x="117" y="192">已排序</text>
+      <text class="caption" x="117" y="242">质量属性</text>
+      <text class="caption" x="117" y="292">场景</text>
     </g>
 
     <g id="stakeholders" transform="translate(190 900)">
       <use href="#stakeholder-row"/>
-      <text class="caption" x="0" y="170">Stakeholders</text>
+      <text class="caption" x="0" y="170">利益相关者</text>
     </g>
 
     <g id="architecture-design">
       <circle class="circle" cx="650" cy="465" r="128"/>
-      <text class="circle-title" x="650" y="432">Architecture</text>
-      <text class="circle-title" x="650" y="486">design</text>
+      <text class="circle-title" x="650" y="432">架构设计</text>
+      <text class="circle-title" x="650" y="486" style="font-size:24px">Architecture design</text>
     </g>
 
     <g id="requirements" transform="translate(570 660)">
@@ -148,8 +148,8 @@
       <path class="scenario" d="M0 61L130 32L195 61L62 90Z"/>
       <path class="scenario" d="M0 44L130 15L195 44L62 73Z"/>
       <rect x="-58" y="150" width="315" height="108" fill="#fff" opacity=".94"/>
-      <text class="caption" x="98" y="190">Requirements,</text>
-      <text class="caption" x="98" y="240">constraints</text>
+      <text class="caption" x="98" y="190">需求</text>
+      <text class="caption" x="98" y="240">与约束</text>
     </g>
 
     <g id="candidate-views" transform="translate(875 145)">
@@ -169,7 +169,8 @@
 
     <g id="documenting">
       <circle class="circle" cx="1110" cy="655" r="128"/>
-      <text class="circle-title" x="1110" y="655">Documenting</text>
+      <text class="circle-title" x="1110" y="635">文档化</text>
+      <text class="circle-title" x="1110" y="685" style="font-size:26px">Documenting</text>
     </g>
 
     <g id="chosen-docs" transform="translate(1405 198)">
@@ -184,7 +185,7 @@
 
     <g id="architecture-evaluation">
       <rect x="1330" y="630" width="280" height="132" fill="#fff" opacity=".94"/>
-      <text class="eval-title" x="1470" y="692">Architecture</text>
+      <text class="eval-title" x="1470" y="692">架构评估</text>
       <text class="eval-title" x="1470" y="738">Evaluation</text>
       <circle class="circle" cx="1548" cy="880" r="130"/>
       <g transform="translate(1530 878) scale(0.78)">

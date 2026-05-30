@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc">
+  <title id="title">分布式缓存失效参考答案图</title>
+  <desc id="desc">旧题说明性答题图：提交数据库后通过协调器或 Broker 通知各缓存失效。</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#1c5c74"/>
+    </marker>
+    <style>
+      .bg{fill:#fbfaf7}
+      .box{fill:#fff;stroke:#c9d1db;stroke-width:2.4;rx:16}
+      .broker{fill:#f0f7f9;stroke:#1c5c74;stroke-width:2.5;rx:16}
+      .cache{fill:#fff8e9;stroke:#c9952e;stroke-width:2;rx:14}
+      .title{font:700 34px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#1f2733}
+      .sub{font:18px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#667386}
+      .name{font:700 22px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#1f2733}
+      .body{font:17px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#536171}
+      .small{font:15px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#687486}
+      .arrow{stroke:#1c5c74;stroke-width:3;fill:none;marker-end:url(#arrow)}
+      .dash{stroke:#9a6a12;stroke-width:3;fill:none;stroke-dasharray:9 7;marker-end:url(#arrow)}
+    </style>
+  </defs>
+  <rect class="bg" width="1280" height="720"/>
+  <text class="title" x="640" y="58" text-anchor="middle">参考答案图：分布式缓存失效</text>
+  <text class="sub" x="640" y="92" text-anchor="middle">旧题说明性答题图：协调器/Broker + 缓存适配器，不是复习课核心图。</text>
+
+  <g transform="translate(70,160)">
+    <rect class="box" width="150" height="80"/>
+    <text class="name" x="75" y="34" text-anchor="middle">客户端</text>
+    <text class="small" x="75" y="60" text-anchor="middle">修改状态</text>
+  </g>
+  <path class="arrow" d="M220 200 H300"/>
+  <g transform="translate(300,145)">
+    <rect class="box" width="200" height="110"/>
+    <text class="name" x="100" y="35" text-anchor="middle">服务器 A</text>
+    <text class="body" x="100" y="65" text-anchor="middle">更新本地缓存</text>
+    <text class="body" x="100" y="91" text-anchor="middle">再提交数据库</text>
+  </g>
+  <path class="arrow" d="M500 200 H590"/>
+  <g transform="translate(590,145)">
+    <rect class="box" width="170" height="110"/>
+    <text class="name" x="85" y="35" text-anchor="middle">数据库</text>
+    <text class="body" x="85" y="70" text-anchor="middle">先提交成功</text>
+  </g>
+  <path class="arrow" d="M760 200 H860"/>
+  <g transform="translate(860,145)">
+    <rect class="broker" width="270" height="110"/>
+    <text class="name" x="135" y="35" text-anchor="middle">失效协调器 / Broker</text>
+    <text class="body" x="135" y="68" text-anchor="middle">发布 invalidate(BSI)</text>
+    <text class="small" x="135" y="94" text-anchor="middle">Observer / 发布订阅 / Connector</text>
+  </g>
+
+  <path class="dash" d="M995 255 C970 320 760 320 730 390"/>
+  <path class="dash" d="M995 255 C1030 330 1035 360 1035 390"/>
+  <path class="dash" d="M995 255 C1085 320 1165 340 1165 390"/>
+  <g transform="translate(250,390)">
+    <rect class="cache" width="250" height="120"/>
+    <text class="name" x="125" y="35" text-anchor="middle">服务器 B 缓存适配器</text>
+    <text class="body" x="125" y="68" text-anchor="middle">删除或标记失效</text>
+    <text class="small" x="125" y="95" text-anchor="middle">下次读 DB 重载</text>
+  </g>
+  <g transform="translate(580,390)">
+    <rect class="cache" width="250" height="120"/>
+    <text class="name" x="125" y="35" text-anchor="middle">服务器 C 缓存适配器</text>
+    <text class="body" x="125" y="68" text-anchor="middle">删除或标记失效</text>
+    <text class="small" x="125" y="95" text-anchor="middle">协议适配</text>
+  </g>
+  <g transform="translate(910,390)">
+    <rect class="cache" width="250" height="120"/>
+    <text class="name" x="125" y="35" text-anchor="middle">遗留缓存适配器</text>
+    <text class="body" x="125" y="68" text-anchor="middle">统一接口转协议</text>
+    <text class="small" x="125" y="95" text-anchor="middle">RMI / HTTP / SOAP</text>
+  </g>
+  <text class="small" x="640" y="615" text-anchor="middle">怎么画：按时序图画，先提交 DB，再由协调器/Broker 广播失效事件到所有缓存适配器。</text>
+</svg>

@@ -1,8 +1,8 @@
 # 2026 NJU Graduate Software Architecture Review
 
-静态复习网站：把 2026 南京大学软件学院研究生课程《软件体系结构》的 slides、复习课纪要、raw 前人资料和往年题整理成可浏览的复习资料。
+静态复习网站：把 2026 南京大学软件学院研究生课程《软件体系结构》的 slides、完整复习课录音/整理纪要、raw 前人资料和往年题整理成可浏览的复习资料。
 
-> 准确性提示：本资料由 Codex（GPT-5.5）辅助整理生成，未经任课老师确认，不一定准确；专门面向 2026 南京大学软件学院研究生《软件体系结构》期末复习，不保证适用于未来年份或本科《软件系统设计》。复习和作答时请优先以课程原始 slides、复习课纪要和老师说明为准。
+> 准确性提示：本资料由 Codex（GPT-5.5）辅助整理生成，未经任课老师确认，不一定准确；专门面向 2026 南京大学软件学院研究生《软件体系结构》期末复习，不保证适用于未来年份或本科《软件系统设计》。复习和作答时请优先以课程原始 slides、完整复习课录音/整理纪要和老师说明为准。
 
 ## 本地浏览
 
@@ -32,15 +32,15 @@ python3 server/metrics_server.py --host 127.0.0.1 --port 18080 --static-root . -
 - `site/`：前端页面、样式、交互和可发布数据。
 - `site/metrics.html` / `site/metrics.js`：隐藏访问统计图表页，不在主导航中展示。
 - `site/assets/reward/`：底部低调打赏弹窗使用的微信/支付宝收款码。
-- `site/content.js`：复习路线、15 个知识点、79 条术语、11 张本地图解和 4 张画板资源。
-- `site/data/questions.json`：39 条往年题聚类，包含中文完整示例答案、英文关键词、优先级、图解关联和逐题来源校对。
-- `site/data/sources.json`：52 个源文件的抽取状态清单。
+- `site/content.js`：复习路线、纲领思维导图、15 个知识点、79 条术语、18 张本地图解（中文模式优先显示中文背诵版）和 4 张画板资源。
+- `site/data/questions.json`：39 条往年题聚类，包含中文完整示例答案、英文关键词、优先级、图解关联、画图题作答步骤和逐题来源校对。
+- `site/data/sources.json`：56 个源文件的抽取状态清单。
 - `server/metrics_server.py`：Python 标准库 + SQLite 的轻量访问统计 API。
 - `deploy/`：systemd service 和 nginx 反代片段。
 - `tools/extract_sources.py`：本地文本抽取脚本。
 - `tools/extract_mubu.mjs`：从 Mubu public share 接口递归抽取思维导图节点。
 - `tools/integrate_2025_materials.mjs`：将 2025 新资料与题簇优先级合并进发布数据。
-- `tools/ground_question_answers.mjs`：按复习课纪要、重绘图和 PPT/旧卷证据校正真题答题框架，并给每题写入来源校对字段；可用 `--check` 验证题库仍与校对脚本一致。
+- `tools/ground_question_answers.mjs`：按完整复习课录音/整理纪要、重绘图和 PPT/旧卷证据校正真题答题框架，并给每题写入来源校对字段；可用 `--check` 验证题库仍与校对脚本一致。
 - `tools/vision_pdf_ocr.swift`：macOS Vision/PDFKit OCR 脚本。
 - `data/catalog/sources.json`：抽取脚本生成的本地原始文件清单，用于记录 raw/slides 的基础抽取状态；可发布资料库以 `site/data/sources.json` 的人工增补版本为准。
 - `.omx/research/`：资料盘点、真题分析、信息架构、UX 方案等研究记录。
@@ -66,7 +66,7 @@ python3 server/metrics_server.py --host 127.0.0.1 --port 18080 --static-root . -
 --chmod=Du=rwx,Dgo=rx,Fu=rw,Fgo=r
 ```
 
-相邻课程辅助资料中，`raw/2021 痛苦回忆.pdf`、`raw/软统2022试卷.pdf` 与 `raw/25软件系统设计回忆版.jpg` 来自《软件系统设计》。该课程只有体系结构部分与本课重合，因此题库只吸收 ASR、质量属性、架构视图、C&C/SOA、ADD、微服务、Pipe-and-Filter、缓存一致性等体系结构题；LSP/OCP、Factory、Command、Observer、Facade/Proxy、代码实现类题目按详细设计/GoF 设计模式排除。`raw/考前关键词提示版本.pdf`、`raw/老师复习大纲（答案方式）.docx` 和 Mubu 思维导图作为 2025 前人冲刺资料使用，但优先级仍服从今年复习课。`data/feishu/ai-wiki-*.md` 与 `data/feishu/whiteboards/` 来自同学 AI 整理 Wiki，通过 bytedcli 抓取后作为辅助资料，不作为老师标准答案。
+相邻课程辅助资料中，`raw/2021 痛苦回忆.pdf`、`raw/软统2022试卷.pdf` 与 `raw/25软件系统设计回忆版.jpg` 来自《软件系统设计》。该课程只有体系结构部分与本课重合，因此题库只吸收 ASR、质量属性、架构视图、C&C/SOA、ADD、微服务、Pipe-and-Filter、缓存一致性等体系结构题；LSP/OCP、Factory、Command、Observer、Facade/Proxy、代码实现类题目按详细设计/GoF 设计模式排除。`raw/考前关键词提示版本.pdf`、`raw/老师复习大纲（答案方式）.docx` 和 Mubu 思维导图作为 2025 前人冲刺资料使用，但优先级仍服从今年复习课。`data/review-class/complete-review-minutes.md`、`data/复习课完整录音-张贺吕骏李杉杉.txt` 与三份复习课 slide 抽取文本（张贺 review-1、吕骏 Lecture 3、李杉杉 review-3）是当前网页的最高复习纲领；三份飞书智能纪要仍保留在资料库中供回看，但已被完整录音替代，不再作为真题答案的直接佐证。`data/feishu/ai-wiki-*.md` 与 `data/feishu/whiteboards/` 来自同学 AI 整理 Wiki，通过 bytedcli 抓取后作为辅助资料，不作为老师标准答案。
 
 ## 访问统计
 
@@ -77,6 +77,7 @@ python3 server/metrics_server.py --host 127.0.0.1 --port 18080 --static-root . -
 - `topic_view` / `glossary_view` / `question_view`：知识点、术语、真题查看。
 - `source_preview` / `source_open`：资料库预览和源文件打开，打开一次按下载一次计。
 - `diagram_open` / `whiteboard_open`：图解、画板放大查看。
+- `mindmap_node_click`：纲领思维导图节点点击。
 - `reward_open`：底部打赏弹窗打开。
 
 统计后端只保存事件类型、对象 key、页面、匿名 session、哈希后的 IP、匿名访客指纹、User-Agent 与 Accept-Language 摘要；不保存明文 IP。访客数用 `X-Forwarded-For` / `X-Real-IP` 中的客户端 IP、User-Agent、Accept-Language 与私有 salt 共同哈希后估算，历史旧数据会退回到 `ip_hash + user_agent` 口径。
@@ -99,7 +100,7 @@ python3 server/metrics_server.py --host 127.0.0.1 --port 18080 --static-root . -
 - `node --check site/app.js site/metrics.js tools/smoke-site.mjs tools/smoke-metrics.mjs`
 - `jq empty site/data/questions.json site/data/sources.json`
 - `python3 -m unittest tools/test_metrics_server.py`
-- Playwright/Chrome 桌面与移动视口验证：15 个知识点、39 条真题聚类、79 个术语、52 条资料清单、11 张本地图解、4 张画板、免责声明、复习清单导入迁移、评论区入口、打赏弹窗，无控制台错误，无横向溢出。
+- Playwright/Chrome 桌面与移动视口验证：纲领思维导图、15 个知识点、39 条真题聚类、79 个术语、56 条资料清单、18 张本地图解、图解中英文切换、画图题步骤、4 张画板、免责声明、复习清单导入迁移、评论区入口、打赏弹窗，无控制台错误，无横向溢出。
 - Playwright/Chrome 隐藏统计页验证：按天/按小时切换、访问人数卡片、事件图表、Top Items、Recent Events 均可渲染。
 
 ## License

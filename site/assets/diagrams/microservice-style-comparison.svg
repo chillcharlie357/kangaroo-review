@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1680" height="980" viewBox="0 0 1680 980" role="img" aria-labelledby="title desc">
+  <title id="title">Architecture style comparison for microservices</title>
+  <desc id="desc">A slide-grounded comparison of monolith, layered architecture, SOA, and microservices, plus the SOA versus microservice differences emphasized in review.</desc>
+  <defs>
+    <style>
+      .bg{fill:#fffdf8}
+      .panel{fill:#ffffff;stroke:#d9d2c4;stroke-width:2}
+      .head{fill:#1f2328}
+      .red{fill:#b54634}
+      .blue{fill:#355f91}
+      .teal{fill:#14756f}
+      .gold{fill:#b8841f}
+      .green{fill:#4e7348}
+      .line{stroke:#d9d2c4;stroke-width:2}
+      .title{font:700 36px Georgia,"Times New Roman",serif;fill:#1f2328}
+      .sub{font:600 18px "Avenir Next","PingFang SC","Noto Sans CJK SC",sans-serif;fill:#667078}
+      .th{font:800 22px "Avenir Next","PingFang SC","Noto Sans CJK SC",sans-serif;fill:#fff}
+      .h{font:800 23px "Avenir Next","PingFang SC","Noto Sans CJK SC",sans-serif;fill:#1f2328}
+      .txt{font:500 20px "Avenir Next","PingFang SC","Noto Sans CJK SC",sans-serif;fill:#1f2328}
+      .small{font:500 16px "Avenir Next","PingFang SC","Noto Sans CJK SC",sans-serif;fill:#667078}
+      .white{font:800 20px "Avenir Next","PingFang SC","Noto Sans CJK SC",sans-serif;fill:#fff}
+    </style>
+  </defs>
+  <rect class="bg" width="1680" height="980"/>
+  <text class="title" x="48" y="58">微服务不是定义题：考特性、对比、拆分与模式</text>
+  <text class="sub" x="48" y="88">Grounded in Lecture 6-7: compare monolith, layered architecture, SOA and microservices; focus on tradeoffs.</text>
+
+  <g transform="translate(48 130)">
+    <rect class="head" x="0" y="0" width="1584" height="58" rx="6"/>
+    <text class="th" x="36" y="37">Style</text>
+    <text class="th" x="260" y="37">结构抓手 / Structure</text>
+    <text class="th" x="695" y="37">优先保障 / Strength</text>
+    <text class="th" x="1120" y="37">主要代价 / Cost</text>
+
+    <g transform="translate(0 76)">
+      <rect class="panel" x="0" y="0" width="1584" height="96" rx="8"/>
+      <rect class="red" x="18" y="20" width="158" height="56" rx="7"/>
+      <text class="white" x="55" y="55">Monolith</text>
+      <text class="txt" x="230" y="38">统一代码库、统一部署、紧耦合。</text>
+      <text class="small" x="230" y="68">Simplest architecture; good for early business.</text>
+      <text class="txt" x="682" y="50">简单、开发启动快、部署集中。</text>
+      <text class="txt" x="1100" y="50">演进困难，容易 Big Ball of Mud。</text>
+    </g>
+
+    <g transform="translate(0 192)">
+      <rect class="panel" x="0" y="0" width="1584" height="96" rx="8"/>
+      <rect class="blue" x="18" y="20" width="158" height="56" rx="7"/>
+      <text class="white" x="54" y="55">Layered</text>
+      <text class="txt" x="230" y="38">表示层、业务层、数据层分层。</text>
+      <text class="small" x="230" y="68">Abstraction and structured thinking; MVC / three-tier.</text>
+      <text class="txt" x="682" y="50">可维护性、职责分离、安全边界。</text>
+      <text class="txt" x="1100" y="50">层间耦合仍在，跨系统协作有限。</text>
+    </g>
+
+    <g transform="translate(0 308)">
+      <rect class="panel" x="0" y="0" width="1584" height="110" rx="8"/>
+      <rect class="gold" x="18" y="27" width="158" height="56" rx="7"/>
+      <text class="white" x="72" y="62">SOA</text>
+      <text class="txt" x="230" y="34">服务契约 + ESB / heavy pipes。</text>
+      <text class="txt" x="230" y="60">共享治理和全局数据模型。</text>
+      <text class="small" x="230" y="92">Often larger services, SOAP/WS-* and global data model.</text>
+      <text class="txt" x="682" y="56">企业级整合、互操作、复用和集中治理。</text>
+      <text class="txt" x="1100" y="40">治理和总线偏重，局部演进、独立发布受限。</text>
+      <text class="small" x="1100" y="72">This explains why SOA tends to move toward microservices.</text>
+    </g>
+
+    <g transform="translate(0 438)">
+      <rect class="panel" x="0" y="0" width="1584" height="122" rx="8"/>
+      <rect class="teal" x="18" y="33" width="158" height="56" rx="7"/>
+      <text class="white" x="37" y="68">Microservice</text>
+      <text class="txt" x="230" y="34">小服务、业务能力边界、轻量通信。</text>
+      <text class="txt" x="230" y="60">服务自有数据，可独立部署。</text>
+      <text class="small" x="230" y="94">Independent deployment / run / scale; decentralized collaboration.</text>
+      <text class="txt" x="682" y="40">局部演进、持续交付、</text>
+      <text class="txt" x="682" y="68">团队自治、弹性扩展。</text>
+      <text class="txt" x="1100" y="34">分布式复杂度、数据一致性。</text>
+      <text class="txt" x="1100" y="60">可观测性和运维成本。</text>
+      <text class="small" x="1100" y="88">Discuss decomposition, communication, deployment.</text>
+    </g>
+  </g>
+
+  <g transform="translate(90 740)">
+    <rect class="panel" x="0" y="0" width="700" height="170" rx="12"/>
+    <text class="h" x="28" y="42">SOA vs Microservices</text>
+    <text class="txt" x="28" y="82">通信：SOA 智能管道 ESB/SOAP；</text>
+    <text class="txt" x="28" y="112">微服务 dumb pipes，REST/gRPC/message broker。</text>
+    <text class="txt" x="28" y="142">数据：SOA 全局模型；微服务服务自有数据。</text>
+  </g>
+
+  <g transform="translate(890 740)">
+    <rect class="panel" x="0" y="0" width="700" height="170" rx="12"/>
+    <text class="h" x="28" y="42">Design Answer Skeleton</text>
+    <text class="txt" x="28" y="82">1. 识别业务能力或子域；2. 划服务边界和 API；</text>
+    <text class="txt" x="28" y="118">3. 定通信与数据归属；4. 补部署/故障/可观测性；</text>
+    <text class="small" x="28" y="154">End with tradeoffs; do not memorize only a definition.</text>
+  </g>
+</svg>

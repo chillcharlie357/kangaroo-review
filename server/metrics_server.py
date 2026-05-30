@@ -30,6 +30,7 @@ EVENT_TYPES = {
     "source_preview",
     "source_open",
     "diagram_open",
+    "mindmap_node_click",
     "whiteboard_open",
     "reward_open",
     "search",

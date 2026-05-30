@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc">
+  <title id="title">Three-tier architecture reference answer</title>
+  <desc id="desc">Illustrative exam answer diagram for a booking system in three-tier style with Views and Beyond documentation notes.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#9a6a12"/>
+    </marker>
+    <style>
+      .bg{fill:#fbfaf7}
+      .tier{fill:#fff;stroke:#c9d1db;stroke-width:2.5;rx:16}
+      .store{fill:#f3f6fa;stroke:#c9d1db;stroke-width:2.5;rx:14}
+      .doc{fill:#fff8e9;stroke:#d09a33;stroke-width:2;rx:14}
+      .title{font:700 32px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#1f2733}
+      .sub{font:18px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#667386}
+      .name{font:700 24px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#9a2f23}
+      .body{font:18px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#2c3543}
+      .small{font:15px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#687486}
+      .arrow{stroke:#9a6a12;stroke-width:3;fill:none;marker-end:url(#arrow)}
+      .muted{font:16px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#687486}
+    </style>
+  </defs>
+  <rect class="bg" width="1280" height="720"/>
+  <text class="title" x="640" y="58" text-anchor="middle">Reference Answer: Booking System in Three-Tier Style</text>
+  <text class="sub" x="640" y="92" text-anchor="middle">Illustrative old-paper answer, not a review-class ground-truth slide.</text>
+
+  <g transform="translate(110,145)">
+    <rect class="tier" width="690" height="110"/>
+    <text class="name" x="40" y="38">Presentation Tier</text>
+    <text class="body" x="40" y="72">login, flight search, seat selection, payment pages</text>
+    <text class="small" x="505" y="38">UI / web / mobile</text>
+  </g>
+  <path class="arrow" d="M455 255 V300"/>
+  <g transform="translate(110,300)">
+    <rect class="tier" width="690" height="120"/>
+    <text class="name" x="40" y="40">Business Logic Tier</text>
+    <text class="body" x="40" y="76">inventory check, pricing, order creation, payment coordination, cancellation rules</text>
+    <text class="small" x="505" y="42">business rules</text>
+  </g>
+  <path class="arrow" d="M455 420 V465"/>
+  <g transform="translate(110,465)">
+    <rect class="tier" width="690" height="110"/>
+    <text class="name" x="40" y="38">Data Access Tier</text>
+    <text class="body" x="40" y="72">repositories / DAOs for flights, seats, orders, users</text>
+    <text class="small" x="505" y="38">persistence boundary</text>
+  </g>
+  <path class="arrow" d="M800 520 H900"/>
+  <g transform="translate(900,480)">
+    <rect class="store" width="240" height="82"/>
+    <text class="name" x="120" y="34" text-anchor="middle">Database</text>
+    <text class="small" x="120" y="61" text-anchor="middle">flight / seat / order / user tables</text>
+  </g>
+
+  <g transform="translate(880,145)">
+    <rect class="doc" width="300" height="245"/>
+    <text class="name" x="28" y="42">Views and Beyond</text>
+    <text class="body" x="28" y="82">1. module view: three tiers</text>
+    <text class="body" x="28" y="116">2. runtime view: booking flow</text>
+    <text class="body" x="28" y="150">3. deployment view: nodes</text>
+    <text class="body" x="28" y="184">4. interfaces and data</text>
+    <text class="body" x="28" y="218">5. rationale and tradeoffs</text>
+  </g>
+  <text class="muted" x="640" y="650" text-anchor="middle">How to draw: draw three stacked tiers, put 2-3 responsibilities in each tier, connect to database, then add documentation items.</text>
+</svg>

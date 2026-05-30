@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1480 860" role="img" aria-labelledby="title desc">
+  <title id="title">Software architecture evolution mainline</title>
+  <desc id="desc">Architecture evolution is not replacement history, but migration of dominant contradictions and boundaries.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#ad7a18"/>
+    </marker>
+    <style>
+      .bg{fill:#fbfaf7}
+      .stage{fill:#fff;stroke:#c9d1db;stroke-width:2.2;rx:16}
+      .stage2{fill:#f3f6fa;stroke:#c9d1db;stroke-width:2.2;rx:16}
+      .ai{fill:#f2e8ff;stroke:#a867e7;stroke-width:2.4;rx:16}
+      .title{font:700 34px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#1f2733}
+      .sub{font:20px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#667386}
+      .name{font:700 24px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#1f2733}
+      .body{font:17px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#536171}
+      .small{font:15px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#7c8796}
+      .arrow{stroke:#ad7a18;stroke-width:3;fill:none;marker-end:url(#arrow)}
+      .summary{fill:#fff8e9;stroke:#c9952e;stroke-width:2}
+      .red{fill:#b61f1f;font:700 19px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    </style>
+  </defs>
+  <rect class="bg" width="1480" height="860"/>
+  <text class="title" x="740" y="62" text-anchor="middle">时代主线：谁是系统核心约束，谁就会重画边界</text>
+  <text class="sub" x="740" y="98" text-anchor="middle">架构演进不是“替代史”，而是“主要矛盾迁移史”</text>
+
+  <g transform="translate(50,155)">
+    <rect class="stage" width="140" height="138"/>
+    <text class="name" x="70" y="37" text-anchor="middle">最早期</text>
+    <text class="body" x="70" y="73" text-anchor="middle">让机器稳定</text>
+    <text class="body" x="70" y="99" text-anchor="middle">执行</text>
+    <text class="small" x="70" y="125" text-anchor="middle">算力稀缺</text>
+  </g>
+  <path class="arrow" d="M190 224 H230"/>
+  <g transform="translate(230,155)">
+    <rect class="stage2" width="150" height="138"/>
+    <text class="name" x="75" y="37" text-anchor="middle">主机/终端</text>
+    <text class="body" x="75" y="73" text-anchor="middle">多人共享</text>
+    <text class="body" x="75" y="99" text-anchor="middle">核心事务</text>
+    <text class="small" x="75" y="125" text-anchor="middle">强中心</text>
+  </g>
+  <path class="arrow" d="M380 224 H420"/>
+  <g transform="translate(420,155)">
+    <rect class="stage" width="140" height="138"/>
+    <text class="name" x="70" y="37" text-anchor="middle">C/S</text>
+    <text class="body" x="70" y="73" text-anchor="middle">把交互带到</text>
+    <text class="body" x="70" y="99" text-anchor="middle">桌面</text>
+    <text class="small" x="70" y="125" text-anchor="middle">胖客户端</text>
+  </g>
+  <path class="arrow" d="M560 224 H600"/>
+  <g transform="translate(600,155)">
+    <rect class="stage2" width="150" height="138"/>
+    <text class="name" x="75" y="37" text-anchor="middle">三层/分层</text>
+    <text class="body" x="75" y="73" text-anchor="middle">统一入口</text>
+    <text class="body" x="75" y="99" text-anchor="middle">系统内分责</text>
+    <text class="small" x="75" y="125" text-anchor="middle">职责边界</text>
+  </g>
+  <path class="arrow" d="M750 224 H790"/>
+  <g transform="translate(790,155)">
+    <rect class="stage" width="140" height="138"/>
+    <text class="name" x="70" y="37" text-anchor="middle">SOA</text>
+    <text class="body" x="70" y="73" text-anchor="middle">跨系统复用</text>
+    <text class="body" x="70" y="99" text-anchor="middle">与编排</text>
+    <text class="small" x="70" y="125" text-anchor="middle">契约/治理</text>
+  </g>
+  <path class="arrow" d="M930 224 H970"/>
+  <g transform="translate(970,155)">
+    <rect class="stage2" width="150" height="138"/>
+    <text class="name" x="75" y="37" text-anchor="middle">微服务</text>
+    <text class="body" x="75" y="73" text-anchor="middle">按业务能力</text>
+    <text class="body" x="75" y="99" text-anchor="middle">独立演进</text>
+    <text class="small" x="75" y="125" text-anchor="middle">团队自治</text>
+  </g>
+  <path class="arrow" d="M1120 224 H1160"/>
+  <g transform="translate(1160,155)">
+    <rect class="stage2" width="170" height="138"/>
+    <text class="name" x="85" y="37" text-anchor="middle">事件驱动</text>
+    <text class="body" x="85" y="73" text-anchor="middle">韧性与</text>
+    <text class="body" x="85" y="99" text-anchor="middle">平台化运行</text>
+    <text class="small" x="85" y="125" text-anchor="middle">异步/云原生</text>
+  </g>
+  <g transform="translate(1115,335)">
+    <rect class="ai" width="150" height="118"/>
+    <text class="name" x="75" y="36" text-anchor="middle">AI 增强</text>
+    <text class="body" x="75" y="72" text-anchor="middle">语义能力</text>
+    <text class="small" x="75" y="99" text-anchor="middle">明确不考</text>
+  </g>
+  <path class="arrow" d="M1245 293 C1240 320 1238 330 1230 345"/>
+  <path class="arrow" d="M1265 394 H1305"/>
+  <g transform="translate(1305,335)">
+    <rect class="ai" width="150" height="118"/>
+    <text class="name" x="75" y="36" text-anchor="middle">AI 原生</text>
+    <text class="body" x="75" y="72" text-anchor="middle">任务执行</text>
+    <text class="small" x="75" y="99" text-anchor="middle">明确不考</text>
+  </g>
+
+  <rect class="summary" x="120" y="535" width="1240" height="180"/>
+  <text class="title" x="740" y="595" text-anchor="middle">一句话总结</text>
+  <text class="sub" x="740" y="642" text-anchor="middle">软件架构的历史，就是“在新的成本结构下，重画边界和协作方式”的历史。</text>
+  <text class="red" x="740" y="690" text-anchor="middle">考试不要只背名词：要讲清旧模式为何失效、新模式如何改变边界、质量属性如何取舍。</text>
+  <text class="small" x="740" y="775" text-anchor="middle">来源：Lecture 3 页 6、69；完整录音吕骏段 37:13-50:23。</text>
+</svg>

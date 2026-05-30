@@ -9,6 +9,7 @@ const eventNames = {
   source_open: "源文件打开/下载",
   diagram_open: "图解放大",
   whiteboard_open: "画板放大",
+  mindmap_node_click: "纲领节点点击",
   reward_open: "打赏弹窗",
   filter_change: "筛选变更",
   search: "搜索"

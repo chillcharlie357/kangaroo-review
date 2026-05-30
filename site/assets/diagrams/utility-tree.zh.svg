@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="900" viewBox="0 0 1500 900" role="img" aria-labelledby="title desc">
+  <title id="title">效用树 Utility Tree：ASR 排优先级（中文背诵版）</title>
+  <desc id="desc">效用树把质量属性展开为具体场景，再按用户/业务重要性与架构影响排序，用来识别和排序 ASR。</desc>
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M2,2 L10,6 L2,10 Z" fill="#333"/>
+    </marker>
+    <style>
+      .bg{fill:#fffdf8}
+      .ink{fill:#1f2328}
+      .muted{fill:#667078}
+      .box{fill:#ffffff;stroke:#2d3439;stroke-width:2}
+      .root{fill:#b54634;stroke:#7e241a;stroke-width:2}
+      .qa{fill:#e9f1f0;stroke:#14756f;stroke-width:2}
+      .leaf{fill:#f6efe1;stroke:#b8841f;stroke-width:2}
+      .rank{fill:#edf0f5;stroke:#355f91;stroke-width:2}
+      .line{stroke:#333;stroke-width:2.2;fill:none;marker-end:url(#arrow)}
+      .title{font:700 34px Georgia,"Times New Roman",serif;fill:#1f2328}
+      .sub{font:600 18px "Avenir Next","PingFang SC","Noto Sans CJK SC",sans-serif;fill:#667078}
+      .h{font:800 24px "Avenir Next","PingFang SC","Noto Sans CJK SC",sans-serif;fill:#1f2328}
+      .white{font:800 25px "Avenir Next","PingFang SC","Noto Sans CJK SC",sans-serif;fill:#fff}
+      .txt{font:500 20px "Avenir Next","PingFang SC","Noto Sans CJK SC",sans-serif;fill:#1f2328}
+      .small{font:500 16px "Avenir Next","PingFang SC","Noto Sans CJK SC",sans-serif;fill:#667078}
+      .badge{font:800 17px "Avenir Next","PingFang SC","Noto Sans CJK SC",sans-serif;fill:#355f91}
+    </style>
+  </defs>
+  <rect class="bg" width="1500" height="900"/>
+  <text class="title" x="48" y="58">效用树 Utility Tree：把 ASR 场景排优先级</text>
+  <text class="sub" x="48" y="88">先把质量属性具体化为场景，再按两个维度排序：用户/业务重要性 + 架构影响或实现难度。</text>
+
+  <rect class="root" x="610" y="130" width="280" height="74" rx="8"/>
+  <text class="white" x="678" y="176">效用 Utility</text>
+
+  <rect class="qa" x="110" y="300" width="250" height="76" rx="8"/>
+  <text class="h" x="168" y="332">可用性</text>
+  <text class="small" x="145" y="358">Availability</text>
+
+  <rect class="qa" x="475" y="300" width="250" height="76" rx="8"/>
+  <text class="h" x="552" y="332">性能</text>
+  <text class="small" x="522" y="358">Performance</text>
+
+  <rect class="qa" x="840" y="300" width="250" height="76" rx="8"/>
+  <text class="h" x="892" y="332">可修改性</text>
+  <text class="small" x="900" y="358">Modifiability</text>
+
+  <rect class="qa" x="1205" y="300" width="250" height="76" rx="8"/>
+  <text class="h" x="1278" y="332">安全性</text>
+  <text class="small" x="1270" y="358">Security</text>
+
+  <path class="line" d="M750 204 C750 252 235 250 235 292"/>
+  <path class="line" d="M750 204 C750 252 600 252 600 292"/>
+  <path class="line" d="M750 204 C750 252 965 252 965 292"/>
+  <path class="line" d="M750 204 C750 252 1330 250 1330 292"/>
+
+  <g transform="translate(70 452)">
+    <rect class="leaf" x="0" y="0" width="330" height="112" rx="8"/>
+    <text class="txt" x="18" y="34">Heartbeat 监视器发现</text>
+    <text class="txt" x="18" y="62">服务器无响应。</text>
+    <text class="small" x="18" y="92">度量：没有停机时间</text>
+    <text class="badge" x="258" y="92">H / H</text>
+  </g>
+  <g transform="translate(435 452)">
+    <rect class="leaf" x="0" y="0" width="330" height="112" rx="8"/>
+    <text class="txt" x="18" y="34">用户在正常操作下</text>
+    <text class="txt" x="18" y="62">发起事务。</text>
+    <text class="small" x="18" y="92">度量：平均延迟 &lt;= 2 秒</text>
+    <text class="badge" x="258" y="92">H / M</text>
+  </g>
+  <g transform="translate(800 452)">
+    <rect class="leaf" x="0" y="0" width="330" height="112" rx="8"/>
+    <text class="txt" x="18" y="34">开发者在设计时</text>
+    <text class="txt" x="18" y="62">修改 UI 界面。</text>
+    <text class="small" x="18" y="92">度量：3 小时内完成</text>
+    <text class="badge" x="258" y="92">M / M</text>
+  </g>
+  <g transform="translate(1165 452)">
+    <rect class="leaf" x="0" y="0" width="330" height="112" rx="8"/>
+    <text class="txt" x="18" y="34">偏远地区心怀不满员工</text>
+    <text class="txt" x="18" y="62">尝试修改支付率。</text>
+    <text class="small" x="18" y="92">度量：识别篡改身份</text>
+    <text class="badge" x="258" y="92">H / H</text>
+  </g>
+
+  <path class="line" d="M235 376 L235 444"/>
+  <path class="line" d="M600 376 L600 444"/>
+  <path class="line" d="M965 376 L965 444"/>
+  <path class="line" d="M1330 376 L1330 444"/>
+
+  <rect class="rank" x="286" y="672" width="928" height="128" rx="12"/>
+  <text class="h" x="326" y="710">排序规则 Priority rule</text>
+  <text class="txt" x="326" y="746">对用户或业务越重要、对架构影响越大或越难实现，越应优先处理。</text>
+  <text class="small" x="326" y="778">叶子常用 H/H、H/M、M/H 等标记：重要性 / 架构影响。</text>
+  <path class="line" d="M750 564 C750 610 750 626 750 662"/>
+
+  <text class="small" x="56" y="850">答题用法：需求文档往往不完整，要通过 stakeholder workshop/interview 补齐场景，再在效用树中排序。</text>
+</svg>

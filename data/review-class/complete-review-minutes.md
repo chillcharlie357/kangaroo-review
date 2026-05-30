@@ -118,7 +118,7 @@ PPT 点名四类职责：
 
 例子：可用性场景。
 
-> Source：Heartbeat monitor。Stimulus：服务器无响应。Artifact：处理器/服务实例。Environment：正常运行。Response：通知操作者并切换到备用实例继续服务。Response measure：用户无可感知停机或在规定时间内恢复。
+> Source：Heartbeat monitor。Stimulus：服务器无响应。Artifact：处理器。Environment：正常运行。Response：通知操作者继续操作。Response measure：没有停机时间。
 
 ### 7. ASR 与 Utility tree
 

@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc">
+  <title id="title">三层架构参考答案图</title>
+  <desc id="desc">旧题说明性答题图：订票系统三层架构，并补 Views and Beyond 文档项。</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#9a6a12"/>
+    </marker>
+    <style>
+      .bg{fill:#fbfaf7}
+      .tier{fill:#fff;stroke:#c9d1db;stroke-width:2.5;rx:16}
+      .store{fill:#f3f6fa;stroke:#c9d1db;stroke-width:2.5;rx:14}
+      .doc{fill:#fff8e9;stroke:#d09a33;stroke-width:2;rx:14}
+      .title{font:700 34px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#1f2733}
+      .sub{font:18px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#667386}
+      .name{font:700 24px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#9a2f23}
+      .body{font:18px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#2c3543}
+      .small{font:15px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#687486}
+      .arrow{stroke:#9a6a12;stroke-width:3;fill:none;marker-end:url(#arrow)}
+      .muted{font:16px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#687486}
+    </style>
+  </defs>
+  <rect class="bg" width="1280" height="720"/>
+  <text class="title" x="640" y="58" text-anchor="middle">参考答案图：订票系统三层架构</text>
+  <text class="sub" x="640" y="92" text-anchor="middle">旧题说明性答题图，不是复习课 PPT 原图。</text>
+
+  <g transform="translate(110,145)">
+    <rect class="tier" width="690" height="110"/>
+    <text class="name" x="40" y="38">表示层 Presentation Tier</text>
+    <text class="body" x="40" y="72">登录、航班查询、选座、支付页面</text>
+    <text class="small" x="505" y="38">UI / Web / Mobile</text>
+  </g>
+  <path class="arrow" d="M455 255 V300"/>
+  <g transform="translate(110,300)">
+    <rect class="tier" width="690" height="120"/>
+    <text class="name" x="40" y="40">业务逻辑层 Business Logic Tier</text>
+    <text class="body" x="40" y="76">库存校验、价格计算、订单创建、支付协调、取消规则</text>
+    <text class="small" x="505" y="42">业务规则</text>
+  </g>
+  <path class="arrow" d="M455 420 V465"/>
+  <g transform="translate(110,465)">
+    <rect class="tier" width="690" height="110"/>
+    <text class="name" x="40" y="38">数据访问层 Data Access Tier</text>
+    <text class="body" x="40" y="72">航班、座位、订单、用户的 Repository / DAO</text>
+    <text class="small" x="505" y="38">持久化边界</text>
+  </g>
+  <path class="arrow" d="M800 520 H900"/>
+  <g transform="translate(900,480)">
+    <rect class="store" width="240" height="82"/>
+    <text class="name" x="120" y="34" text-anchor="middle">数据库</text>
+    <text class="small" x="120" y="61" text-anchor="middle">航班 / 座位 / 订单 / 用户表</text>
+  </g>
+
+  <g transform="translate(880,145)">
+    <rect class="doc" width="300" height="245"/>
+    <text class="name" x="28" y="42">Views and Beyond</text>
+    <text class="body" x="28" y="82">1. 模块视图：三层职责</text>
+    <text class="body" x="28" y="116">2. 运行时视图：订票流程</text>
+    <text class="body" x="28" y="150">3. 部署视图：节点映射</text>
+    <text class="body" x="28" y="184">4. 接口与数据说明</text>
+    <text class="body" x="28" y="218">5. 设计理由与权衡</text>
+  </g>
+  <text class="muted" x="640" y="650" text-anchor="middle">怎么画：三层竖向堆叠，每层写 2-3 个职责，连到数据库，旁边补文档项。</text>
+</svg>
