@@ -74,6 +74,7 @@ const expectedPriorities = {
   q_soa_quality: "P1",
   q_operability_performance_scenarios: "P1",
   q_microservice_food_delivery_design: "P1",
+  q_enterprise_architecture_methods: "P1",
   q_arch_sources: "P1",
   q_stakeholder_concerns: "P1",
   q_cnc_mvc: "P1"
@@ -140,7 +141,7 @@ function validateQuestions(items) {
     }
   }
 
-  if (items.length !== 39) errors.push(`Expected 39 question clusters, found ${items.length}`);
+  if (items.length !== 40) errors.push(`Expected 40 question clusters, found ${items.length}`);
   return errors;
 }
 

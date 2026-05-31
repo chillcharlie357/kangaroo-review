@@ -2974,5 +2974,79 @@
       "Connect order, payment, and delivery using synchronous APIs or asynchronous events; add Saga/compensation only as an illustrative consistency mechanism.",
       "Write quality tradeoffs below: independent scaling/evolution vs distributed consistency and operational complexity."
     ]
+  },
+  {
+    "id": "q_enterprise_architecture_methods",
+    "cluster": "enterprise_architecture",
+    "priority": "P1",
+    "priority_reason_zh": "企业架构是今年 P1 展开重点；题面来自同学 AI Wiki 的英文常见问法和可背诵答案，并由复习课整理稿与 Lecture 10-11 企业架构课件支撑。",
+    "priority_reason_en": "Enterprise architecture is a P1 expansion topic. The prompt comes from the peer AI Wiki common English prompts/direct answer and is grounded by the review-class outline plus Lecture 10-11 enterprise-architecture slides.",
+    "canonical_question": "Explain Enterprise Architecture and its main methods.",
+    "question_zh": "解释企业架构及其主要方法，并说明其在数字化转型中的作用。",
+    "appearances": [
+      "Feishu AI Wiki common English prompt",
+      "Feishu AI Wiki direct-answer question"
+    ],
+    "source_paths": [
+      "https://my.feishu.cn/wiki/MsqFw2do2ifOEikleEBcm19HnTc",
+      "data/review-class/complete-review-minutes.md",
+      "data/复习课完整录音-张贺吕骏李杉杉.txt",
+      "data/extracted/slides/slides__Lecture 14: Course Review - 3 - 课程复习.txt",
+      "data/extracted/slides/slides__Lecture 10-11: Enterprise Architecture - 企业架构设计实战课-南京大学_课件版.txt",
+      "site/assets/diagrams/enterprise-4a.svg"
+    ],
+    "recurring_terms": [
+      "Enterprise Architecture",
+      "4A",
+      "TOGAF",
+      "ADM",
+      "CBM",
+      "digital transformation",
+      "governance"
+    ],
+    "likely_answer_pattern": "Define enterprise architecture, explain 4A, distinguish TOGAF/ADM/CBM, then state how EA supports digital transformation through alignment, standardization, complexity reduction, roadmap, and governance.",
+    "question_en": "Explain Enterprise Architecture and its main methods.",
+    "answer_zh": "企业架构描述企业核心组成部分、内外部关系，以及指导设计和演进的治理原则。答题先按 4A 展开：业务架构定义业务能力、流程和价值链；数据架构组织核心业务对象、主题域和数据标准；应用架构说明应用、服务和 API 如何支撑业务能力；技术架构提供平台、基础设施、中间件和部署标准。主要方法上，TOGAF 是企业架构框架，ADM 是 TOGAF 的架构开发流程，CBM 用业务组件/能力拆分企业。数字化转型中的作用是统一战略目标、标准化建设、降低系统复杂度，并用路线图和治理机制支持持续演进。",
+    "topicIds": [
+      "enterprise"
+    ],
+    "english_keywords": [
+      "enterprise architecture",
+      "business architecture",
+      "data architecture",
+      "application architecture",
+      "technology architecture",
+      "TOGAF",
+      "ADM",
+      "CBM",
+      "governance"
+    ],
+    "diagram_id": "enterprise-4a",
+    "sample_answer_zh": "企业架构是面向企业整体的架构视角，描述企业为了共同目标而形成的核心组成部分、关系，以及指导其设计和演进的原则。可以按 4A 作答：业务架构回答企业要做什么、能力和流程如何组织；数据架构回答核心业务对象、主题域、数据标准和责任；应用架构回答哪些应用、服务和 API 支撑哪些业务能力；技术架构回答平台、基础设施、中间件、网络和部署标准如何承载应用。方法上，TOGAF 是企业架构框架，ADM 是 TOGAF 的迭代开发流程，CBM 是业务组件/能力建模方法。企业架构在数字化转型中的作用是把战略目标落到能力、数据、应用和技术建设，统一目标和标准，减少重复建设和复杂度，并通过治理、迁移路线图和变更管理支持持续演进。",
+    "sample_answer_en": "Enterprise Architecture describes the core parts of an enterprise, their internal and external relationships, and the principles governing their design and evolution. A safe answer uses 4A: business architecture defines capabilities, processes, and value chains; data architecture defines core business objects, subject areas, data standards, and ownership; application architecture maps applications, services, and APIs to business capabilities; technology architecture provides platforms, infrastructure, middleware, networks, and deployment standards. TOGAF is the overall EA framework, ADM is TOGAF's iterative development method, and CBM decomposes the enterprise into business capabilities/components. In digital transformation, EA aligns strategy with execution, standardizes construction, reduces duplication and complexity, and supports continuous evolution through governance, migration roadmap, and change management.",
+    "visual_hint_zh": "可画“战略目标 -> 业务能力 -> 4A -> 治理/路线图”的链条图，4A 下分别写能力流程、主题域、应用/API、平台基础设施。",
+    "visual_hint_en": "Draw a chain: strategic goals -> business capabilities -> 4A -> governance/roadmap. Under 4A, write capabilities/processes, subject areas, applications/APIs, and platform/infrastructure.",
+    "source_audit_zh": "新增题来自 Wiki 的企业架构英文常见问法与“题 3”背诵答案；答案仅吸收 4A、TOGAF/ADM、CBM、数字化转型作用，并用复习课与 Lecture 10-11 作为基线，避免把 5A 或案例细节放大成主线。",
+    "source_audit_en": "This added prompt comes from the Wiki common English prompt and Question 3 direct answer. The answer keeps 4A, TOGAF/ADM, CBM, and digital-transformation value, with the review class and Lecture 10-11 as baseline; 5A/case details are not promoted to the mainline.",
+    "source_audit_sources": [
+      "https://my.feishu.cn/wiki/MsqFw2do2ifOEikleEBcm19HnTc",
+      "data/review-class/complete-review-minutes.md",
+      "data/复习课完整录音-张贺吕骏李杉杉.txt",
+      "data/extracted/slides/slides__Lecture 14: Course Review - 3 - 课程复习.txt",
+      "data/extracted/slides/slides__Lecture 10-11: Enterprise Architecture - 企业架构设计实战课-南京大学_课件版.txt",
+      "site/assets/diagrams/enterprise-4a.svg"
+    ],
+    "drawing_steps_zh": [
+      "先画战略目标在最左侧，向右连接业务能力/能力地图。",
+      "从业务能力分出 4A：业务、数据、应用、技术。",
+      "在业务架构下写能力/流程/价值链；数据架构下写主题域/数据标准；应用架构下写应用组合/API；技术架构下写平台/基础设施。",
+      "最右侧补治理、迁移路线图和变更管理，说明企业架构支持数字化转型。"
+    ],
+    "drawing_steps_en": [
+      "Put strategic goals on the left and connect them to business capabilities/capability map.",
+      "Split capabilities into 4A: business, data, application, and technology architecture.",
+      "Under business write capabilities/processes/value chain; under data write subject areas/data standards; under application write application portfolio/APIs; under technology write platform/infrastructure.",
+      "Add governance, migration roadmap, and change management on the right to explain digital transformation support."
+    ]
   }
 ]

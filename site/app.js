@@ -1462,7 +1462,7 @@ function renderPapers() {
   const clusters = ["all", ...new Set(priorityQuestions.map((q) => q.cluster).sort())];
   const questions = priorityQuestions
     .filter((question) => state.cluster === "all" || question.cluster === state.cluster)
-    .filter((question) => includesQuery(question.cluster, question.priority, question.priority_reason_zh, question.priority_reason_en, question.source_audit_zh, question.source_audit_en, question.canonical_question, question.question_zh, question.likely_answer_pattern, question.answer_zh, question.sample_answer_zh, question.sample_answer_en, question.recurring_terms, question.english_keywords, question.appearances));
+    .filter((question) => includesQuery(question.cluster, question.priority, question.priority_reason_zh, question.priority_reason_en, question.source_audit_zh, question.source_audit_en, question.canonical_question, question.question_zh, question.question_en, question.likely_answer_pattern, question.answer_zh, question.sample_answer_zh, question.sample_answer_en, question.recurring_terms, question.english_keywords, question.topicIds, question.appearances, question.diagram_id));
   const openQuestionId = questions.some((question) => questionId(question) === state.openQuestionId)
     ? state.openQuestionId
     : "";

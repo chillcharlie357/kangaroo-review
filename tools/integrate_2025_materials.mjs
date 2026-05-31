@@ -48,7 +48,8 @@ const p1 = new Set([
   "q_soa_quality",
   "q_soa_ws_esb",
   "q_stakeholder_concerns",
-  "q_design_decisions_importance"
+  "q_design_decisions_importance",
+  "q_enterprise_architecture_methods"
 ]);
 
 for (const question of questions) {

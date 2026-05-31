@@ -371,7 +371,7 @@ for (const result of [desktop, mobile]) {
     if (!result[key]) errors.push(`${result.name}: ${key} failed`);
   }
   if (result.overviewMetricBadges < 3) errors.push(`${result.name}: metric badges missing`);
-  if (result.questionCount < 39) errors.push(`${result.name}: expected at least 39 question clusters`);
+  if (result.questionCount < 40) errors.push(`${result.name}: expected at least 40 question clusters`);
   if (result.whiteboardCount < 4) errors.push(`${result.name}: expected at least 4 whiteboards`);
   if (result.whiteboardNaturalWidth < 1000) errors.push(`${result.name}: whiteboard image did not load`);
 }

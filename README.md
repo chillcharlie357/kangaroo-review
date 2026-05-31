@@ -33,7 +33,7 @@ python3 server/metrics_server.py --host 127.0.0.1 --port 18080 --static-root . -
 - `site/metrics.html` / `site/metrics.js`：隐藏访问统计图表页，不在主导航中展示。
 - `site/assets/reward/`：底部低调打赏弹窗使用的微信/支付宝收款码。
 - `site/content.js`：复习路线、纲领思维导图、15 个知识点、82 条术语、18 张本地图解（中文模式优先显示中文背诵版）和 4 张画板资源。
-- `site/data/questions.json`：39 条往年题聚类，包含中文完整示例答案、英文关键词、优先级、图解关联、画图题作答步骤和逐题来源校对。
+- `site/data/questions.json`：40 条往年题聚类，包含中文完整示例答案、英文关键词、优先级、图解关联、画图题作答步骤和逐题来源校对。
 - `site/data/sources.json`：57 个源文件的抽取状态清单。
 - `server/metrics_server.py`：Python 标准库 + SQLite 的轻量访问统计 API。
 - `deploy/`：systemd service 和 nginx 反代片段。
@@ -100,7 +100,7 @@ python3 server/metrics_server.py --host 127.0.0.1 --port 18080 --static-root . -
 - `node --check site/app.js site/metrics.js tools/smoke-site.mjs tools/smoke-metrics.mjs`
 - `jq empty site/data/questions.json site/data/sources.json`
 - `python3 -m unittest tools/test_metrics_server.py`
-- Playwright/Chrome 桌面与移动视口验证：纲领思维导图、15 个知识点、39 条真题聚类、82 个术语、57 条资料清单、18 张本地图解、图解中英文切换、画图题步骤、4 张画板、免责声明、复习清单导入迁移、评论区入口、打赏弹窗，无控制台错误，无横向溢出。
+- Playwright/Chrome 桌面与移动视口验证：纲领思维导图、15 个知识点、40 条真题聚类、82 个术语、57 条资料清单、18 张本地图解、图解中英文切换、画图题步骤、4 张画板、免责声明、复习清单导入迁移、评论区入口、打赏弹窗，无控制台错误，无横向溢出。
 - Playwright/Chrome 隐藏统计页验证：按天/按小时切换、访问人数卡片、事件图表、Top Items、Recent Events 均可渲染。
 
 ## License

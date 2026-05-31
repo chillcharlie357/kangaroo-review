@@ -2358,8 +2358,8 @@ window.reviewContent = {
       },
       "items": [
         {
-          "zh": "按 39 个真题簇逐条看中文答案，再对照英文题干；2025/2022/2021 相邻课程真题只看架构筛选部分，GoF/OOP 题跳过",
-          "en": "Read Chinese answer frames for all 39 clusters, then compare English prompts; use only the architecture-filtered parts of 2025/2022/2021 adjacent-course papers and skip GoF/OOP-only questions"
+          "zh": "按 40 个真题簇逐条看中文答案，再对照英文题干；2025/2022/2021 相邻课程真题只看架构筛选部分，GoF/OOP 题跳过",
+          "en": "Read Chinese answer frames for all 40 clusters, then compare English prompts; use only the architecture-filtered parts of 2025/2022/2021 adjacent-course papers and skip GoF/OOP-only questions"
         },
         {
           "zh": "主练微服务 + DDD + ADD/ASR 文档化；三层、缓存只作为 P2 历史题过一遍",
